@@ -673,6 +673,59 @@ li {
   padding: 0;
 }
 
+.post-related {
+  width: min(690px, 100%);
+  margin: 1.8rem auto 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(201, 152, 100, 0.16);
+}
+
+.post-related h2 {
+  margin: 0 0 0.3rem;
+  font-size: 1.18rem;
+}
+
+.post-related-tip {
+  margin: 0 0 0.64rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.post-related-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.post-related-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.48rem 0.58rem;
+  border: 1px solid rgba(201, 152, 100, 0.16);
+  border-radius: 8px;
+  background: rgba(27, 34, 44, 0.6);
+}
+
+.post-related-item a {
+  color: #f1e7d8;
+  text-decoration: none;
+  font-size: 0.94rem;
+}
+
+.post-related-item a:hover {
+  color: #ffe4c5;
+}
+
+.post-related-item span {
+  color: var(--muted);
+  font-size: 0.79rem;
+  white-space: nowrap;
+}
+
 .site-footer {
   border-top: 1px solid rgba(209, 160, 106, 0.16);
   color: #b9b09f;
@@ -754,6 +807,14 @@ li {
   .post-header,
   .post-content {
     width: min(100%, 100%);
+  }
+
+  .post-related {
+    width: 100%;
+  }
+
+  .post-related-item {
+    padding: 0.44rem 0.5rem;
   }
 
   .post-content {

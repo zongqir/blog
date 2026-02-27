@@ -8,6 +8,46 @@ layout: default
   {% assign reading_minutes = 1 %}
 {% endif %}
 {% assign cover_topic = page.tags | first | default: "技术博客" %}
+{% assign related_posts = "" | split: "" %}
+{% assign related_urls = "|" %}
+{% assign candidate_posts = site.posts %}
+{% if page.related_auto != false %}
+  {% if page.series %}
+    {% assign series_related = candidate_posts | where: "series", page.series %}
+    {% for rp in series_related %}
+      {% if related_posts.size >= 3 %}
+        {% break %}
+      {% endif %}
+      {% if rp.url != page.url and rp.draft != true %}
+        {% assign related_posts = related_posts | push: rp %}
+        {% assign related_urls = related_urls | append: rp.url | append: "|" %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if related_posts.size < 3 and page.tags and page.tags.size > 0 %}
+    {% for rp in candidate_posts %}
+      {% if related_posts.size >= 3 %}
+        {% break %}
+      {% endif %}
+      {% if rp.url == page.url or rp.draft == true %}
+        {% continue %}
+      {% endif %}
+      {% unless related_urls contains rp.url %}
+        {% assign has_overlap = false %}
+        {% for current_tag in page.tags %}
+          {% if rp.tags contains current_tag %}
+            {% assign has_overlap = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% if has_overlap %}
+          {% assign related_posts = related_posts | push: rp %}
+          {% assign related_urls = related_urls | append: rp.url | append: "|" %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+{% endif %}
 
 <div class="reading-progress" aria-hidden="true">
   <span class="reading-progress-bar" data-reading-progress></span>
@@ -48,4 +88,19 @@ layout: default
   <section class="post-content" data-post-content>
     {{ content }}
   </section>
+
+  {% if related_posts.size > 0 %}
+  <section class="post-related">
+    <h2>相关文章</h2>
+    <p class="post-related-tip">基于专题与标签自动推荐，帮助你快速继续阅读。</p>
+    <ul class="post-related-list">
+      {% for rp in related_posts %}
+      <li class="post-related-item">
+        <a href="{{ rp.url | relative_url }}">{{ rp.title }}</a>
+        <span>{{ rp.updated | default: rp.date | date: "%Y-%m-%d" }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
 </article>

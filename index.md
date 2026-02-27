@@ -79,7 +79,7 @@ title: 首页
   </div>
   <div class="status-item">
     <span class="status-label">内容规模</span>
-    <span class="status-value">累计 {{ site.posts.size }} 篇文章</span>
+    <span class="status-value">累计 {{ published_posts.size }} 篇文章</span>
   </div>
   <div class="status-item">
     <span class="status-label">专题连载</span>
