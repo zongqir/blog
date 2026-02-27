@@ -5,15 +5,22 @@ title: 首页
 
 # 最新文章
 
+{% assign published_posts = site.posts | where_exp: "p", "p.draft != true" %}
+
+{% assign featured_candidates = published_posts | where: "featured", true | sort: "featured_rank" %}
 {% assign featured_post = nil %}
-{% assign featured_ts = 0 %}
-{% for post in site.posts %}
-  {% assign post_ts = post.updated | default: post.date | date: '%s' | plus: 0 %}
-  {% if post_ts > featured_ts %}
-    {% assign featured_post = post %}
-    {% assign featured_ts = post_ts %}
-  {% endif %}
-{% endfor %}
+{% if featured_candidates.size > 0 %}
+  {% assign featured_post = featured_candidates | first %}
+{% else %}
+  {% assign featured_ts = 0 %}
+  {% for post in published_posts %}
+    {% assign post_ts = post.updated | default: post.date | date: '%s' | plus: 0 %}
+    {% if post_ts > featured_ts %}
+      {% assign featured_post = post %}
+      {% assign featured_ts = post_ts %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
 
 {% if featured_post %}
 <section class="featured-post">
@@ -41,23 +48,28 @@ title: 首页
 </section>
 {% endif %}
 
-{% assign hot_urls = "/2026/02/26/i18n-context-governance/,/2026/02/26/complex-business-governance/,/2025/01/18/linux-troubleshooting-decision-map/" | split: "," %}
+{% assign hot_candidates = published_posts | where: "hot", true | sort: "hot_rank" %}
 {% assign hot_posts = "" | split: "" %}
-{% for post in site.posts %}
-  {% if hot_urls contains post.url %}
+{% for post in hot_candidates %}
+  {% if featured_post == nil or post.url != featured_post.url %}
     {% assign hot_posts = hot_posts | push: post %}
   {% endif %}
 {% endfor %}
+{% if hot_posts.size == 0 %}
+  {% assign hot_auto_pool = published_posts | where_exp: "p", "p.tags contains '架构设计' or p.tags contains '工程治理' or p.tags contains 'SRE' or p.tags contains '性能优化'" %}
+  {% if hot_auto_pool.size == 0 %}
+    {% assign hot_auto_pool = published_posts %}
+  {% endif %}
+  {% for post in hot_auto_pool limit:3 %}
+    {% if featured_post == nil or post.url != featured_post.url %}
+      {% assign hot_posts = hot_posts | push: post %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
 {% assign hot_posts_count = hot_posts.size %}
 
-{% assign series_tags = "架构设计,工程治理,SRE" | split: "," %}
-{% assign active_series_count = 0 %}
-{% for series_tag in series_tags %}
-  {% assign series_posts = site.tags[series_tag] %}
-  {% if series_posts and series_posts.size > 0 %}
-    {% assign active_series_count = active_series_count | plus: 1 %}
-  {% endif %}
-{% endfor %}
+{% assign series_names = published_posts | map: "series" | compact | uniq %}
+{% assign active_series_count = series_names.size %}
 {% assign status_post = featured_post | default: site.posts.first %}
 
 <section class="status-strip">
@@ -85,14 +97,14 @@ title: 首页
 
 <section class="home-series">
   <h2 class="home-section-title">专题连载 <small>({{ active_series_count }})</small></h2>
-  <p class="home-section-desc">围绕固定主题持续更新，形成可追踪的知识脉络。</p>
+  <p class="home-section-desc">优先按 frontmatter 的 <code>series</code> 字段聚合，自动形成系列入口。</p>
   <div class="series-grid">
-    {% for series_tag in series_tags %}
-      {% assign series_posts = site.tags[series_tag] %}
+    {% for series_name in series_names %}
+      {% assign series_posts = published_posts | where: "series", series_name %}
       {% if series_posts and series_posts.size > 0 %}
         {% assign latest_series_post = series_posts | first %}
         <article class="series-card">
-          <p class="series-kicker">{{ series_tag }} 系列</p>
+          <p class="series-kicker">{{ series_name }} 系列</p>
           <h3 class="series-title"><a href="{{ latest_series_post.url | relative_url }}">{{ latest_series_post.title }}</a></h3>
           <p class="series-meta">{{ series_posts.size }} 篇 · 最近更新 {{ latest_series_post.updated | default: latest_series_post.date | date: "%Y-%m-%d" }}</p>
         </article>
@@ -102,7 +114,7 @@ title: 首页
 </section>
 
 {% assign home_posts = "" | split: "" %}
-{% for post in site.posts %}
+{% for post in published_posts %}
   {% if featured_post == nil or post.url != featured_post.url %}
     {% assign home_posts = home_posts | push: post %}
   {% endif %}

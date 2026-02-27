@@ -8,6 +8,11 @@ tags:
   - 'DDD'
   - '架构设计'
   - 'ToB'
+featured: true
+featured_rank: 1
+hot: true
+hot_rank: 1
+series: "工程治理体系"
 ---
 
 这两年我做 ToB，越来越确信一件事：

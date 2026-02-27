@@ -8,6 +8,11 @@ tags:
   - "I18N"
   - "工程治理"
   - "架构设计"
+featured: true
+featured_rank: 2
+hot: true
+hot_rank: 2
+series: "全球化工程治理"
 ---
 
 很多团队做国际化，第一反应是“把文案翻译出来”。  
