@@ -1,0 +1,60 @@
+name: Deploy blog to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
+
+      - name: Resolve deployment URL and baseurl
+        id: site
+        shell: bash
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          repo="${GITHUB_REPOSITORY#*/}"
+          usersite="${owner}.github.io"
+
+          if [ "${repo,,}" = "$usersite" ]; then
+            baseurl=""
+          else
+            baseurl="/$repo"
+          fi
+
+          echo "url=https://${owner}.github.io" >> "$GITHUB_OUTPUT"
+          echo "baseurl=$baseurl" >> "$GITHUB_OUTPUT"
+
+      - name: Build with Jekyll
+        run: |
+          cat > _config_ci.yml <<'EOF'
+          url: "${{ steps.site.outputs.url }}"
+          baseurl: "${{ steps.site.outputs.baseurl }}"
+          EOF
+          bundle exec jekyll build --config _config.yml,_config_ci.yml
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          force_orphan: true

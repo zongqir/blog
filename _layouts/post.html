@@ -1,0 +1,51 @@
+---
+layout: default
+---
+
+{% assign reading_chars = page.content | strip_html | strip_newlines | replace: ' ', '' | size %}
+{% assign reading_minutes = reading_chars | plus: 499 | divided_by: 500 %}
+{% if reading_minutes < 1 %}
+  {% assign reading_minutes = 1 %}
+{% endif %}
+{% assign cover_topic = page.tags | first | default: "技术博客" %}
+
+<div class="reading-progress" aria-hidden="true">
+  <span class="reading-progress-bar" data-reading-progress></span>
+</div>
+
+<article class="post">
+  <header class="post-header">
+    <section class="post-cover">
+      <p class="post-cover-kicker">{{ cover_topic }}</p>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}
+        <p class="post-summary">{{ page.description }}</p>
+      {% endif %}
+    </section>
+    <p class="post-meta">
+      发布于：<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+      {% if page.updated %}
+      <span class="meta-sep">|</span>
+      更新于：<time datetime="{{ page.updated | date_to_xmlschema }}">{{ page.updated | date: "%Y-%m-%d" }}</time>
+      {% endif %}
+      <span class="meta-sep">|</span>
+      阅读约 {{ reading_minutes }} 分钟
+      {% if page.tags and page.tags.size > 0 %}
+      <span class="meta-sep">|</span>
+      标签：
+      {% for tag in page.tags %}
+        <a class="tag-chip" href="{{ '/tags/' | relative_url }}#{{ tag | slugify: 'raw' }}">{{ tag }}</a>
+      {% endfor %}
+      {% endif %}
+    </p>
+  </header>
+
+  <aside class="post-toc" data-post-toc hidden>
+    <p class="post-toc-title">目录</p>
+    <nav class="post-toc-nav" data-post-toc-nav aria-label="文章目录"></nav>
+  </aside>
+
+  <section class="post-content" data-post-content>
+    {{ content }}
+  </section>
+</article>

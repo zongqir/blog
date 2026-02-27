@@ -1,0 +1,32 @@
+title: 我的博客
+description: 个人笔记与随想
+lang: zh-CN
+url: ""
+baseurl: ""
+timezone: Asia/Shanghai
+permalink: /:year/:month/:day/:title/
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - README.md
+  - scripts
+  - vendor
+  - Gemfile
+  - Gemfile.lock
