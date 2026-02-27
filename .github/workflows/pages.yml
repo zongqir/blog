@@ -33,14 +33,25 @@ jobs:
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           repo="${GITHUB_REPOSITORY#*/}"
           usersite="${owner}.github.io"
+          custom_domain=""
 
-          if [ "${repo,,}" = "$usersite" ]; then
-            baseurl=""
-          else
-            baseurl="/$repo"
+          if [ -f CNAME ]; then
+            custom_domain="$(sed -n '1{s/[[:space:]]*$//;p;}' CNAME)"
           fi
 
-          echo "url=https://${owner}.github.io" >> "$GITHUB_OUTPUT"
+          if [ -n "$custom_domain" ]; then
+            url="https://${custom_domain}"
+            baseurl=""
+          else
+            url="https://${owner}.github.io"
+            if [ "${repo,,}" = "$usersite" ]; then
+              baseurl=""
+            else
+              baseurl="/$repo"
+            fi
+          fi
+
+          echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "baseurl=$baseurl" >> "$GITHUB_OUTPUT"
 
       - name: Build with Jekyll
