@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>技术博客写作约束（write.md） | 我的博客</title>
+    <meta name="description" content="个人笔记与随想">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>技术博客写作约束（write.md） | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="技术博客写作约束（write.md）" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="个人笔记与随想" />
+<meta property="og:description" content="个人笔记与随想" />
+<link rel="canonical" href="https://blog.zongqir.com/write/" />
+<meta property="og:url" content="https://blog.zongqir.com/write/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="技术博客写作约束（write.md）" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"个人笔记与随想","headline":"技术博客写作约束（write.md）","url":"https://blog.zongqir.com/write/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="/">我的博客</a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="技术博客写作约束writemd">技术博客写作约束（write.md）</h1>
+
+<p>这份约束是默认护栏，不是执法条文。
+目标不是写到完美，而是写到有价值：有亮点、有依据、有边界。</p>
+
+<h2 id="0-基本共识">0. 基本共识</h2>
+
+<ol>
+  <li>不追求“面面俱到”，追求“一个点讲透”。</li>
+  <li>不追求“绝对正确”，追求“当时信息下的可解释决策”。</li>
+  <li>允许内容瑕疵，但不允许伪确定性。</li>
+</ol>
+
+<p>一句话原则：<code class="language-plaintext highlighter-rouge">先有突出亮点，再谈完整性。</code></p>
+
+<h2 id="1-三层约束模型">1. 三层约束模型</h2>
+
+<h3 id="11-硬底线所有文章都要满足">1.1 硬底线（所有文章都要满足）</h3>
+
+<p>每篇文章至少回答 3 个问题：</p>
+
+<ol>
+  <li>你在说什么问题或观点。</li>
+  <li>你的判断依据是什么（经验、数据、案例、约束均可）。</li>
+  <li>你目前不确定什么，或这件事的边界是什么。</li>
+</ol>
+
+<p>这三条是最低要求，不分文章类型。</p>
+
+<h3 id="12-类型化标准按文章类型放宽">1.2 类型化标准（按文章类型放宽）</h3>
+
+<h4 id="a-决策复盘严格">A. 决策复盘（严格）</h4>
+
+<p>适用：架构选型、线上故障复盘、重大技术取舍。</p>
+
+<p>建议满足：</p>
+
+<ol>
+  <li>开头 200 字写清问题、影响、成功标准。</li>
+  <li>至少 1 个 <code class="language-plaintext highlighter-rouge">A vs B</code> 决策及依据。</li>
+  <li>至少 2 个 trade-off（收益/成本/风险/维护负担）。</li>
+  <li>至少 1 个失败路径或回滚点。</li>
+  <li>至少 1 组验证方式（指标、日志、SLO、验收口径）。</li>
+</ol>
+
+<p>及格线：<code class="language-plaintext highlighter-rouge">8/10</code>。</p>
+
+<h4 id="b-实践笔记中等">B. 实践笔记（中等）</h4>
+
+<p>适用：工具实践、迁移过程、阶段性总结。</p>
+
+<p>建议满足：</p>
+
+<ol>
+  <li>写清场景和约束。</li>
+  <li>给出核心步骤或关键片段。</li>
+  <li>说明至少 1 个坑和处理方式。</li>
+  <li>给出“在哪些场景不建议照搬”。</li>
+</ol>
+
+<p>及格线：<code class="language-plaintext highlighter-rouge">6/10</code>。</p>
+
+<h4 id="c-个人感想宽松">C. 个人感想（宽松）</h4>
+
+<p>适用：职业反思、方法论感受、学习心得。</p>
+
+<p>建议满足：</p>
+
+<ol>
+  <li>明确这是“个人视角”而非通用结论。</li>
+  <li>至少给出 1 个具体经历或触发事件。</li>
+  <li>说明这条感想暂不成立的场景。</li>
+</ol>
+
+<p>及格线：<code class="language-plaintext highlighter-rouge">4/10</code>。</p>
+
+<h3 id="13-瑕疵声明允许不完整">1.3 瑕疵声明（允许不完整）</h3>
+
+<p>允许不完整，但要显式标注不完整的位置。可用句式：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">这里是阶段性判断，缺少长期数据。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">这里主要是个人偏好，不是团队标准。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">这部分尚未验证，先记录观察点。</code></li>
+</ol>
+
+<p>规则：可以有瑕疵，不能装作没有瑕疵。</p>
+
+<h2 id="2-亮点优先策略">2. 亮点优先策略</h2>
+
+<p>每篇文章只强制追求一个“突出亮点”，其他部分做到够用即可。</p>
+
+<p>亮点可从以下 5 类中选 1 类：</p>
+
+<ol>
+  <li>一个高价值决策：为什么选 A 不选 B。</li>
+  <li>一个关键踩坑：如何识别、如何止损。</li>
+  <li>一个可复用框架：检查清单、迁移顺序、诊断路径。</li>
+  <li>一个反直觉结论：常见做法为什么在特定场景失效。</li>
+  <li>一个可验证结果：前后指标或明确观察方法。</li>
+</ol>
+
+<p>发布前自问：<code class="language-plaintext highlighter-rouge">读者读完后，最该带走的一个点是什么？</code></p>
+
+<h2 id="3-文风约束保留人味不装人味">3. 文风约束（保留人味，不装人味）</h2>
+
+<h3 id="31-句子配比建议">3.1 句子配比（建议）</h3>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">决策句</code> 约 70%：约束、取舍、动作、结果。</li>
+  <li><code class="language-plaintext highlighter-rouge">叙事句</code> 约 30%：误判、转折、信息不足。</li>
+</ol>
+
+<h3 id="32-人类痕迹每篇至少-1-处">3.2 人类痕迹（每篇至少 1 处）</h3>
+
+<p>至少出现一处：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">我原本以为……后来发现……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">当时的错误判断是……修正动作是……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">目前仍不确定的是……</code></li>
+</ol>
+
+<h2 id="4-禁止项高-ai-味来源">4. 禁止项（高 AI 味来源）</h2>
+
+<p>以下内容默认删掉，除非紧跟证据：</p>
+
+<ol>
+  <li>空泛判断：<code class="language-plaintext highlighter-rouge">提升效率</code>、<code class="language-plaintext highlighter-rouge">最佳实践</code>、<code class="language-plaintext highlighter-rouge">值得借鉴</code>、<code class="language-plaintext highlighter-rouge">显著优化</code>。</li>
+  <li>无条件结论：<code class="language-plaintext highlighter-rouge">应该</code>、<code class="language-plaintext highlighter-rouge">必须</code>、<code class="language-plaintext highlighter-rouge">一定</code>，但没写边界。</li>
+  <li>术语堆叠：连续名词很多，但没有场景约束。</li>
+  <li>只讲成功：没有代价、失败模式、回滚点。</li>
+  <li>伪装人味：刻意口语化、刻意错别字、情绪词堆砌。</li>
+</ol>
+
+<h2 id="5-发布前快速检查">5. 发布前快速检查</h2>
+
+<h3 id="51-通用三问必过">5.1 通用三问（必过）</h3>
+
+<ol>
+  <li>这篇文的核心问题或观点是否明确。</li>
+  <li>判断依据是否具体。</li>
+  <li>不确定性或边界是否写出。</li>
+</ol>
+
+<h3 id="52-类型化评分选一种">5.2 类型化评分（选一种）</h3>
+
+<ol>
+  <li>决策复盘：满分 10，至少 8 分。</li>
+  <li>实践笔记：满分 10，至少 6 分。</li>
+  <li>个人感想：满分 10，至少 4 分。</li>
+</ol>
+
+<p>低于及格线，不是不能发，而是先降级标注为：<code class="language-plaintext highlighter-rouge">草稿 / 阶段性记录</code>。</p>
+
+<hr />
+
+<p>最终目标：<code class="language-plaintext highlighter-rouge">不追求完美无瑕，追求真实、清楚、可复用，并且有一个能被记住的亮点。</code></p>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>&copy; 2026 我的博客</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>
