@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "outputDirectory": "."
+  "installCommand": "bundle install",
+  "buildCommand": "bundle exec jekyll build",
+  "outputDirectory": "_site"
 }
