@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客文风 | 我的博客</title>
+    <meta name="description" content="约束技术博客的真实感、自然度与去 AI 味表达。Use when the user wants to rewrite a blog draft, polish a technical article, reduce AI flavor, remove preaching/meta-writing, or align prose with AGENTS.md style rules. Focuses on background setup, human tone, grounded technical detail, and safe editing boundaries rather than outline restructuring.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客文风 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客文风" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="约束技术博客的真实感、自然度与去 AI 味表达。Use when the user wants to rewrite a blog draft, polish a technical article, reduce AI flavor, remove preaching/meta-writing, or align prose with AGENTS.md style rules. Focuses on background setup, human tone, grounded technical detail, and safe editing boundaries rather than outline restructuring." />
+<meta property="og:description" content="约束技术博客的真实感、自然度与去 AI 味表达。Use when the user wants to rewrite a blog draft, polish a technical article, reduce AI flavor, remove preaching/meta-writing, or align prose with AGENTS.md style rules. Focuses on background setup, human tone, grounded technical detail, and safe editing boundaries rather than outline restructuring." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-writing-style/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-writing-style/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客文风" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"约束技术博客的真实感、自然度与去 AI 味表达。Use when the user wants to rewrite a blog draft, polish a technical article, reduce AI flavor, remove preaching/meta-writing, or align prose with AGENTS.md style rules. Focuses on background setup, human tone, grounded technical detail, and safe editing boundaries rather than outline restructuring.","headline":"博客文风","url":"https://blog.zongqir.com/skills/blog-writing-style/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="博客文风">博客文风</h1>
+
+<h2 id="这个-skill-管什么">这个 skill 管什么</h2>
+
+<p>这个 skill 只管“怎么写”，不管“怎么搭大纲”。</p>
+
+<p>它主要处理这些问题：</p>
+
+<ol>
+  <li>文章读起来像模型在总结，不像人在复盘。</li>
+  <li>语言太高级、太抽象、太像报告。</li>
+  <li>说教味、布道味、营销味、第二人称太重。</li>
+  <li>中文表达不自然，读起来像翻译腔、摘要腔或修得太圆。</li>
+  <li>背景没立住，正文像悬空分析。</li>
+  <li>真实判断被修成四平八稳的中性正确。</li>
+  <li>技术细节看起来对，但没有泥土感。</li>
+  <li>为了去 AI 味，把真正有价值的内容一起删掉了。</li>
+  <li>技术密度过高，术语、组件、机制堆得很满，但读者抓不住主线。</li>
+</ol>
+
+<p>它默认不处理这些问题：</p>
+
+<ol>
+  <li>二级三级标题怎么排。</li>
+  <li>整体大纲怎么重构。</li>
+  <li>哪些段落本身应该继续展开、写透，而不是精简。</li>
+  <li>发布门禁和运营字段。</li>
+</ol>
+
+<p>如果问题主要是大纲、框架、标题推进关系，优先使用 <code class="language-plaintext highlighter-rouge">$blog-outline-doctor</code>。
+如果问题主要是内容太薄、关键判断没写透，优先使用 <code class="language-plaintext highlighter-rouge">$blog-depth-reviewer</code>。</p>
+
+<p>补充参考：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">../blog-article-fit-checker/references/write-principles.md</code> 归档了原始 <code class="language-plaintext highlighter-rouge">write.md</code>。</li>
+  <li>其中和文风最相关的口径是：保留人味，不装人味。</li>
+</ol>
+
+<h2 id="写作红线">写作红线</h2>
+
+<h3 id="1-真实性优先">1. 真实性优先</h3>
+
+<ol>
+  <li>不要伪造经历、案例、踩坑、数据、结果、对比。</li>
+  <li>作者没说过的经验，不要补成“我曾经如何如何”。</li>
+  <li>不确定的内容，要明确写成推测、常见情况、可能原因，不要写成确定事实。</li>
+</ol>
+
+<h3 id="2-不要把文章写成标准答案">2. 不要把文章写成标准答案</h3>
+
+<ol>
+  <li>目标不是“生成一篇标准博客”，而是把作者真实想法整理清楚。</li>
+  <li>不要把作者写成老师、导师、布道者。</li>
+  <li>如果素材不够，先指出缺什么，不要硬补成一篇完整但空心的文章。</li>
+  <li>不是每篇都要有完整结论、统一方法论和标准收束。</li>
+  <li>如果问题本来还在演进，允许停在当前判断、当前边界、当前倾向。</li>
+</ol>
+
+<h3 id="3-不要有-ai-味">3. 不要有 AI 味</h3>
+
+<p>默认优先清理这些东西：</p>
+
+<ol>
+  <li>模板化表达。</li>
+  <li>正确但没信息量的空话。</li>
+  <li>过于高级的抽象词。</li>
+  <li>元说明腔。</li>
+  <li>方法论广播腔。</li>
+</ol>
+
+<p>少写这些句子：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">随着……发展</code></li>
+  <li><code class="language-plaintext highlighter-rouge">在当今……背景下</code></li>
+  <li><code class="language-plaintext highlighter-rouge">本文将……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">值得注意的是</code></li>
+  <li><code class="language-plaintext highlighter-rouge">综上所述</code></li>
+  <li><code class="language-plaintext highlighter-rouge">先把问题问对</code></li>
+  <li><code class="language-plaintext highlighter-rouge">如果我要判断</code></li>
+  <li><code class="language-plaintext highlighter-rouge">真正值得写的是</code></li>
+</ol>
+
+<p>再补几类高风险信号：</p>
+
+<ol>
+  <li>句子和段落过度平均。</li>
+  <li>文章被补得过度完整。</li>
+  <li>看起来高级、其实谁都能说的假洞察。</li>
+  <li>组件名很多，但现场感很弱。</li>
+</ol>
+
+<p>再补一类常见失衡：</p>
+
+<ol>
+  <li>技术密度过高，但密度没有转成可理解的判断。</li>
+  <li>一段同时塞进概念、实现、比较、延伸，读者读完只记得术语很多。</li>
+</ol>
+
+<h3 id="4-不要有说教味和假熟味">4. 不要有说教味和假熟味</h3>
+
+<ol>
+  <li>不要写“你应该”“你必须”“正确做法是”“最佳实践是”“永远不要”。</li>
+  <li>不要写“你一定也遇到过”“朋友，如果你看到这里”“你是不是也有这种感觉”。</li>
+  <li>默认用第一人称或中性叙述，不用第二人称带读者走。</li>
+  <li>不要写成教科书、百科、培训材料。</li>
+</ol>
+
+<h3 id="5-中文表达约束">5. 中文表达约束</h3>
+
+<p>目标不是“像中文”，而是更接近中文技术写作者的自然表达。</p>
+
+<p>优先遵守这些约束：</p>
+
+<ol>
+  <li>避免英译中句式。</li>
+  <li>避免论文摘要腔、咨询报告腔、产品宣讲腔。</li>
+  <li>允许句子短一些、顿一些，不强行做英文式平滑连接。</li>
+  <li>一个概念第一次定了，后面可以重复叫同一个名字，不必为了“文采”反复换说法。</li>
+  <li>优先保留中文技术写作里常见的推进方式：先交代背景，再说当时怎么想，再说后来卡在哪。</li>
+</ol>
+
+<p>少用这类翻译腔句式：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">本质上是对于……的重新思考</code></li>
+  <li><code class="language-plaintext highlighter-rouge">其核心在于……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">围绕……展开了深入讨论</code></li>
+  <li><code class="language-plaintext highlighter-rouge">从某种意义上来说</code></li>
+</ol>
+
+<p>中文技术文章更适合：</p>
+
+<ol>
+  <li>交代约束。</li>
+  <li>说明动作。</li>
+  <li>补上代价。</li>
+</ol>
+
+<p>不要硬套英文博客常见的“抽象观点 -&gt; 举例 -&gt; 升华”套路。</p>
+
+<p>少靠连接词制造逻辑感。<br />
+优先让逻辑靠事实顺序和对象关系成立，不靠一串连接词硬拽。</p>
+
+<p>这些词不是不能用，但不要太密：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">因此</code></li>
+  <li><code class="language-plaintext highlighter-rouge">然而</code></li>
+  <li><code class="language-plaintext highlighter-rouge">与此同时</code></li>
+  <li><code class="language-plaintext highlighter-rouge">进一步而言</code></li>
+  <li><code class="language-plaintext highlighter-rouge">换言之</code></li>
+  <li><code class="language-plaintext highlighter-rouge">某种程度上</code></li>
+  <li><code class="language-plaintext highlighter-rouge">从另一个角度看</code></li>
+</ol>
+
+<h3 id="6-不要写成站在台上点评系统">6. 不要写成站在台上点评系统</h3>
+
+<p>少用这些语气词去硬装经验感：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">其实</code></li>
+  <li><code class="language-plaintext highlighter-rouge">当然</code></li>
+  <li><code class="language-plaintext highlighter-rouge">通常</code></li>
+  <li><code class="language-plaintext highlighter-rouge">真正</code></li>
+  <li><code class="language-plaintext highlighter-rouge">这也是为什么</code></li>
+  <li><code class="language-plaintext highlighter-rouge">最值钱的是</code></li>
+  <li><code class="language-plaintext highlighter-rouge">我后来反感的</code></li>
+</ol>
+
+<p>经验感不是靠这些词堆出来的。<br />
+经验感来自具体背景、具体取舍、具体代价。</p>
+
+<h3 id="补充不要把技术段写成术语瀑布">补充：不要把技术段写成术语瀑布</h3>
+
+<p>技术文章不是术语越多越专业。<br />
+当技术密度过高时，最常见的问题不是“内容太深”，而是“信息类型混在一起，读者没有抓手”。</p>
+
+<p>重点清理这些情况：</p>
+
+<ol>
+  <li>连续报组件名、机制名、缩写，但对象关系没有立起来。</li>
+  <li>一段里同时讲背景、原理、实现、边界、延伸，导致主线被淹没。</li>
+  <li>重要判断前堆了太多定义和旁支，读者还没走到结论就已经掉线。</li>
+  <li>为了显得专业，把本来一句能讲清的动作写成一串抽象名词。</li>
+</ol>
+
+<p>默认处理原则：</p>
+
+<ol>
+  <li>一段只承载一种主要信息功能：背景、判断、机制、代价，尽量不要全塞进去。</li>
+  <li>术语第一次出现时，要么立刻解释它在当前问题里干什么，要么先别写。</li>
+  <li>如果技术细节会打断主线，就把它压短，只保留支撑当前判断必需的部分。</li>
+  <li>读者需要记住的不是术语数量，而是对象关系和关键动作。</li>
+</ol>
+
+<h3 id="7-保留人味不装人味">7. 保留人味，不装人味</h3>
+
+<p>建议把句子重心放在两类内容上：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">决策句</code>：约束、取舍、动作、结果。</li>
+  <li><code class="language-plaintext highlighter-rouge">叙事句</code>：误判、转折、信息不足。</li>
+</ol>
+
+<p>不用硬抠比例，但默认应当以决策句为主，叙事句补足真实过程。</p>
+
+<p>每篇文章尽量至少保留一处真实人类痕迹，例如：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">我原本以为……后来发现……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">当时的错误判断是……修正动作是……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">目前仍不确定的是……</code></li>
+</ol>
+
+<p>重点是让真实犹豫可见，不是靠口语词和情绪词假装有人味。</p>
+
+<h3 id="8-接受必要的语言毛边">8. 接受必要的语言毛边</h3>
+
+<p>不要把所有句子都修成同样长度、同样节奏、同样饱满。</p>
+
+<p>默认接受这些情况：</p>
+
+<ol>
+  <li>局部重复。</li>
+  <li>轻微停顿。</li>
+  <li>转折不那么工整。</li>
+  <li>某些句子比较硬、比较笨，但信息量更高。</li>
+</ol>
+
+<p>有信息量的笨句，通常优先于没信息量的漂亮句。<br />
+不要为了“更像文章”就把原文里有判断力的硬句子抹平。</p>
+
+<p>去 AI 味不是去掉一切棱角，而是保留真实写作里的不齐整。</p>
+
+<h3 id="9-可以写感受但不要写成空情绪">9. 可以写感受，但不要写成空情绪</h3>
+
+<p>允许出现个人感受，例如：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">我当时不太敢继续这么推。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">这一步开始让我觉得系统在变重。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">我后来对这种做法越来越别扭。</code></li>
+</ol>
+
+<p>但感受后面最好接具体原因：</p>
+
+<ol>
+  <li>是故障域变大了。</li>
+  <li>还是状态散了。</li>
+  <li>还是迁移太难了。</li>
+</ol>
+
+<p>感受不是用来制造人味的，要和真实判断、误判、压力、取舍绑在一起。</p>
+
+<p>少写悬空情绪句，例如：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">这让我深受启发</code></li>
+  <li><code class="language-plaintext highlighter-rouge">我也更加坚定了一个想法</code></li>
+  <li><code class="language-plaintext highlighter-rouge">令人遗憾的是</code></li>
+</ol>
+
+<p>优先保留带原因的主观看法，少写无对象的态度表达。</p>
+
+<h3 id="10-保留作者偏好">10. 保留作者偏好</h3>
+
+<p>如果作者明显对某种方案有偏好，不要强行改成四平八稳。</p>
+
+<p>只要这种偏好有边界、有理由，就应该保留：</p>
+
+<ol>
+  <li>作者偏向哪种做法。</li>
+  <li>为什么偏向。</li>
+  <li>代价是什么。</li>
+  <li>哪些场景下不成立。</li>
+</ol>
+
+<p>不要为了“客观”把鲜明判断都改成温吞结论。<br />
+技术博客允许作者有立场，前提是立场落在具体约束和代价上。</p>
+
+<h3 id="11-保留作者指纹">11. 保留作者指纹</h3>
+
+<p>保留作者常用的推进方式，不强行换成统一腔调。</p>
+
+<p>默认优先保留这些东西：</p>
+
+<ol>
+  <li>作者反复盯的那几个核心词。</li>
+  <li>作者原本的偏好、犹豫和局部执念。</li>
+  <li>作者自己的判断路径。</li>
+  <li>某些不那么漂亮、但很有辨识度的句子组织方式。</li>
+</ol>
+
+<p>不要把所有句子都改成“更好看”的版本，结果把人写没了。<br />
+如果原文有明显的个人判断路径，优先保留路径，不优先追求语言对称。</p>
+
+<h2 id="改写顺序">改写顺序</h2>
+
+<h3 id="1-先把背景立住">1. 先把背景立住</h3>
+
+<p>起手不要掉进技术名词。<br />
+除非文章本来就是组件深挖，否则开头优先回答：业务在做什么、当时卡住什么、为什么这个问题值得写。</p>
+
+<p>开头至少要回答这些问题：</p>
+
+<ol>
+  <li>当时系统处在什么阶段。</li>
+  <li>哪些前提已经定了。</li>
+  <li>现在在讨论什么。</li>
+  <li>真正卡住什么。</li>
+</ol>
+
+<p>如果这是独立文章，开头必须能独立成立。<br />
+如果这是承接上文的文章，就直接写清承接关系。</p>
+
+<p>不要把“当时”写成空时间词。<br />
+写“当时”时，至少要落到：哪些前提已定、这次只讨论哪一层、现实卡点是什么。</p>
+
+<p>如果文章是在既定约束下做选择，要把约束写出来。<br />
+例如：topic 已经按租户拆好、消费侧已经在线上跑着、现在不是重做 topic，而是在讨论后续怎么接。</p>
+
+<p>段落默认优先写成这个顺序：</p>
+
+<ol>
+  <li>当时系统是什么样。</li>
+  <li>具体卡在哪里。</li>
+  <li>为什么这样改。</li>
+  <li>这个改法没解决什么。</li>
+</ol>
+
+<h3 id="2-再把抽象词压回具体对象">2. 再把抽象词压回具体对象</h3>
+
+<p>不要把工具写成起点。<br />
+正常顺序是：先有系统问题，再有方案设想，最后才到 etcd / zk / Pulsar / Router 这种落地手段。</p>
+
+<p>优先把这些词拆开：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">承接</code></li>
+  <li><code class="language-plaintext highlighter-rouge">分层</code></li>
+  <li><code class="language-plaintext highlighter-rouge">治理</code></li>
+  <li><code class="language-plaintext highlighter-rouge">策略</code></li>
+  <li><code class="language-plaintext highlighter-rouge">复杂度</code></li>
+  <li><code class="language-plaintext highlighter-rouge">能力</code></li>
+  <li><code class="language-plaintext highlighter-rouge">模型</code></li>
+</ol>
+
+<p>少写这类悬空表达：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">进入消费模型</code></li>
+  <li><code class="language-plaintext highlighter-rouge">承接关系</code></li>
+  <li><code class="language-plaintext highlighter-rouge">形成稳定分层</code></li>
+  <li><code class="language-plaintext highlighter-rouge">职责下放</code></li>
+  <li><code class="language-plaintext highlighter-rouge">复杂度回到主问题</code></li>
+</ol>
+
+<p>如果必须写，后面必须立刻补一句具体系统状态或动作。</p>
+
+<p>能改成具体动作就改成具体动作。<br />
+比如“消费者怎么订阅、资源怎么分、哪个租户出问题怎么处理”，就不要只写“大租户治理”和“资源承接”。</p>
+
+<p>不要制造假洞察。<br />
+少写这些句子：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">这背后反映的是……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">更深层的问题在于……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">归根结底，这是一个……问题</code></li>
+</ol>
+
+<p>如果要上升抽象，必须立刻落回具体对象和动作。<br />
+不能只把原文换个更大的词再说一遍。</p>
+
+<h3 id="3-再把技术细节写实">3. 再把技术细节写实</h3>
+
+<p>不要拿空公式和泛估算冒充技术深度。<br />
+优先写这些具体东西：</p>
+
+<ol>
+  <li>连接</li>
+  <li>接收队列</li>
+  <li>ack 状态</li>
+  <li>cursor</li>
+  <li>metadata</li>
+  <li>backlog</li>
+  <li>实例重启</li>
+  <li>恢复一轮要多久</li>
+</ol>
+
+<p>技术真实感不等于术语密度。<br />
+不要只写 Pulsar、subscription、router、shard 这些词。</p>
+
+<p>更重要的是写清：</p>
+
+<ol>
+  <li>哪个状态多起来了。</li>
+  <li>哪个恢复动作开始变慢。</li>
+  <li>哪类故障开始从点状变片状。</li>
+  <li>哪种配置开始越来越难改。</li>
+</ol>
+
+<p>技术感来自对象 + 变化 + 代价，不是来自组件名堆叠。<br />
+如果一句话只是在报术语，没有说对象关系和代价，优先重写。</p>
+
+<p>如果一段里的技术词很多，但删掉一半不影响核心判断，通常说明技术密度已经过高。<br />
+这时优先减的是堆叠和旁支，不是支撑判断所必需的硬内容。</p>
+
+<h3 id="4-最后才修语气">4. 最后才修语气</h3>
+
+<p>修语气时只做这些事：</p>
+
+<ol>
+  <li>去掉端着的句型。</li>
+  <li>去掉“不是 A，而是 B”这种对抗句。</li>
+  <li>去掉对读者说话。</li>
+  <li>去掉解释写法的句子。</li>
+  <li>去掉“这里把事实说准一点”“回头看我更相信的是”“如果我要判断”这种抬高语气的句子。</li>
+  <li>去掉“先把……”“先看……”“真正值得写的是……”这种方法论起手。</li>
+  <li>不要为了修齐句子，把原文的硬判断、毛边和偏好一起抹平。</li>
+</ol>
+
+<p>不要写这些东西：</p>
+
+<ol>
+  <li>元说明腔：<code class="language-plaintext highlighter-rouge">这篇如果不先……</code>、<code class="language-plaintext highlighter-rouge">先把问题问对</code>、<code class="language-plaintext highlighter-rouge">不然整篇会写偏</code></li>
+  <li>解释写法的句子：<code class="language-plaintext highlighter-rouge">这篇怎么写</code>、<code class="language-plaintext highlighter-rouge">这一段为什么先写</code></li>
+  <li>八股结构：为了凑“背景-意义-定义-步骤-总结”而牺牲自然表达</li>
+</ol>
+
+<p>再补一组默认清理项：</p>
+
+<ol>
+  <li>空泛判断：<code class="language-plaintext highlighter-rouge">提升效率</code>、<code class="language-plaintext highlighter-rouge">最佳实践</code>、<code class="language-plaintext highlighter-rouge">值得借鉴</code>、<code class="language-plaintext highlighter-rouge">显著优化</code></li>
+  <li>无条件结论：<code class="language-plaintext highlighter-rouge">应该</code>、<code class="language-plaintext highlighter-rouge">必须</code>、<code class="language-plaintext highlighter-rouge">一定</code>，但没写边界</li>
+  <li>术语堆叠：连续名词很多，但没有场景约束</li>
+  <li>只讲成功：没有代价、失败模式、回滚点</li>
+  <li>伪装人味：刻意口语化、刻意错别字、情绪词堆砌</li>
+</ol>
+
+<h3 id="5-结尾不要硬收束">5. 结尾不要硬收束</h3>
+
+<p>不是每篇都要写出完整结论、统一答案、方法论升华。</p>
+
+<p>如果问题本来还在演进，更适合写清楚：</p>
+
+<ol>
+  <li>现在先这样做。</li>
+  <li>哪些地方以后还可能改。</li>
+  <li>哪些判断目前还不稳定。</li>
+</ol>
+
+<p>比起硬写一个 <code class="language-plaintext highlighter-rouge">最后我们得出</code>，更重要的是把当前停点写准。</p>
+
+<h3 id="6-不要把文章补得过度完整">6. 不要把文章补得过度完整</h3>
+
+<p>如果原文只是想讲一个局部判断，不要主动补成全景方法论。</p>
+
+<p>默认不要做这些事：</p>
+
+<ol>
+  <li>作者没有定义术语，却自动替作者补一套术语定义。</li>
+  <li>原文重点是某个转折，却为了完整性补太多背景知识。</li>
+  <li>作者没打算展开的支线，被补成并行章节。</li>
+  <li>只想回答一个具体问题的文章，被改成讲完整体系。</li>
+</ol>
+
+<p>允许文章只回答一个具体问题，而不是把整套体系都讲完。</p>
+
+<h2 id="删改边界">删改边界</h2>
+
+<ol>
+  <li>如果一段承载了真实背景、真实犹豫、真实 trade-off、真实建模分叉，优先重写表达，不要先删。</li>
+  <li>只有一段既没有新信息，也没有真实判断，只是在重复包装时，才允许直接删。</li>
+  <li>不要为了去 AI 味而过度精简。重点不是短，而是有料。</li>
+  <li>现实优先。要保留时间、人手、成本、兼容性、历史包袱、团队习惯、风险这些现实限制。</li>
+  <li>如果一段读起来像“站在台上点评系统”，而不是“在复盘当时怎么想”，优先压回日常表达。</li>
+  <li>如果一段有明显作者偏好、真实毛边、真实情绪，但这些东西都挂在具体原因上，优先保留，不要修成中性正确。</li>
+  <li>如果作者原文里有模糊感、试探感、阶段性感，不要替作者做最终拍板。</li>
+</ol>
+
+<h2 id="允许局部不稳">允许局部不稳</h2>
+
+<p>允许写：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">我当时还拿不准。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">这一步先这么做。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">后面再看要不要继续推。</code></li>
+</ol>
+
+<p>技术文章可以有未决问题，不需要每次都变成结论。<br />
+不要把试探性判断改成确定性结论。</p>
+
+<h2 id="默认输出">默认输出</h2>
+
+<p>使用这个 skill 时，默认输出三部分：</p>
+
+<ol>
+  <li>文风问题清单：
+    <ul>
+      <li>哪些地方像模型在总结。</li>
+      <li>哪些地方背景没立住。</li>
+      <li>哪些地方说教味或元说明腔太重。</li>
+      <li>哪些地方技术细节太空。</li>
+    </ul>
+  </li>
+  <li>AI 味来源诊断：
+    <ul>
+      <li>这段像 AI 的主要原因是什么。</li>
+      <li>是抽象过高、推进太齐、假洞察，还是语气太端。</li>
+      <li>改写时保留了什么：背景、犹豫、硬判断，还是作者偏好。</li>
+    </ul>
+  </li>
+  <li>改写后的版本：
+    <ul>
+      <li>保留作者原本判断。</li>
+      <li>压低抽象度。</li>
+      <li>压平语气。</li>
+      <li>不擅自补作者没说过的经历。</li>
+    </ul>
+  </li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

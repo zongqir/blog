@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客发布流程与门禁 | 我的博客</title>
+    <meta name="description" content="统一处理技术博客从写作到发布前的流程、门禁与核验。Use when the user wants to know whether a draft is ready to publish, what release checks to run, how to verify pages and frontmatter before publishing, or how to walk through a Jekyll blog release workflow without遗漏关键门禁. Focuses on workflow sequencing, release gates, page verification, and publish readiness rather than prose rewriting.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客发布流程与门禁 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客发布流程与门禁" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="统一处理技术博客从写作到发布前的流程、门禁与核验。Use when the user wants to know whether a draft is ready to publish, what release checks to run, how to verify pages and frontmatter before publishing, or how to walk through a Jekyll blog release workflow without遗漏关键门禁. Focuses on workflow sequencing, release gates, page verification, and publish readiness rather than prose rewriting." />
+<meta property="og:description" content="统一处理技术博客从写作到发布前的流程、门禁与核验。Use when the user wants to know whether a draft is ready to publish, what release checks to run, how to verify pages and frontmatter before publishing, or how to walk through a Jekyll blog release workflow without遗漏关键门禁. Focuses on workflow sequencing, release gates, page verification, and publish readiness rather than prose rewriting." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-release-gate/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-release-gate/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客发布流程与门禁" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"统一处理技术博客从写作到发布前的流程、门禁与核验。Use when the user wants to know whether a draft is ready to publish, what release checks to run, how to verify pages and frontmatter before publishing, or how to walk through a Jekyll blog release workflow without遗漏关键门禁. Focuses on workflow sequencing, release gates, page verification, and publish readiness rather than prose rewriting.","headline":"博客发布流程与门禁","url":"https://blog.zongqir.com/skills/blog-release-gate/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="博客发布流程与门禁">博客发布流程与门禁</h1>
+
+<h2 id="核心定位">核心定位</h2>
+
+<p>这个 skill 不负责润色正文。<br />
+它负责把“这篇文章怎么从草稿走到可发布”这条链路走完整。</p>
+
+<p>它主要回答四件事：</p>
+
+<ol>
+  <li>现在处在写作流程的哪个阶段。</li>
+  <li>下一步该做什么，而不是同时做一堆事。</li>
+  <li>发布前哪些门禁必须过。</li>
+  <li>页面、链接、构建、聚合位有没有明显问题。</li>
+</ol>
+
+<p>补充参考：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">../blog-article-fit-checker/references/write-principles.md</code> 归档了原始 <code class="language-plaintext highlighter-rouge">write.md</code>。</li>
+  <li>其中和发布门禁最相关的是：通用三问、类型化评分、低于及格线时如何降级标注。</li>
+</ol>
+
+<h2 id="默认工作顺序">默认工作顺序</h2>
+
+<p>按这个顺序走，不要跳步：</p>
+
+<ol>
+  <li>先判断文章当前阶段。</li>
+  <li>再补齐元数据和站点分发信息。</li>
+  <li>再做质量总检。</li>
+  <li>再做 SEO 与聚合检查。</li>
+  <li>最后做构建、页面核验和发布确认。</li>
+</ol>
+
+<p>不要一上来就问“能不能发”。<br />
+如果前面的阶段还没走完，发布结论没有意义。</p>
+
+<h2 id="阶段划分">阶段划分</h2>
+
+<h3 id="1-选题定义">1. 选题定义</h3>
+
+<p>检查这些事：</p>
+
+<ol>
+  <li>问题是什么。</li>
+  <li>目标读者是谁。</li>
+  <li>适用边界在哪里。</li>
+  <li>这篇文章准备带来什么收益。</li>
+</ol>
+
+<p>如果这一步都不清楚，后面的提纲和正文通常会发飘。</p>
+
+<h3 id="2-提纲评审">2. 提纲评审</h3>
+
+<p>检查这些事：</p>
+
+<ol>
+  <li>一级标题有没有形成推进线。</li>
+  <li>关键证据、例子、图示要放在哪里。</li>
+  <li>是否有不该展开的支线。</li>
+</ol>
+
+<p>结构问题优先转给 <code class="language-plaintext highlighter-rouge">$blog-outline-doctor</code>。</p>
+
+<h3 id="3-初稿产出">3. 初稿产出</h3>
+
+<p>检查这些事：</p>
+
+<ol>
+  <li>有没有先把完整意思写出来。</li>
+  <li>有没有过早进入修辞打磨。</li>
+  <li>有没有因为追求“像文章”把真实判断写丢。</li>
+</ol>
+
+<p>表达问题优先转给 <code class="language-plaintext highlighter-rouge">$blog-writing-style</code>。</p>
+
+<h3 id="4-技术校验">4. 技术校验</h3>
+
+<p>检查这些事：</p>
+
+<ol>
+  <li>术语是否准确。</li>
+  <li>链路是否说得通。</li>
+  <li>代码片段、图示、结论与反例是否自洽。</li>
+  <li>是否存在明显事实风险。</li>
+</ol>
+
+<p>事实风险优先转给 <code class="language-plaintext highlighter-rouge">$blog-fact-risk-review</code>。</p>
+
+<h3 id="5-可读性精修">5. 可读性精修</h3>
+
+<p>检查这些事：</p>
+
+<ol>
+  <li>标题层级是否清楚。</li>
+  <li>段落节奏是否自然。</li>
+  <li>摘要是否能独立成立。</li>
+  <li>结尾有没有和正文承诺脱节。</li>
+</ol>
+
+<h3 id="6-seo-与站点分发检查">6. SEO 与站点分发检查</h3>
+
+<p>检查这些事：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">title</code>、<code class="language-plaintext highlighter-rouge">description</code>、slug、标签是否一致。</li>
+  <li><code class="language-plaintext highlighter-rouge">series</code>、<code class="language-plaintext highlighter-rouge">featured</code>、<code class="language-plaintext highlighter-rouge">hot</code> 等字段是否自洽。</li>
+  <li>相关文章、标签页、归档页、首页聚合位是否能正确收录。</li>
+  <li>SEO 入口是否破坏视觉系统约束。</li>
+</ol>
+
+<p>SEO 和聚合问题优先转给 <code class="language-plaintext highlighter-rouge">$blog-seo-governor</code>。</p>
+
+<h3 id="7-发布前门禁">7. 发布前门禁</h3>
+
+<p>这一步只做最后确认，不替代前面的阶段。</p>
+
+<h2 id="发布门禁">发布门禁</h2>
+
+<h3 id="1-内容与渲染门禁">1. 内容与渲染门禁</h3>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">bundle exec jekyll build</code> 构建通过。</li>
+  <li>关键页面渲染正常：<code class="language-plaintext highlighter-rouge">/</code>、<code class="language-plaintext highlighter-rouge">/archive/</code>、<code class="language-plaintext highlighter-rouge">/tags/</code>、<code class="language-plaintext highlighter-rouge">/about/</code>。</li>
+  <li>新文 permalink、标签锚点、目录锚点可跳转。</li>
+  <li>首页精选、热门、专题卡片无空字段、无死链接。</li>
+</ol>
+
+<h3 id="2-质量门禁">2. 质量门禁</h3>
+
+<ol>
+  <li>开头 200 字内说清问题和重要性。</li>
+  <li>正文兑现开头承诺，不要前后脱节。</li>
+  <li>文章类型与质量尺子匹配，不拿单一模板硬套所有文章。</li>
+  <li>没有明显空话、假深度、脑补结论。</li>
+  <li>至少过“通用三问”：核心问题明确、判断依据具体、不确定性或边界写出。</li>
+  <li>不要向目标读者传递明显错误的职业信号，例如把行业基线写成主发现，或把阶段性补课写成高阶洞见。</li>
+</ol>
+
+<p>类型判断优先转给 <code class="language-plaintext highlighter-rouge">$blog-article-fit-checker</code>。<br />
+总检优先转给 <code class="language-plaintext highlighter-rouge">$blog-quality-gate</code>。</p>
+
+<h3 id="3-元数据与分发门禁">3. 元数据与分发门禁</h3>
+
+<ol>
+  <li>Frontmatter 字段完整且格式合法。</li>
+  <li>无明显硬编码运营数据，例如虚构访问量、伪造统计。</li>
+  <li>SEO、标签、专题、相关文章、首页聚合规则通过。</li>
+  <li><code class="language-plaintext highlighter-rouge">draft</code>、<code class="language-plaintext highlighter-rouge">featured</code>、<code class="language-plaintext highlighter-rouge">hot</code>、<code class="language-plaintext highlighter-rouge">series_buildable</code> 等状态不打架。</li>
+</ol>
+
+<h3 id="4-发布确认门禁">4. 发布确认门禁</h3>
+
+<ol>
+  <li>推送后 GitHub Actions 的 Pages 工作流成功。</li>
+  <li>线上关键入口可访问。</li>
+  <li>新文真实出现在预期聚合位。</li>
+</ol>
+
+<h2 id="降级发布规则">降级发布规则</h2>
+
+<p>如果文章还没达到当前档位的及格线，不一定只能继续压着不发。<br />
+可以降级处理，但要显式标注。</p>
+
+<p>可接受的降级标注：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">草稿</code></li>
+  <li><code class="language-plaintext highlighter-rouge">阶段性记录</code></li>
+</ol>
+
+<p>适用场景：</p>
+
+<ol>
+  <li>核心观点成立，但证据还不够完整。</li>
+  <li>判断已有价值，但长期结果还没出来。</li>
+  <li>结构和表达已可读，但还不适合当成完整复盘发布。</li>
+</ol>
+
+<h2 id="页面核验清单">页面核验清单</h2>
+
+<h3 id="1-文章页">1. 文章页</h3>
+
+<ol>
+  <li>标题、摘要、时间显示正常。</li>
+  <li>目录锚点正常。</li>
+  <li>文内跳转和相关文章链接正常。</li>
+  <li>标签跳转正常。</li>
+</ol>
+
+<h3 id="2-首页">2. 首页</h3>
+
+<ol>
+  <li>精选位无空字段。</li>
+  <li>热门位排序和数据正常。</li>
+  <li>专题位聚合正常。</li>
+  <li>状态条指标真实且可核查。</li>
+</ol>
+
+<h3 id="3-标签页与归档页">3. 标签页与归档页</h3>
+
+<ol>
+  <li>新文已进入对应分组。</li>
+  <li>锚点可跳转。</li>
+  <li>列表项时间、摘要、标签显示正常。</li>
+</ol>
+
+<h2 id="输出要求">输出要求</h2>
+
+<p>使用这个 skill 时，默认输出四部分：</p>
+
+<ol>
+  <li>当前阶段：
+    <ul>
+      <li>文章目前停在哪一步</li>
+      <li>下一步该做什么</li>
+    </ul>
+  </li>
+  <li>未过门禁：
+    <ul>
+      <li>哪些门禁还没过</li>
+      <li>为什么还不能发</li>
+    </ul>
+  </li>
+  <li>页面与分发检查：
+    <ul>
+      <li>哪些页面和聚合位需要确认</li>
+      <li>哪些入口可能有问题</li>
+    </ul>
+  </li>
+  <li>发布结论：
+    <ul>
+      <li>可发布 / 接近可发布 / 还不能发</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要跳过前置阶段直接给发布结论。</li>
+  <li>不要把发布门禁当成正文润色器。</li>
+  <li>不要为了“快发”跳过构建、页面核验和聚合检查。</li>
+  <li>不要把 SEO 曝光建立在虚构数据或破坏视觉系统约束之上。</li>
+  <li>不要因为题材敏感就一刀切地不发，更要判断风险来自题材本身，还是来自错误 framing、边界缺失和成熟度信号暴露。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

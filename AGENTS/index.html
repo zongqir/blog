@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Repository Guidelines（仓库指南） | 我的博客</title>
+    <meta name="description" content="个人笔记与随想">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Repository Guidelines（仓库指南） | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Repository Guidelines（仓库指南）" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="个人笔记与随想" />
+<meta property="og:description" content="个人笔记与随想" />
+<link rel="canonical" href="https://blog.zongqir.com/AGENTS/" />
+<meta property="og:url" content="https://blog.zongqir.com/AGENTS/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Repository Guidelines（仓库指南）" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"个人笔记与随想","headline":"Repository Guidelines（仓库指南）","url":"https://blog.zongqir.com/AGENTS/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="repository-guidelines仓库指南">Repository Guidelines（仓库指南）</h1>
+
+<h2 id="项目结构与模块组织">项目结构与模块组织</h2>
+<p>本仓库是一个基于 Jekyll 的 GitHub Pages 博客。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_posts/</code>：博客文章，文件名格式为 <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-slug.md</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">_layouts/</code>：页面布局模板（如 <code class="language-plaintext highlighter-rouge">default.html</code>、<code class="language-plaintext highlighter-rouge">post.html</code>）。</li>
+  <li><code class="language-plaintext highlighter-rouge">_includes/</code>：可复用的 Liquid 片段（如文章列表渲染）。</li>
+  <li><code class="language-plaintext highlighter-rouge">assets/css/</code>、<code class="language-plaintext highlighter-rouge">assets/js/</code>：主题样式与前端脚本。</li>
+  <li><code class="language-plaintext highlighter-rouge">.github/workflows/pages.yml</code>：构建并部署到 <code class="language-plaintext highlighter-rouge">gh-pages</code> 的工作流。</li>
+  <li><code class="language-plaintext highlighter-rouge">scripts/new-post.ps1</code>：PowerShell 发文脚手架。</li>
+  <li>根页面：<code class="language-plaintext highlighter-rouge">index.md</code>、<code class="language-plaintext highlighter-rouge">archive.md</code>、<code class="language-plaintext highlighter-rouge">tags.md</code>、<code class="language-plaintext highlighter-rouge">about.md</code>、<code class="language-plaintext highlighter-rouge">404.md</code>。</li>
+</ul>
+
+<h2 id="构建测试与本地开发命令">构建、测试与本地开发命令</h2>
+<p>在仓库根目录执行：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">install
+</span>bundle <span class="nb">exec </span>jekyll serve
+bundle <span class="nb">exec </span>jekyll build
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">jekyll serve</code>：本地预览（<code class="language-plaintext highlighter-rouge">http://127.0.0.1:4000</code>）。</li>
+  <li><code class="language-plaintext highlighter-rouge">jekyll build</code>：生成生产构建到 <code class="language-plaintext highlighter-rouge">_site/</code>。</li>
+</ul>
+
+<p>创建新文章（PowerShell）：</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="n">\scripts\new-post.ps1</span><span class="w"> </span><span class="nt">-Title</span><span class="w"> </span><span class="s2">"我的文章"</span><span class="w"> </span><span class="nt">-Description</span><span class="w"> </span><span class="s2">"摘要"</span><span class="w"> </span><span class="nt">-Tags</span><span class="w"> </span><span class="err">架构设计</span><span class="p">,</span><span class="nx">SaaS</span><span class="err">化解读</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="编码风格与命名规范">编码风格与命名规范</h2>
+<ul>
+  <li>Markdown、HTML、CSS、脚本统一使用 UTF-8。</li>
+  <li>保持与现有文件一致的缩进风格（HTML/CSS/Liquid 使用 2 空格）。</li>
+  <li>面向站点展示的文案优先中文，表达简洁直接。</li>
+  <li>文章 frontmatter 固定使用：<code class="language-plaintext highlighter-rouge">title</code>、<code class="language-plaintext highlighter-rouge">description</code>、<code class="language-plaintext highlighter-rouge">date</code>、<code class="language-plaintext highlighter-rouge">updated</code>、<code class="language-plaintext highlighter-rouge">tags</code>。</li>
+</ul>
+
+<h2 id="博客写作补充约束">博客写作补充约束</h2>
+<ul>
+  <li>当任务涉及博客选题、提纲、初稿、改写、润色、复盘、发布时，默认先判断该用哪个 blog skill，不再把详细执行规则长期堆在 <code class="language-plaintext highlighter-rouge">AGENTS.md</code> 里。</li>
+  <li>博客相关总原则只保留不伤文的底线：真实性、可发布性、承诺与正文一致、不要脑补、不要用单一模板硬套所有文章。</li>
+  <li>如与本文件其他规则冲突，优先级顺序为：
+    <ol>
+      <li>真实性与安全性</li>
+      <li>可发布性</li>
+      <li>对应 blog skill 的明确约束</li>
+      <li>本文件其余通用写作规则</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="博客协作统一执行口径">博客协作统一执行口径</h2>
+<p>博客相关规则默认按 skill 分工执行：</p>
+
+<ul>
+  <li>结构、大纲、标题推进：<code class="language-plaintext highlighter-rouge">skills/blog-outline-doctor/SKILL.md</code></li>
+  <li>内容写透度与关键段落补写：<code class="language-plaintext highlighter-rouge">skills/blog-depth-reviewer/SKILL.md</code></li>
+  <li>文风、表达、删改边界：<code class="language-plaintext highlighter-rouge">skills/blog-writing-style/SKILL.md</code></li>
+  <li>文章类型与适用质量尺子：<code class="language-plaintext highlighter-rouge">skills/blog-article-fit-checker/SKILL.md</code></li>
+  <li>总检与问题分诊：<code class="language-plaintext highlighter-rouge">skills/blog-quality-gate/SKILL.md</code></li>
+  <li>SEO、frontmatter、标签、专题、首页聚合：<code class="language-plaintext highlighter-rouge">skills/blog-seo-governor/SKILL.md</code></li>
+  <li>写作流程、发布门禁、页面核验：<code class="language-plaintext highlighter-rouge">skills/blog-release-gate/SKILL.md</code></li>
+</ul>
+
+<p>这里只保留三条总原则：</p>
+
+<ol>
+  <li>目标不是生成标准博客，而是把作者真实想法整理成可发布的文章。</li>
+  <li>先判断问题属于结构、写透度、表达、类型错配、事实风险、SEO 或发布门禁中的哪一类，再调用对应 skill，不要所有问题都堆到一个地方解决。</li>
+  <li>当用户对文章给出新批评时，先修当前文章，再把可复用约束沉淀到对应 skill，而不是继续把 <code class="language-plaintext highlighter-rouge">AGENTS.md</code> 写成一份越来越长的博客总手册。
+    <h2 id="决策优先级与冲突处理">决策优先级与冲突处理</h2>
+    <p>当规则冲突或目标冲突时，按以下顺序决策（从高到低）：</p>
+  </li>
+  <li>真实性与安全性：不得伪造数据、误导读者或引入高风险改动。</li>
+  <li>可发布性：页面可构建、可渲染、关键路径不报错。</li>
+  <li>内容可读性：信息结构清晰、结论可验证、读者可执行。</li>
+  <li>一致性：遵循既有信息架构、文案口径、视觉 token。</li>
+  <li>美观度：在不破坏前四项前提下优化视觉表现。</li>
+</ol>
+
+<p>执行约束：</p>
+<ul>
+  <li>不以“视觉好看”为理由破坏内容真实性。</li>
+  <li>不以“快速上线”为理由跳过构建与发布门禁。</li>
+  <li>不以“炫技动画”为理由损害性能与可读性。</li>
+</ul>
+
+<h2 id="博客写作-sop从选题到发布">博客写作 SOP（从选题到发布）</h2>
+<ul>
+  <li>写作流程、阶段判断、发布前顺序与门禁，统一按 <code class="language-plaintext highlighter-rouge">skills/blog-release-gate/SKILL.md</code> 执行。</li>
+  <li>博客任务的最小总要求只保留三条：
+    <ol>
+      <li>开头 200 字内说清问题和重要性。</li>
+      <li>正文兑现开头承诺，不要前后脱节。</li>
+      <li>不拿单一模板要求所有文章；是否需要方案、落地、结果、框架，按 <code class="language-plaintext highlighter-rouge">skills/blog-article-fit-checker/SKILL.md</code> 判断。</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="frontmatter-元数据规范必填--可选">Frontmatter 元数据规范（必填 + 可选）</h2>
+<ul>
+  <li>frontmatter、标签、专题、聚合位与相关文章规则，统一按 <code class="language-plaintext highlighter-rouge">skills/blog-seo-governor/SKILL.md</code> 执行。</li>
+</ul>
+
+<h2 id="自动标签与自动运营字段规则写作时自动完成">自动标签与自动运营字段规则（写作时自动完成）</h2>
+<ul>
+  <li>自动标签、专题归类和运营字段补齐，统一按 <code class="language-plaintext highlighter-rouge">skills/blog-seo-governor/SKILL.md</code> 执行。</li>
+</ul>
+
+<h2 id="首页运营规则元数据驱动">首页运营规则（元数据驱动）</h2>
+<ul>
+  <li>首页聚合、运营字段和 SEO 分发入口的视觉约束，统一按 <code class="language-plaintext highlighter-rouge">skills/blog-seo-governor/SKILL.md</code> 执行。</li>
+</ul>
+
+<h2 id="发布门禁清单发布前必须通过">发布门禁清单（发布前必须通过）</h2>
+<ul>
+  <li>发布门禁、页面核验和上线确认，统一按 <code class="language-plaintext highlighter-rouge">skills/blog-release-gate/SKILL.md</code> 执行。</li>
+</ul>
+
+<h2 id="测试与验证指南">测试与验证指南</h2>
+<p>本仓库无单元测试框架，采用构建与页面核验：</p>
+
+<ol>
+  <li>本地执行 <code class="language-plaintext highlighter-rouge">bundle exec jekyll build</code>，确保构建通过。</li>
+  <li>抽查关键页面：<code class="language-plaintext highlighter-rouge">/</code>、<code class="language-plaintext highlighter-rouge">/archive/</code>、<code class="language-plaintext highlighter-rouge">/tags/</code>、<code class="language-plaintext highlighter-rouge">/about/</code>。</li>
+  <li>更完整的发布核验、页面检查和上线确认按 <code class="language-plaintext highlighter-rouge">skills/blog-release-gate/SKILL.md</code> 执行。</li>
+</ol>
+
+<h2 id="提交与-pull-request-规范">提交与 Pull Request 规范</h2>
+<ul>
+  <li>提交信息遵循 Conventional Commits，例如：
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">feat(theme): 重构为暗色阅读优先主题</code></li>
+      <li><code class="language-plaintext highlighter-rouge">fix(ci): ...</code></li>
+      <li><code class="language-plaintext highlighter-rouge">content(profile): 更新关于页与标签体系</code></li>
+    </ul>
+  </li>
+  <li>每次提交聚焦单一主题（主题样式、内容、CI、脚本分开提交）。</li>
+  <li>PR 建议包含：
+    <ul>
+      <li>变更内容与动机。</li>
+      <li>受影响的页面或文件路径。</li>
+      <li>涉及 UI 时附截图。</li>
+      <li>本地构建或 CI 通过说明。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="git-自动提交策略">Git 自动提交策略</h2>
+<ul>
+  <li>完成代码修改后，默认直接执行提交，不再二次询问。</li>
+  <li>提交格式使用 Conventional Commits。</li>
+  <li>允许执行：<code class="language-plaintext highlighter-rouge">git add</code>、<code class="language-plaintext highlighter-rouge">git commit</code>。</li>
+  <li>禁止执行：<code class="language-plaintext highlighter-rouge">git reset --hard</code>、<code class="language-plaintext highlighter-rouge">git checkout --</code>、<code class="language-plaintext highlighter-rouge">git revert</code>（除非用户明确要求）。</li>
+  <li>若工作区存在与当前任务无关的改动，不要回滚，跳过并只提交本次相关文件。</li>
+</ul>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

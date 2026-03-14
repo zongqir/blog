@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客大纲 Doctor | 我的博客</title>
+    <meta name="description" content="审查和重构技术博客大纲、章节框架、二级/三级标题推进关系。Use when the user wants to review an outline, diagnose why headings feel stitched together, rebuild section flow, or extract outline rules from AGENTS.md. Focuses on opening setup, promise-to-body alignment, heading logic, and anti-patchwork structure rather than full prose polishing.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客大纲 Doctor | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客大纲 Doctor" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="审查和重构技术博客大纲、章节框架、二级/三级标题推进关系。Use when the user wants to review an outline, diagnose why headings feel stitched together, rebuild section flow, or extract outline rules from AGENTS.md. Focuses on opening setup, promise-to-body alignment, heading logic, and anti-patchwork structure rather than full prose polishing." />
+<meta property="og:description" content="审查和重构技术博客大纲、章节框架、二级/三级标题推进关系。Use when the user wants to review an outline, diagnose why headings feel stitched together, rebuild section flow, or extract outline rules from AGENTS.md. Focuses on opening setup, promise-to-body alignment, heading logic, and anti-patchwork structure rather than full prose polishing." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-outline-doctor/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-outline-doctor/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客大纲 Doctor" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"审查和重构技术博客大纲、章节框架、二级/三级标题推进关系。Use when the user wants to review an outline, diagnose why headings feel stitched together, rebuild section flow, or extract outline rules from AGENTS.md. Focuses on opening setup, promise-to-body alignment, heading logic, and anti-patchwork structure rather than full prose polishing.","headline":"博客大纲 Doctor","url":"https://blog.zongqir.com/skills/blog-outline-doctor/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="博客大纲-doctor">博客大纲 Doctor</h1>
+
+<h2 id="核心职责">核心职责</h2>
+
+<p>这个 skill 只管四件事：</p>
+
+<ol>
+  <li>开头有没有把背景、前提、当前讨论边界交代清楚。</li>
+  <li>文章框架是不是一条线往前推，而不是写到哪想到哪。</li>
+  <li>二级、三级标题之间有没有真实关系，而不是东拼西凑。</li>
+  <li>开头承诺和后文展开是否对得上。</li>
+</ol>
+
+<p>默认不处理这些事：</p>
+
+<ol>
+  <li>全文润色。</li>
+  <li>文风美化。</li>
+  <li>SEO、运营字段、发布门禁。</li>
+  <li>技术正确性以外的页面样式问题。</li>
+</ol>
+
+<h2 id="默认任务理解">默认任务理解</h2>
+
+<ol>
+  <li>目标不是“生成一篇标准博客”，而是把作者真实想法整理成可发布的大纲和结构。</li>
+  <li>先判断问题是出在标题、结构、叙事主线，还是表达抽象度，不要看到标题别扭就只修标题。</li>
+  <li>如果标题之间像拼起来的，优先判断是主线没立住，还是标题本身措辞差；通常先修主线，再修标题。</li>
+  <li>默认职责是整理、压缩、提纯作者已经表达过的结构判断，不是替作者脑补新论点，也不是替作者临时发明一套看起来工整的框架。</li>
+  <li>如果素材不足以支撑某个大纲判断，优先指出缺什么，不要自动补成一套表面完整、实际空心的结构。</li>
+</ol>
+
+<h2 id="使用方式">使用方式</h2>
+
+<p>遇到下面这些情况时使用这个 skill：</p>
+
+<ol>
+  <li>用户说“大纲不顺”“标题像拼起来的”“二级标题没关系”“三级标题乱”。</li>
+  <li>文章开头已经承诺了几个问题、几种方案、几条线，但后文展开对不上。</li>
+  <li>正文里长出了分片、Router、上游改模型这类关键节点，但开头没交代。</li>
+  <li>文章读起来像“有框架在指引”，而不是事情自然往下走。</li>
+</ol>
+
+<h2 id="检查顺序">检查顺序</h2>
+
+<h3 id="1-先看开头有没有立住">1. 先看开头有没有立住</h3>
+
+<p>开头至少要说清楚这几件事：</p>
+
+<ol>
+  <li>当时系统处在什么阶段。</li>
+  <li>哪些前提已经定了，不再讨论了。</li>
+  <li>现在只讨论什么问题。</li>
+  <li>真正卡住什么。</li>
+</ol>
+
+<p>如果这四件事没有立住，后面的大纲再完整也容易发飘。</p>
+
+<p>另外再补一条：</p>
+
+<ol>
+  <li>如果这是独立文章，开头必须能独立成立，不能默认读者看过上一篇。</li>
+  <li>如果这是承接上文的文章，就直接写清楚承接关系，不要写成既没承接、又没背景的状态。</li>
+</ol>
+
+<h3 id="2-再看文章承诺和正文展开是不是一致">2. 再看文章承诺和正文展开是不是一致</h3>
+
+<p>如果开头写了“这篇只讲三种做法 / 三个问题 / 三条线”，后文就必须按这个承诺展开。</p>
+
+<p>如果后面自然长出了新节点，要做二选一：</p>
+
+<ol>
+  <li>把它收回原有结构里，作为某一节的自然展开。</li>
+  <li>回头重写开头，把这个新节点提前交代进去。</li>
+</ol>
+
+<p>不允许出现这种情况：</p>
+
+<ol>
+  <li>开头说三种做法。</li>
+  <li>正文写着写着突然飞出一个新方案。</li>
+  <li>结尾又多出一个开头没提过的方向。</li>
+</ol>
+
+<h3 id="3-再看二级标题是不是在往前推">3. 再看二级标题是不是在往前推</h3>
+
+<p>先补一条总规则：</p>
+
+<ol>
+  <li>一级标题要围绕同一条推进线展开，优先写对象、动作、边界、分层、代价，不要写成一组观点卡片。</li>
+  <li>一级标题通常控制在 5 到 7 个；如果更多，先检查是不是把并列信息误写成主线节点。</li>
+  <li>当文章更适合“建模拆解”或“承载分层”时，标题应围绕系统对象推进，而不是围绕作者感受推进。</li>
+  <li>不要为了把标题写得“有判断”而写成一句端着的评论话。标题首先要像正常人在往下讲事情，其次才是提炼观点。</li>
+</ol>
+
+<p>二级标题必须承担推进职责。检查时至少过这四条：</p>
+
+<ol>
+  <li>这一节和上一节之间有没有清楚的因果或推进关系。</li>
+  <li>标题能不能直接落到正文第一段，而不是标题很大、正文很虚。</li>
+  <li>去掉这个标题后，整篇会不会更顺。如果会，说明它大概率是硬塞进去的。</li>
+  <li>这一节是不是只是在重复前文，只是换了一个更像总结的说法。</li>
+  <li>标题首先要让读者知道这一节在回答什么问题，解决什么卡点，或者把前文往哪里推进，而不是只追求“像结论”或“像点评”。</li>
+</ol>
+
+<p>总原则只有一条：<br />
+标题必须有逻辑。只要二级标题之间没有清楚关系，读起来像拼出来的，大纲就算失败。</p>
+
+<p>二级标题常见问题：</p>
+
+<ol>
+  <li>只是在评论，不是在推进。</li>
+  <li>写成一句端着的判断话。</li>
+  <li>标题像观点卡片，读不出顺序。</li>
+  <li>标题之间没有“上一节为什么走到下一节”的关系。</li>
+</ol>
+
+<h3 id="4-最后看三级标题是不是服务对应二级标题">4. 最后看三级标题是不是服务对应二级标题</h3>
+
+<p>三级标题只能做两件事：</p>
+
+<ol>
+  <li>把一个二级问题拆成几个连续步骤。</li>
+  <li>把一个二级问题拆成几个并列观察点。</li>
+</ol>
+
+<p>三级标题检查时至少过这三条：</p>
+
+<ol>
+  <li>是不是同一个二级问题下的自然拆分，而不是另起一题。</li>
+  <li>拆分维度是不是一致，不能一个讲风险、一个讲方案、一个讲感受。</li>
+  <li>子标题读下来能不能看出顺序，而不是几句并列判断堆在一起。</li>
+</ol>
+
+<h2 id="重排原则">重排原则</h2>
+
+<p>当大纲有拼凑感时，优先按这个顺序处理：</p>
+
+<ol>
+  <li>先重写开头，立住背景和讨论边界。</li>
+  <li>再重排二级标题，让它们形成一条推进线。</li>
+  <li>再处理三级标题，让它们服从二级标题。</li>
+  <li>最后才改标题措辞。</li>
+</ol>
+
+<p>不要反过来做。<br />
+如果框架是散的，只改标题用词，读起来还是会像拼出来的。</p>
+
+<h2 id="输出要求">输出要求</h2>
+
+<p>使用这个 skill 时，默认输出两部分：</p>
+
+<ol>
+  <li>当前大纲的问题：
+    <ul>
+      <li>哪些标题断线了。</li>
+      <li>哪些标题是硬塞的。</li>
+      <li>哪些关键节点开头没承诺。</li>
+    </ul>
+  </li>
+  <li>重排后的大纲：
+    <ul>
+      <li>先给新的二级标题线。</li>
+      <li>再补必要的三级标题。</li>
+      <li>每个标题只保留推进职责，不写点评腔。</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要只修标题措辞，不修结构。</li>
+  <li>不要一边写正文一边临时长标题。</li>
+  <li>不要把正文里临时想到的新判断直接升成一个新标题。</li>
+  <li>不要让标题看起来像“模型在做总结”，而不是“人在往下讲事情”。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

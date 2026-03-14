@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客 SEO 治理 | 我的博客</title>
+    <meta name="description" content="统一处理技术博客的 SEO、标签体系、相关文章和首页运营规则。Use when the user wants to create or review SEO metadata, infer tags and series, check slugs and internal links, validate homepage/related-post exposure, or run publish-time SEO gates for a Jekyll blog. Focuses on article discovery, metadata consistency, taxonomy quality, site-level aggregation, and release readiness without rewriting article prose.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客 SEO 治理 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客 SEO 治理" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="统一处理技术博客的 SEO、标签体系、相关文章和首页运营规则。Use when the user wants to create or review SEO metadata, infer tags and series, check slugs and internal links, validate homepage/related-post exposure, or run publish-time SEO gates for a Jekyll blog. Focuses on article discovery, metadata consistency, taxonomy quality, site-level aggregation, and release readiness without rewriting article prose." />
+<meta property="og:description" content="统一处理技术博客的 SEO、标签体系、相关文章和首页运营规则。Use when the user wants to create or review SEO metadata, infer tags and series, check slugs and internal links, validate homepage/related-post exposure, or run publish-time SEO gates for a Jekyll blog. Focuses on article discovery, metadata consistency, taxonomy quality, site-level aggregation, and release readiness without rewriting article prose." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-seo-governor/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-seo-governor/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客 SEO 治理" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"统一处理技术博客的 SEO、标签体系、相关文章和首页运营规则。Use when the user wants to create or review SEO metadata, infer tags and series, check slugs and internal links, validate homepage/related-post exposure, or run publish-time SEO gates for a Jekyll blog. Focuses on article discovery, metadata consistency, taxonomy quality, site-level aggregation, and release readiness without rewriting article prose.","headline":"博客 SEO 治理","url":"https://blog.zongqir.com/skills/blog-seo-governor/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="博客-seo-治理">博客 SEO 治理</h1>
+
+<h2 id="核心职责">核心职责</h2>
+
+<p>这个 skill 统一处理文章发现能力，不只看单篇 <code class="language-plaintext highlighter-rouge">frontmatter</code>。</p>
+
+<p>它主要处理五类问题：</p>
+
+<ol>
+  <li>文章级 SEO 元数据是否完整、可读、可被检索。</li>
+  <li>标签体系是否稳定，是否能支撑归档、聚合和相关文章推荐。</li>
+  <li><code class="language-plaintext highlighter-rouge">series</code>、<code class="language-plaintext highlighter-rouge">featured</code>、<code class="language-plaintext highlighter-rouge">hot</code> 这些运营字段是否自洽，是否能驱动首页模块。</li>
+  <li>内部链接、标签页、归档页、相关文章链路是否形成可发现闭环。</li>
+  <li>发布前 SEO 门禁是否过线。</li>
+  <li>SEO 相关分发入口是否违反站点视觉系统约束。</li>
+</ol>
+
+<p>它默认不处理这些事：</p>
+
+<ol>
+  <li>大纲是否顺。</li>
+  <li>文风是否自然。</li>
+  <li>正文事实是否成立。</li>
+  <li>整站视觉改版或纯审美层面的 UI 设计。</li>
+</ol>
+
+<p>补充边界：</p>
+
+<ol>
+  <li>这个 skill 不负责重新做视觉方案。</li>
+  <li>但它要检查 SEO 与分发入口是否因为运营诉求破坏视觉系统约束，例如：首页卡片层级失衡、标签页信息组织失真、归档或相关文章区域出现硬编码视觉特例。</li>
+</ol>
+
+<p>如果问题主要是结构和标题推进，优先用 <code class="language-plaintext highlighter-rouge">$blog-outline-doctor</code>。<br />
+如果问题主要是正文表达和去 AI 味，优先用 <code class="language-plaintext highlighter-rouge">$blog-writing-style</code>。<br />
+如果问题主要是文章整体是否可发布，可以配合 <code class="language-plaintext highlighter-rouge">$blog-quality-gate</code> 一起用。</p>
+
+<h2 id="处理范围">处理范围</h2>
+
+<h3 id="1-文章级">1. 文章级</h3>
+
+<p>默认覆盖这些字段和对象：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">title</code></li>
+  <li><code class="language-plaintext highlighter-rouge">description</code></li>
+  <li><code class="language-plaintext highlighter-rouge">date</code></li>
+  <li><code class="language-plaintext highlighter-rouge">updated</code></li>
+  <li><code class="language-plaintext highlighter-rouge">tags</code></li>
+  <li><code class="language-plaintext highlighter-rouge">series</code></li>
+  <li><code class="language-plaintext highlighter-rouge">series_part</code></li>
+  <li><code class="language-plaintext highlighter-rouge">series_intent</code></li>
+  <li><code class="language-plaintext highlighter-rouge">series_buildable</code></li>
+  <li><code class="language-plaintext highlighter-rouge">featured</code></li>
+  <li><code class="language-plaintext highlighter-rouge">featured_rank</code></li>
+  <li><code class="language-plaintext highlighter-rouge">hot</code></li>
+  <li><code class="language-plaintext highlighter-rouge">hot_rank</code></li>
+  <li><code class="language-plaintext highlighter-rouge">draft</code></li>
+  <li><code class="language-plaintext highlighter-rouge">canonical_url</code></li>
+  <li>permalink / slug</li>
+  <li>正文内部链接</li>
+</ol>
+
+<h3 id="2-站点级">2. 站点级</h3>
+
+<p>默认覆盖这些聚合与分发点：</p>
+
+<ol>
+  <li>首页精选</li>
+  <li>首页热门</li>
+  <li>专题连载</li>
+  <li>标签页</li>
+  <li>归档页</li>
+  <li>相关文章推荐</li>
+  <li>上述入口的信息层级与视觉一致性</li>
+</ol>
+
+<h3 id="3-发布前门禁">3. 发布前门禁</h3>
+
+<p>默认覆盖这些检查项：</p>
+
+<ol>
+  <li>元数据完整性</li>
+  <li>标签与专题一致性</li>
+  <li>链接与锚点可达性</li>
+  <li>首页卡片字段完整性</li>
+  <li>相关文章最小数量要求</li>
+  <li>构建与关键页面检查</li>
+</ol>
+
+<h2 id="默认工作顺序">默认工作顺序</h2>
+
+<p>处理 SEO 时，按这个顺序走，不要跳步：</p>
+
+<ol>
+  <li>先看文章级元数据。</li>
+  <li>再看标签和专题归类。</li>
+  <li>再看 slug、内部链接、相关文章。</li>
+  <li>再看首页聚合与运营位。</li>
+  <li>最后给发布门禁结论。</li>
+</ol>
+
+<p>原因很简单：<br />
+如果最基础的标题、摘要、标签都不稳，后面的聚合与推荐判断也会一起发飘。</p>
+
+<h2 id="文章级-seo-规则">文章级 SEO 规则</h2>
+
+<h3 id="1-title">1. <code class="language-plaintext highlighter-rouge">title</code></h3>
+
+<p>默认要求：</p>
+
+<ol>
+  <li>能表达具体问题，而不是空泛口号。</li>
+  <li>不要只堆术语。</li>
+  <li>和正文真实内容一致。</li>
+  <li>不要为了 SEO 硬塞关键词，牺牲可读性。</li>
+</ol>
+
+<h3 id="2-description">2. <code class="language-plaintext highlighter-rouge">description</code></h3>
+
+<p>默认要求：</p>
+
+<ol>
+  <li>建议 50 到 120 字。</li>
+  <li>要能独立解释“这篇在讲什么、为什么值得看”。</li>
+  <li>不要只重复标题。</li>
+  <li>不要写成营销话术。</li>
+</ol>
+
+<h3 id="3-slug--permalink">3. slug / permalink</h3>
+
+<p>默认要求：</p>
+
+<ol>
+  <li>语义稳定。</li>
+  <li>和标题主题一致。</li>
+  <li>不要频繁改历史文章 slug。</li>
+  <li>需要变更时，先确认旧链接影响。</li>
+</ol>
+
+<h3 id="4-date-与-updated">4. <code class="language-plaintext highlighter-rouge">date</code> 与 <code class="language-plaintext highlighter-rouge">updated</code></h3>
+
+<p>默认要求：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">date</code> 只表示首次发布时间。</li>
+  <li><code class="language-plaintext highlighter-rouge">updated</code> 只在文章有真实修改时更新。</li>
+  <li>不要拿 <code class="language-plaintext highlighter-rouge">updated</code> 制造“看起来常更新”的假象。</li>
+</ol>
+
+<h3 id="5-canonical_url">5. <code class="language-plaintext highlighter-rouge">canonical_url</code></h3>
+
+<p>默认要求：</p>
+
+<ol>
+  <li>只在转载、多站同步、需要规范化时填写。</li>
+  <li>没有明确规范化需求时，不要硬加。</li>
+</ol>
+
+<h2 id="标签体系规则">标签体系规则</h2>
+
+<h3 id="1-标签的职责">1. 标签的职责</h3>
+
+<p>标签不是关键词垃圾桶。<br />
+它至少要承担三件事：</p>
+
+<ol>
+  <li>表达主题。</li>
+  <li>支撑标签页聚合。</li>
+  <li>为相关文章推荐提供回退依据。</li>
+</ol>
+
+<h3 id="2-标签数量">2. 标签数量</h3>
+
+<p>默认 <code class="language-plaintext highlighter-rouge">2</code> 到 <code class="language-plaintext highlighter-rouge">6</code> 个。<br />
+少于 <code class="language-plaintext highlighter-rouge">2</code> 个，主题表达容易失真。<br />
+多于 <code class="language-plaintext highlighter-rouge">6</code> 个，通常说明把相关词都当成标签塞进去了。</p>
+
+<h3 id="3-自动标签映射">3. 自动标签映射</h3>
+
+<p>标签按标题、摘要、正文关键词综合判断，不只看标题。</p>
+
+<p>默认映射：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">国际化</code>：国际化、i18n、locale、多语言、时区、UTC。</li>
+  <li><code class="language-plaintext highlighter-rouge">架构设计</code>：架构、DDD、领域、状态机、适配器、边界。</li>
+  <li><code class="language-plaintext highlighter-rouge">工程治理</code>：治理、规范、门禁、checklist、流程、标准化、自动化。</li>
+  <li><code class="language-plaintext highlighter-rouge">SRE</code>：故障、告警、监控、可用性、稳定性、恢复、容量。</li>
+  <li><code class="language-plaintext highlighter-rouge">性能优化</code>：性能、延迟、吞吐、CPU、内存、IO、GC、压测。</li>
+  <li><code class="language-plaintext highlighter-rouge">Linux</code>：Linux、top、vmstat、pidstat、iostat、内核、系统调用。</li>
+  <li><code class="language-plaintext highlighter-rouge">ToB</code>：ToB、B端、企业客户、SaaS。</li>
+</ol>
+
+<h3 id="4-打标签原则">4. 打标签原则</h3>
+
+<ol>
+  <li>至少保留一个主主题标签。</li>
+  <li>正文和标题信号冲突时，优先以正文实际内容为准。</li>
+  <li>不要为了覆盖搜索词，把所有相关词都变成标签。</li>
+  <li>没有足够证据时，直接标为待确认，不要瞎补。</li>
+</ol>
+
+<h2 id="专题与运营字段">专题与运营字段</h2>
+
+<h3 id="1-series">1. <code class="language-plaintext highlighter-rouge">series</code></h3>
+
+<p>默认映射：</p>
+
+<ol>
+  <li>命中 <code class="language-plaintext highlighter-rouge">国际化</code> =&gt; <code class="language-plaintext highlighter-rouge">series: "全球化工程治理"</code>。</li>
+  <li>命中 <code class="language-plaintext highlighter-rouge">SRE</code> 或 <code class="language-plaintext highlighter-rouge">Linux</code> =&gt; <code class="language-plaintext highlighter-rouge">series: "SRE 故障实战"</code>。</li>
+  <li>命中 <code class="language-plaintext highlighter-rouge">架构设计</code> 或 <code class="language-plaintext highlighter-rouge">工程治理</code> =&gt; <code class="language-plaintext highlighter-rouge">series: "工程治理体系"</code>。</li>
+</ol>
+
+<h3 id="2-series_buildable">2. <code class="language-plaintext highlighter-rouge">series_buildable</code></h3>
+
+<p>默认规则：</p>
+
+<ol>
+  <li>命中系列映射时，默认 <code class="language-plaintext highlighter-rouge">true</code>。</li>
+  <li>未命中时，默认 <code class="language-plaintext highlighter-rouge">false</code>。</li>
+  <li>如果作者明确说不是系列文，可以手动改成 <code class="language-plaintext highlighter-rouge">false</code>。</li>
+</ol>
+
+<h3 id="3-series_part">3. <code class="language-plaintext highlighter-rouge">series_part</code></h3>
+
+<p>只有在 <code class="language-plaintext highlighter-rouge">series_buildable=true</code> 时才生成。</p>
+
+<p>生成方式：</p>
+
+<ol>
+  <li>扫描 <code class="language-plaintext highlighter-rouge">_posts/</code> 中同系列历史文章。</li>
+  <li>取现有最大 <code class="language-plaintext highlighter-rouge">series_part + 1</code>。</li>
+  <li>若没有历史文章，从 <code class="language-plaintext highlighter-rouge">1</code> 开始。</li>
+</ol>
+
+<h3 id="4-series_intent">4. <code class="language-plaintext highlighter-rouge">series_intent</code></h3>
+
+<p>默认模板：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">全球化工程治理</code> =&gt; <code class="language-plaintext highlighter-rouge">围绕国际化、多语言、时区与跨区域交付中的工程约束，整理一套可落地的治理方法。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">SRE 故障实战</code> =&gt; <code class="language-plaintext highlighter-rouge">围绕故障定位、容量判断、恢复流程与稳定性建设，沉淀可复用的 SRE 实战经验。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">工程治理体系</code> =&gt; <code class="language-plaintext highlighter-rouge">围绕架构演进、工程规范、流程门禁与长期维护成本，整理一套可持续的工程治理方法。</code></li>
+</ol>
+
+<h3 id="5-hot">5. <code class="language-plaintext highlighter-rouge">hot</code></h3>
+
+<p>默认规则：</p>
+
+<ol>
+  <li>命中 <code class="language-plaintext highlighter-rouge">架构设计</code>、<code class="language-plaintext highlighter-rouge">工程治理</code>、<code class="language-plaintext highlighter-rouge">SRE</code>、<code class="language-plaintext highlighter-rouge">性能优化</code> 任一主题信号时，默认 <code class="language-plaintext highlighter-rouge">hot: true</code>。</li>
+  <li>若只命中兜底标签，默认 <code class="language-plaintext highlighter-rouge">hot: false</code>。</li>
+</ol>
+
+<h3 id="6-hot_rank">6. <code class="language-plaintext highlighter-rouge">hot_rank</code></h3>
+
+<p>默认粗排：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">架构设计</code> =&gt; <code class="language-plaintext highlighter-rouge">10</code></li>
+  <li><code class="language-plaintext highlighter-rouge">工程治理</code> =&gt; <code class="language-plaintext highlighter-rouge">20</code></li>
+  <li><code class="language-plaintext highlighter-rouge">SRE</code> =&gt; <code class="language-plaintext highlighter-rouge">30</code></li>
+  <li><code class="language-plaintext highlighter-rouge">性能优化</code> =&gt; <code class="language-plaintext highlighter-rouge">40</code></li>
+</ol>
+
+<p>如果命中多个主题，取更小的那个值。<br />
+后续允许手动微调。</p>
+
+<h3 id="7-featured">7. <code class="language-plaintext highlighter-rouge">featured</code></h3>
+
+<p><code class="language-plaintext highlighter-rouge">featured</code> 不是自动推断字段。<br />
+默认只在作者明确要求首页精选，或者已有明确运营判断时才填写。</p>
+
+<h2 id="首页与聚合规则">首页与聚合规则</h2>
+
+<p>首页模块必须由 <code class="language-plaintext highlighter-rouge">frontmatter</code> 驱动，不允许硬编码文章 URL。</p>
+
+<p>默认规则：</p>
+
+<ol>
+  <li>精选文章：<code class="language-plaintext highlighter-rouge">featured=true</code>，按 <code class="language-plaintext highlighter-rouge">featured_rank</code> 升序，再按 <code class="language-plaintext highlighter-rouge">updated</code> 降序。</li>
+  <li>热门文章：<code class="language-plaintext highlighter-rouge">hot=true</code>，按 <code class="language-plaintext highlighter-rouge">hot_rank</code> 升序，再按 <code class="language-plaintext highlighter-rouge">updated</code> 降序。</li>
+  <li>专题连载：按 <code class="language-plaintext highlighter-rouge">series</code> 聚合；缺失时可以回退到约定标签映射。</li>
+  <li>状态条只展示真实可核查指标，例如总文章数、最近更新时间、专题数量。</li>
+</ol>
+
+<p>默认原则：</p>
+
+<ol>
+  <li>首页不展示虚构访问量。</li>
+  <li>热度感优先通过 <code class="language-plaintext highlighter-rouge">热门</code>、<code class="language-plaintext highlighter-rouge">精选</code>、<code class="language-plaintext highlighter-rouge">连载</code> 这些标签体系表达。</li>
+  <li><code class="language-plaintext highlighter-rouge">draft=true</code> 的文章不得进入首页运营位。</li>
+  <li>首页、标签页、归档页、相关文章这些 SEO 入口，不得为了关键词覆盖或点击刺激破坏视觉 token、阅读节奏和既有信息层级。</li>
+</ol>
+
+<h2 id="视觉系统约束">视觉系统约束</h2>
+
+<p>这个 skill 需要同时检查 SEO 分发入口是否遵守视觉系统约束。<br />
+原因不是“视觉归 SEO 管”，而是首页、标签页、归档页、相关文章这些入口本来就是搜索与分发链路的一部分。</p>
+
+<h3 id="1-允许优先调整">1. 允许优先调整</h3>
+
+<p>这些调整默认允许做：</p>
+
+<ol>
+  <li>颜色 token：<code class="language-plaintext highlighter-rouge">--text</code>、<code class="language-plaintext highlighter-rouge">--muted</code>、<code class="language-plaintext highlighter-rouge">--accent</code>、<code class="language-plaintext highlighter-rouge">--line</code></li>
+  <li>节奏 token：字号层级、行高、间距、卡片内边距</li>
+  <li>交互强度：hover、阴影、边框对比、动效时长</li>
+</ol>
+
+<h3 id="2-谨慎调整">2. 谨慎调整</h3>
+
+<p>这些调整需要明确理由，不能为了 SEO 或点击率随手改：</p>
+
+<ol>
+  <li>布局结构：模块顺序、信息架构、导航结构</li>
+  <li>文章页阅读路径：封面、目录、正文宽度核心逻辑</li>
+  <li>标签页与归档页的数据组织方式</li>
+</ol>
+
+<h3 id="3-禁止事项">3. 禁止事项</h3>
+
+<p>这些情况直接判为违规：</p>
+
+<ol>
+  <li>为追求“炫酷”引入影响阅读的重动效与噪点背景</li>
+  <li>无依据地切换整体视觉风格，导致站点品牌漂移</li>
+  <li>在未定义 token 的情况下散落硬编码色值与尺寸</li>
+  <li>为了关键词覆盖或卡片点击率，在首页、标签页、归档页、相关文章区域临时塞入一次性样式和视觉特例</li>
+</ol>
+
+<h3 id="4-判断原则">4. 判断原则</h3>
+
+<ol>
+  <li>不以“视觉好看”为理由破坏内容真实性。</li>
+  <li>不以“SEO 更强”为理由破坏阅读路径和信息层级。</li>
+  <li>不以“运营曝光”为理由制造硬编码视觉例外。</li>
+</ol>
+
+<h2 id="内部链接与相关文章">内部链接与相关文章</h2>
+
+<h3 id="1-内部链接">1. 内部链接</h3>
+
+<p>检查这些事：</p>
+
+<ol>
+  <li>新文是否有合理的内部链接入口或出口。</li>
+  <li>标签锚点、目录锚点、文章 permalink 是否可跳转。</li>
+  <li>不要给出失效链接。</li>
+</ol>
+
+<h3 id="2-相关文章推荐">2. 相关文章推荐</h3>
+
+<p>默认生成顺序：</p>
+
+<ol>
+  <li>先按 <code class="language-plaintext highlighter-rouge">series</code> 推荐。</li>
+  <li>同系列不足时，回退按标签重叠度补足。</li>
+  <li>默认展示 <code class="language-plaintext highlighter-rouge">3</code> 篇。</li>
+</ol>
+
+<p>质量规则：</p>
+
+<ol>
+  <li>排除当前文章。</li>
+  <li>排除 <code class="language-plaintext highlighter-rouge">draft=true</code> 文章。</li>
+  <li>发布前至少满足“可推荐数量 &gt;= 3”。</li>
+  <li>推荐结果尽量覆盖“至少 1 篇基础向 + 1 篇进阶向”。</li>
+</ol>
+
+<h2 id="发布门禁">发布门禁</h2>
+
+<h3 id="1-内容与渲染门禁">1. 内容与渲染门禁</h3>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">bundle exec jekyll build</code> 构建通过。</li>
+  <li>关键页面渲染正常：<code class="language-plaintext highlighter-rouge">/</code>、<code class="language-plaintext highlighter-rouge">/archive/</code>、<code class="language-plaintext highlighter-rouge">/tags/</code>、<code class="language-plaintext highlighter-rouge">/about/</code>。</li>
+  <li>新文 permalink、标签锚点、目录锚点可跳转。</li>
+  <li>首页精选、热门、专题卡片无空字段、无死链接。</li>
+</ol>
+
+<h3 id="2-seo-与运营门禁">2. SEO 与运营门禁</h3>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">frontmatter</code> 字段完整且格式合法。</li>
+  <li><code class="language-plaintext highlighter-rouge">title</code>、<code class="language-plaintext highlighter-rouge">description</code>、slug、tag、内部链接一致。</li>
+  <li>无明显硬编码运营数据，例如虚构访问量、伪造统计。</li>
+  <li>专栏评估字段合法：<code class="language-plaintext highlighter-rouge">series_buildable</code>、<code class="language-plaintext highlighter-rouge">series_part</code>、<code class="language-plaintext highlighter-rouge">series_intent</code> 一致。</li>
+  <li>相关文章推荐满足最小数量与质量规则。</li>
+  <li>首页、标签页、归档页、相关文章等 SEO 分发入口符合视觉系统约束，不出现破坏阅读路径的硬编码样式和信息层级异常。</li>
+  <li>推送后 GitHub Actions 的 Pages 工作流成功。</li>
+</ol>
+
+<h2 id="默认输出">默认输出</h2>
+
+<p>使用这个 skill 时，默认输出四部分：</p>
+
+<ol>
+  <li>SEO 问题清单：
+    <ul>
+      <li>缺了什么字段。</li>
+      <li>哪些标签或运营字段冲突。</li>
+      <li>哪些链接与聚合链路有问题。</li>
+    </ul>
+  </li>
+  <li>推荐的元数据：
+    <ul>
+      <li>给出可直接落回文章文件的 YAML。</li>
+    </ul>
+  </li>
+  <li>站点分发建议：
+    <ul>
+      <li>标签、专题、相关文章、首页曝光位应该怎么挂。</li>
+    </ul>
+  </li>
+  <li>门禁结论：
+    <ul>
+      <li>可发布 / 接近可发布 / 明显不过线。</li>
+    </ul>
+  </li>
+  <li>视觉约束结论：
+    <ul>
+      <li>SEO 分发入口是否符合视觉系统约束，若不符合，指出具体入口和破坏点。</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要伪造描述、热度、访问量、统计或外链来源。</li>
+  <li>不要把不稳定推断写成确定事实。</li>
+  <li>不要为了 SEO 堆砌标题、摘要和标签。</li>
+  <li>不要让 <code class="language-plaintext highlighter-rouge">draft</code>、<code class="language-plaintext highlighter-rouge">featured</code>、<code class="language-plaintext highlighter-rouge">hot</code>、<code class="language-plaintext highlighter-rouge">series_buildable</code> 这些状态彼此打架。</li>
+  <li>不要把这个 skill 用成正文润色器，它负责的是发现、聚合和发布治理。</li>
+  <li>不要为了 SEO 或运营曝光，给首页、标签页、归档页、相关文章区域塞破坏视觉系统的一次性样式和信息堆叠。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

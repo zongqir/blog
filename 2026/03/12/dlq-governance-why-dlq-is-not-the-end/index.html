@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>死信队列的工程治理：为什么进入死信，不等于问题结束 | 我的博客</title>
+    <meta name="description" content="很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>死信队列的工程治理：为什么进入死信，不等于问题结束 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="死信队列的工程治理：为什么进入死信，不等于问题结束" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。" />
+<meta property="og:description" content="很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。" />
+<link rel="canonical" href="https://blog.zongqir.com/2026/03/12/dlq-governance-why-dlq-is-not-the-end/" />
+<meta property="og:url" content="https://blog.zongqir.com/2026/03/12/dlq-governance-why-dlq-is-not-the-end/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-12T23:38:29+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="死信队列的工程治理：为什么进入死信，不等于问题结束" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-03-12T23:38:29+08:00","datePublished":"2026-03-12T23:38:29+08:00","description":"很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。","headline":"死信队列的工程治理：为什么进入死信，不等于问题结束","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zongqir.com/2026/03/12/dlq-governance-why-dlq-is-not-the-end/"},"url":"https://blog.zongqir.com/2026/03/12/dlq-governance-why-dlq-is-not-the-end/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-post">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      
+
+
+
+
+
+
+
+
+<div class="reading-progress" aria-hidden="true">
+  <span class="reading-progress-bar" data-reading-progress></span>
+</div>
+
+<article class="post">
+  <div class="post-grid" data-post-grid>
+    <header class="post-header">
+      <div class="post-header-topline">
+        <p class="post-cover-kicker">工程治理</p>
+        
+          <p class="post-series">收录于 工程治理体系</p>
+        
+      </div>
+      <section class="post-cover">
+        <h1>死信队列的工程治理：为什么进入死信，不等于问题结束</h1>
+        
+          <p class="post-summary">很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。</p>
+        
+      </section>
+      <div class="post-meta-panel">
+        <p class="post-meta">
+          <span class="meta-pill">发布于 <time datetime="2026-03-12T23:38:29+08:00">2026-03-12</time></span>
+          
+            <span class="meta-pill">更新于 <time datetime="2026-03-12T23:52:00+08:00">2026-03-12</time></span>
+          
+          <span class="meta-pill">阅读约 10 分钟</span>
+        </p>
+        
+          <p class="post-meta-tags">
+            
+              <a class="tag-chip" href="/tags/#工程治理">工程治理</a>
+            
+              <a class="tag-chip" href="/tags/#架构设计">架构设计</a>
+            
+              <a class="tag-chip" href="/tags/#消息队列">消息队列</a>
+            
+              <a class="tag-chip" href="/tags/#事件驱动">事件驱动</a>
+            
+              <a class="tag-chip" href="/tags/#sre">SRE</a>
+            
+          </p>
+        
+      </div>
+    </header>
+
+    <aside class="post-toc" data-post-toc hidden>
+      <button class="post-toc-toggle" type="button" data-post-toc-toggle aria-expanded="false" aria-controls="post-toc-nav">
+        章节导航
+      </button>
+      <div class="post-toc-shell" data-post-toc-shell>
+        <p class="post-toc-title">章节导航</p>
+        <nav id="post-toc-nav" class="post-toc-nav" data-post-toc-nav aria-label="文章目录"></nav>
+      </div>
+    </aside>
+
+    <section class="post-content" data-post-content>
+      <p>前段时间我排查一个 MQ 系统，看到一组很典型的现象：<br />
+系统里挂着多个死信队列，其中一个 backlog 已经堆了很久，消息量不小，但业务侧几乎没人关注它。</p>
+
+<p>这件事让我一下子警觉起来。<br />
+如果这些消息真的重要，为什么可以长期没人处理？<br />
+如果这些消息不重要，当初为什么又要专门设计死信队列？</p>
+
+<p>后来我越来越确信，很多团队的问题不是“没有 DLQ”，而是对 DLQ 的理解停在了“失败消息存储位置”这一层。<br />
+他们知道消费失败可以重试，重试多次以后可以进死信；但再往后，谁来发现、谁来判断、谁来修复、谁来 replay，往往没有形成一条明确的工程链路。</p>
+
+<p>所以这篇不讲 <code class="language-plaintext highlighter-rouge">DLQ</code> 怎么配置，也不讲某个中间件的 API。<br />
+我只想讲一件事：</p>
+
+<p><strong>进入死信，不代表问题结束，而代表某个业务结果还没有被兑现。</strong></p>
+
+<p>如果这句话不成立，死信队列最后大概率会变成数据黑洞。<br />
+如果这句话成立，那我们真正要设计的就不只是一个队列，而是一条异常治理路径。</p>
+
+<p>再把话说得更直一点：<br />
+如果一个死信队列长期堆积、长期没人处理，但业务又没有明显报警，通常只剩两种解释：</p>
+
+<ol>
+  <li>这些消息其实早就不承载关键业务结果。</li>
+  <li>系统已经在不知不觉中接受了部分业务不一致。</li>
+</ol>
+
+<p>无论是哪一种，都不是“队列问题”，而是工程治理问题。</p>
+
+<h2 id="一死信不是处理完成而是业务结果没有兑现">一、死信不是“处理完成”，而是业务结果没有兑现</h2>
+
+<p>很多系统讨论异常处理时，默认都是从技术链路开始的：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>消费失败 -&gt; Retry -&gt; Dead Letter Queue
+</code></pre></div></div>
+
+<p>从 MQ 的角度看，这条链路当然成立。<br />
+Retry 负责自动恢复，DLQ 负责把失败消息隔离出去，避免主链路被坏消息拖死。</p>
+
+<p>但如果理解只停在这里，DLQ 就很容易被写成一个“失败缓存区”。<br />
+团队盯的是消费错误率、重试次数、backlog 曲线，却没有继续追问一个更本质的问题：</p>
+
+<p><strong>这条消息在业务上到底代表什么？</strong></p>
+
+<p>在事件驱动系统里，一条消息通常不是一个抽象对象，它往往代表一个已经发生的业务事实。<br />
+比如：</p>
+
+<ol>
+  <li>用户已经完成支付。</li>
+  <li>订单已经创建成功。</li>
+  <li>库存已经扣减。</li>
+  <li>用户应该获得积分。</li>
+</ol>
+
+<p>如果“支付成功”消息在积分系统消费失败，技术上看只是一次消费异常。<br />
+但业务上真正发生的是：</p>
+
+<p><strong>用户已经付款，但他应得的积分没有到账。</strong></p>
+
+<p>也就是说，技术上的失败消息，对应的是业务上的结果未完成。<br />
+这也是我现在看 DLQ 时最在意的地方。进入死信，不应该被理解成“系统处理完了”，而应该被理解成“系统把一个暂时无法自动恢复的问题隔离出来了，等待后续治理”。</p>
+
+<p>如果连这层含义都没有，DLQ 迟早会沦为一种心理安慰：<br />
+消息没丢，但业务也没真正闭环。</p>
+
+<h2 id="二为什么很多团队会把死信队列用成黑洞">二、为什么很多团队会把死信队列用成黑洞</h2>
+
+<p>这件事往往不是因为团队懒，也不一定是中间件能力不够。<br />
+更常见的原因是，问题在一开始就被定义小了。</p>
+
+<p>系统上线时，团队通常会认真讨论这些事：</p>
+
+<ol>
+  <li>topic 怎么建。</li>
+  <li>consumer 怎么扩。</li>
+  <li>重试次数配多少。</li>
+  <li>死信 topic 叫什么。</li>
+</ol>
+
+<p>但很少有人在同一个设计会议里继续往下问：</p>
+
+<ol>
+  <li>哪些异常适合延迟重试，哪些异常应该直接进入死信？</li>
+  <li>一条死信到底对应哪个业务结果没有兑现？</li>
+  <li>谁来处理这些消息，处理时限是什么？</li>
+  <li>replay 之前要先修代码、修数据，还是先补偿业务？</li>
+  <li>这次处理完以后，后面怎么避免再次发生？</li>
+</ol>
+
+<p>这些问题一旦缺席，DLQ 很容易进入一种看起来“系统没坏”、实际上治理已经缺位的状态：</p>
+
+<ol>
+  <li>队列是有的。</li>
+  <li>监控是粗糙的，甚至没有。</li>
+  <li>死信数据在持续积累。</li>
+  <li>平台方知道“有失败”，但不知道业务后果是什么。</li>
+  <li>业务方知道“有问题”，但不知道该去哪里接这个问题。</li>
+</ol>
+
+<p>Producer 和 Consumer 在事件系统里本来就是解耦的。<br />
+消息一旦发出去，Producer 往往就把自己的职责视为完成。<br />
+如果 Consumer 失败又没有一条明确的异常路径，这个失败就很容易停留在系统内部，既没有自然回流到业务链路，也没有被稳定接住。</p>
+
+<p>所以很多团队不是没有死信队列，而是没有把异常当成一个完整生命周期来治理。</p>
+
+<h2 id="三不是所有异常都应该进死信先看业务上能不能恢复">三、不是所有异常都应该进死信，先看业务上能不能恢复</h2>
+
+<p>一旦把视角从“处理失败消息”切到“恢复业务结果”，很多看起来理所当然的设计都会变。</p>
+
+<p>最典型的一条就是：<br />
+不是所有异常都应该沿着 <code class="language-plaintext highlighter-rouge">失败 -&gt; Retry -&gt; DLQ</code> 这条路径走到底。</p>
+
+<p>因为不同异常，对应的是完全不同的业务状态。</p>
+
+<h3 id="1-临时依赖失败">1. 临时依赖失败</h3>
+
+<p>例如数据库瞬时不可用、RPC 超时、网络抖动。<br />
+这类问题往往不是业务本身错了，而是当前执行环境不稳定。</p>
+
+<p>这种时候最合理的动作通常不是直接进死信，而是：</p>
+
+<ol>
+  <li>延迟重试。</li>
+  <li>指数退避。</li>
+  <li>控制重试预算。</li>
+</ol>
+
+<p>因为很多问题在几分钟内就会自动恢复。<br />
+如果这种异常都快速打进死信，本质上是在把“本来可以自动恢复的问题”升级成“必须人工治理的问题”。</p>
+
+<h3 id="2-条件暂未满足">2. 条件暂未满足</h3>
+
+<p>还有一类情况，严格来说甚至不能叫错误。<br />
+比如依赖数据还没同步、关联资源还没 ready、上游状态尚未推进到可处理阶段。</p>
+
+<p>这类消息的关键不在“失败”，而在“现在还不具备处理条件”。<br />
+它们更适合走等待条件成熟的路径，而不是直接送进死信。</p>
+
+<h3 id="3-数据异常">3. 数据异常</h3>
+
+<p>例如字段缺失、schema 不兼容、关键业务字段非法。<br />
+这类问题通常无法靠重试解决，因为重试不会改变消息内容本身。</p>
+
+<p>这时候进入死信通常是合理的，但它的含义不是“归档失败消息”，而是：</p>
+
+<ol>
+  <li>把问题从主链路隔离出去。</li>
+  <li>保护正常消息继续处理。</li>
+  <li>给后续的数据修复、人工分析和 replay 留出入口。</li>
+</ol>
+
+<h3 id="4-代码缺陷">4. 代码缺陷</h3>
+
+<p>如果消息消费失败是因为 Consumer 本身有 bug，那 DLQ 也不应该被理解成终点。<br />
+它更像一个临时停车场：</p>
+
+<ol>
+  <li>先修代码。</li>
+  <li>再 replay 历史失败消息。</li>
+  <li>确认业务结果被补回。</li>
+</ol>
+
+<p>所以真正该先问的不是“要不要配 DLQ”，而是：</p>
+
+<p><strong>这类异常在业务上能不能自动恢复；如果不能，系统准备怎么把结果补回来。</strong></p>
+
+<h2 id="四dlq-的职责只有三件事不要把它讲成完整方案">四、DLQ 的职责只有三件事，不要把它讲成完整方案</h2>
+
+<p>如果把死信队列讲得太重，很容易把它误写成“异常处理方案”。<br />
+这会直接把设计带偏。</p>
+
+<p>DLQ 真正擅长做的事情，只有三件：</p>
+
+<ol>
+  <li>隔离 Poison Message，避免坏消息反复阻塞主链路。</li>
+  <li>保护系统吞吐，不让少量异常拖垮大盘。</li>
+  <li>为后续治理提供一个明确入口。</li>
+</ol>
+
+<p>它不擅长做的事情也很明确：</p>
+
+<ol>
+  <li>它不会自动告诉你业务后果是什么。</li>
+  <li>它不会替你完成异常分类。</li>
+  <li>它不会替你做数据修复、补偿或 replay。</li>
+  <li>它不会自然长出责任归属和处理时限。</li>
+</ol>
+
+<p>这里其实有一个更具体的起点，就是 <code class="language-plaintext highlighter-rouge">Poison Message</code>。<br />
+这类消息的典型特征是：无论重试多少次都很难成功，还会持续阻塞消费者。<br />
+如果系统没有隔离机制，一条坏消息就可能把后面的正常消息一起拖住。DLQ 在这里最核心的价值，就是把这种消息从主链路里摘出来。</p>
+
+<p>所以我更愿意把 DLQ 理解成异常路径里的一个隔离点，而不是整套方案。<br />
+很多系统不是没有 DLQ，而是把“有 DLQ”误当成“异常治理已经完整”。结果就是主链路吞吐保护住了，业务闭环却没有真正建立。</p>
+
+<h2 id="五事件驱动系统不能只设计正常路径还必须把异常路径单独设计出来">五、事件驱动系统不能只设计正常路径，还必须把异常路径单独设计出来</h2>
+
+<p>正常路径大家都很熟：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Producer -&gt; MQ -&gt; Consumer -&gt; 业务处理成功
+</code></pre></div></div>
+
+<p>这条链路很好讲，也很好画架构图。<br />
+团队会讨论 topic 怎么拆、吞吐怎么扩、消费模型怎么选、数据怎么落库。</p>
+
+<p>但真正让系统在长期运行中变重的，往往不是正常路径，而是异常路径。</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Consumer 失败
+-&gt; Retry
+-&gt; Delay Retry
+-&gt; Dead Letter Queue
+-&gt; 分析
+-&gt; Replay / 补偿
+-&gt; 复盘
+</code></pre></div></div>
+
+<p>如果这条路径没有在设计阶段被显式定义，异常就会在系统内部沉积：</p>
+
+<ol>
+  <li>有些消息不断重试，消耗算力。</li>
+  <li>有些消息进入死信后长期没人处理。</li>
+  <li>有些业务结果一直没有兑现，但没有人立刻感知。</li>
+  <li>有些系统在整体可用的表象下，默默接受了一部分不一致。</li>
+</ol>
+
+<p>这也是为什么我越来越觉得，事件驱动系统不应该只追求“消息发出去了、链路能跑通”。<br />
+更关键的是：</p>
+
+<p><strong>当消息处理失败时，系统有没有一条明确的异常路径，把这个失败从技术事件变成可治理的业务对象。</strong></p>
+
+<p>这条路径一旦缺失，DLQ 再多也只是把问题换个地方放。</p>
+
+<h2 id="六真正要建设的是一条异常治理链">六、真正要建设的，是一条异常治理链</h2>
+
+<p>如果死信队列只是异常路径里的一个节点，那真正需要建设的能力就会变得更清楚。</p>
+
+<p>在我看来，一个能长期运转的异常治理链，至少要有五步：</p>
+
+<h3 id="1-发现">1. 发现</h3>
+
+<p>系统必须先能看见异常，而不是靠人碰巧发现。</p>
+
+<p>最基础的可观测项至少包括：</p>
+
+<ol>
+  <li>consumer failure rate</li>
+  <li>retry rate</li>
+  <li>DLQ backlog</li>
+  <li>消费延迟</li>
+  <li>replay 成功率</li>
+</ol>
+
+<p>但只盯技术指标还不够。<br />
+更有价值的是把它们和业务对象挂起来：哪个租户、哪条订单链路、哪类权益发放、哪种补偿动作正在失败。</p>
+
+<h3 id="2-分类">2. 分类</h3>
+
+<p>异常不能只按“失败了”来处理。<br />
+至少要回答：</p>
+
+<ol>
+  <li>这是临时故障，还是确定性失败？</li>
+  <li>这是依赖抖动，还是数据问题？</li>
+  <li>这是可以自动恢复的，还是必须人工介入的？</li>
+  <li>这条消息到底对应哪个业务结果？</li>
+</ol>
+
+<p>没有分类，后面的处置一定会混乱。</p>
+
+<h3 id="3-分析">3. 分析</h3>
+
+<p>真正的分析不是看一眼日志就结束。<br />
+它要回答的是根因在哪里，以及业务影响是什么。</p>
+
+<p>例如：</p>
+
+<ol>
+  <li>是消息数据本身坏了。</li>
+  <li>是消费逻辑有 bug。</li>
+  <li>是外部依赖不可用。</li>
+  <li>是系统设计把不该重试的问题反复重试了。</li>
+</ol>
+
+<h3 id="4-处置">4. 处置</h3>
+
+<p>这一步才是异常治理真正的价值所在。<br />
+当原因确认之后，系统要明确采取哪种恢复动作：</p>
+
+<ol>
+  <li>replay 历史消息。</li>
+  <li>数据修复后再 replay。</li>
+  <li>直接走业务补偿。</li>
+  <li>明确放弃，并留下审计痕迹。</li>
+</ol>
+
+<p>注意，处置目标不是“把死信清空”，而是“把业务结果补回来，或者把无法补回的边界说清楚”。</p>
+
+<h3 id="5-复盘">5. 复盘</h3>
+
+<p>如果异常处理到 replay 为止，系统只是在不停擦地。<br />
+真正的治理闭环，一定还要回到系统本身：</p>
+
+<ol>
+  <li>重试策略是不是太粗。</li>
+  <li>数据校验是不是太晚。</li>
+  <li>是否缺少租户级监控。</li>
+  <li>是否应该增加 replay 工具或数据修复工具。</li>
+  <li>责任边界是不是本来就不清楚。</li>
+</ol>
+
+<p>异常复盘做得多了，系统才会逐渐从“会出错”走向“出错后还能被治理”。</p>
+
+<h2 id="七从工程落地看至少要补齐三类能力">七、从工程落地看，至少要补齐三类能力</h2>
+
+<p>如果要把这篇文章压成几条可执行的建议，我会优先补这三类能力。</p>
+
+<h3 id="1-让死信和业务对象挂上钩">1. 让死信和业务对象挂上钩</h3>
+
+<p>不要让 <code class="language-plaintext highlighter-rouge">DLQ</code> 只是 broker 上的一个名字。<br />
+至少要能回答：</p>
+
+<ol>
+  <li>这条死信对应哪个业务动作。</li>
+  <li>影响的业务对象是谁。</li>
+  <li>当前责任归属在哪个系统、哪个团队。</li>
+</ol>
+
+<p>如果死信消息和业务对象之间没有映射关系，后续所有治理动作都会很慢。</p>
+
+<h3 id="2-给死信建立明确的处理流程和时限">2. 给死信建立明确的处理流程和时限</h3>
+
+<p>很多团队的问题不是不会 replay，而是没人知道什么时候该处理、谁来处理。</p>
+
+<p>所以流程至少要明确：</p>
+
+<ol>
+  <li>发现后谁接单。</li>
+  <li>谁做分类。</li>
+  <li>谁决定是补偿、修数据还是 replay。</li>
+  <li>什么级别的异常需要升级。</li>
+  <li>多久不处理就算超时。</li>
+</ol>
+
+<p>没有这些定义，死信队列里的数据只会越来越旧。</p>
+
+<h3 id="3-提前准备-replay-和修复工具">3. 提前准备 replay 和修复工具</h3>
+
+<p>如果每次处理死信都要临时写脚本，治理成本会非常高。<br />
+系统规模一上来，这种方式一定撑不住。</p>
+
+<p>更现实的做法是把这些能力前置成工具：</p>
+
+<ol>
+  <li>查看死信详情。</li>
+  <li>按条件筛选同类异常。</li>
+  <li>修复数据后重新投递。</li>
+  <li>保留 replay 审计记录。</li>
+</ol>
+
+<p>你不一定一开始就做成一套“异常处理平台”，但至少要让异常治理不再完全依赖人工体力。</p>
+
+<p>系统规模再往上走，这三类能力通常还会继续演进成平台能力。<br />
+因为当 Topic、Consumer 和死信队列的数量同时增长以后，如果每个系统都各自处理异常，治理成本很快就会失控。<br />
+到那一步，统一的监控、分析、回放和审计，往往就不是锦上添花，而是必要基础设施。</p>
+
+<h2 id="八写在最后">八、写在最后</h2>
+
+<p>死信队列当然有价值，而且在成熟系统里通常是必要的。<br />
+但它真正的价值，不是“系统终于有地方放失败消息了”，而是：</p>
+
+<ol>
+  <li>它隔离了坏消息，保护主链路吞吐。</li>
+  <li>它把无法自动恢复的问题显式暴露出来。</li>
+  <li>它迫使团队正视一件事：系统里有一些业务结果，并没有像你想的那样自然完成。</li>
+</ol>
+
+<p>所以我不太愿意把 DLQ 写成一个“消息中间件功能点”。<br />
+它更像一面镜子。</p>
+
+<p>一个团队怎么对待死信队列，往往就怎么对待异常治理。<br />
+如果死信长期堆积却没人关心，说明系统并没有真正建立异常路径；<br />
+如果死信能够被及时发现、分类、修复、replay 和复盘，说明团队已经开始把异常当成一种系统能力来治理。</p>
+
+<p>这类问题本质上也和我在 <a href="/2026/02/26/complex-business-governance/">《复杂业务治理：思考》</a> 里写的是一回事：<br />
+系统真正难的，往往不是把正常路径跑通，而是把长期例外纳入治理。</p>
+
+<p>这篇文章最后只想落一句话：</p>
+
+<p><strong>死信队列的工程价值，不在于存储失败消息，而在于把“业务未完成”纳入一条可治理的异常路径。</strong></p>
+
+<p>只有把这条路径设计出来，进入死信才不是终点，而只是治理的开始。</p>
+
+    </section>
+
+    
+  </div>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客编辑型杂志风重设计 | 我的博客</title>
+    <meta name="description" content="个人笔记与随想">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客编辑型杂志风重设计 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客编辑型杂志风重设计" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="个人笔记与随想" />
+<meta property="og:description" content="个人笔记与随想" />
+<link rel="canonical" href="https://blog.zongqir.com/docs/plans/2026-03-13-editorial-blog-redesign-design/" />
+<meta property="og:url" content="https://blog.zongqir.com/docs/plans/2026-03-13-editorial-blog-redesign-design/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-13T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客编辑型杂志风重设计" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-03-13T00:00:00+08:00","datePublished":"2026-03-13T00:00:00+08:00","description":"个人笔记与随想","headline":"博客编辑型杂志风重设计","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zongqir.com/docs/plans/2026-03-13-editorial-blog-redesign-design/"},"url":"https://blog.zongqir.com/docs/plans/2026-03-13-editorial-blog-redesign-design/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="背景">背景</h1>
+
+<p>当前博客已经具备基础的信息架构：</p>
+
+<ul>
+  <li>首页有精选、热门、专题连载和文章列表</li>
+  <li>文章页有摘要、标签、阅读时长和自动目录</li>
+  <li>归档、标签、关于等关键页面都已存在</li>
+</ul>
+
+<p>但整体视觉语言仍然偏传统技术博客：</p>
+
+<ol>
+  <li>首页更像功能列表，而不是有明确判断和策展感的刊物入口。</li>
+  <li>文章页已经具备阅读辅助能力，但排版和版面节奏还不够“出版化”。</li>
+  <li>整站风格虽有暗色基调，但更接近常见深色主题，而不是“编辑型技术杂志”。</li>
+</ol>
+
+<p>这次改造的目标不是重写内容，也不是给博客加更多功能，而是在不改动文章正文立场和主体内容的前提下，重做博客外壳与阅读体验。</p>
+
+<h1 id="目标">目标</h1>
+
+<p>本次重设计要同时满足以下约束：</p>
+
+<ol>
+  <li>首页建立“有判断的技术刊物”气质，而不是个人自我介绍页。</li>
+  <li>不强迫作者书写“我是谁”，避免把首页做成个人展示卡。</li>
+  <li>阅读体验优先，特别是长文阅读、标题层级、正文节奏和继续阅读路径。</li>
+  <li>保留现有内容资产与信息组织能力，不大规模重写 frontmatter 或文章正文。</li>
+  <li>视觉上形成明确识别度，但不过度炫技，不损害可读性。</li>
+</ol>
+
+<h1 id="设计结论">设计结论</h1>
+
+<p>最终采用：</p>
+
+<ul>
+  <li>方向：编辑型技术杂志感</li>
+  <li>首页定位：议题主编型，而非作者介绍型</li>
+  <li>文章页定位：长文优先、刊物式阅读体验</li>
+</ul>
+
+<p>不采用以下方向：</p>
+
+<ul>
+  <li>不做强调个人履历和头像的个人品牌首页</li>
+  <li>不做偏后台面板感的知识库首页</li>
+  <li>不做强插画、强装饰、维护成本过高的封面站</li>
+</ul>
+
+<h1 id="首页信息架构">首页信息架构</h1>
+
+<p>首页采用以下阅读顺序：</p>
+
+<ol>
+  <li>主编导语区</li>
+  <li>本期重点文章</li>
+  <li>专题连载与近期文章</li>
+  <li>站点状态类辅助信息</li>
+</ol>
+
+<h2 id="1-主编导语区">1. 主编导语区</h2>
+
+<p>第一屏不写“宗旗是谁”，而是直接回答：</p>
+
+<ul>
+  <li>这里长期讨论什么问题</li>
+  <li>这些文章帮助读者看清什么取舍</li>
+</ul>
+
+<p>结构采用双区：</p>
+
+<ul>
+  <li>左侧为强观点主标题与 2 到 3 句导语</li>
+  <li>右侧为“当前关注议题”列表，承接站点长期母题</li>
+</ul>
+
+<p>议题建议围绕：</p>
+
+<ul>
+  <li>SaaS 化</li>
+  <li>架构演进</li>
+  <li>稳定性治理</li>
+  <li>性能优化</li>
+</ul>
+
+<h2 id="2-本期重点文章">2. 本期重点文章</h2>
+
+<p>保留现有精选文章逻辑，但表达方式升级为“封面导读”：</p>
+
+<ul>
+  <li>文章标题为主视觉焦点</li>
+  <li>元信息压低权重</li>
+  <li>描述和标签形成继续阅读入口</li>
+</ul>
+
+<p>这个区块的角色不是“推荐卡片”，而是当前站点最值得先读的一篇文章。</p>
+
+<h2 id="3-专题连载与近期文章">3. 专题连载与近期文章</h2>
+
+<p>专题连载用于承接“体系化阅读”，近期文章用于承接“持续更新”。</p>
+
+<p>两者都保留，但视觉上应明显区别：</p>
+
+<ul>
+  <li>专题更像栏目入口</li>
+  <li>近期文章更像期刊目录</li>
+</ul>
+
+<h2 id="4-辅助信息">4. 辅助信息</h2>
+
+<p>站点活跃、内容规模、连载数量等状态保留，但降级为低权重辅助信号。</p>
+
+<p>它们用于增加真实更新感，不参与第一屏叙事中心。</p>
+
+<h1 id="文章页设计">文章页设计</h1>
+
+<p>文章页采用“刊首导语 + 稳定正文列 + 轻量辅助边栏”的阅读模型。</p>
+
+<h2 id="1-刊首导语">1. 刊首导语</h2>
+
+<p>文章头部保留现有信息，但重新组织为更清晰的阅读入口：</p>
+
+<ul>
+  <li>标题</li>
+  <li>摘要</li>
+  <li>发布时间 / 更新时间</li>
+  <li>阅读时长</li>
+  <li>标签</li>
+</ul>
+
+<p>目标是让读者在很短时间内完成“这篇文章是否值得投入阅读”的判断。</p>
+
+<h2 id="2-正文排版">2. 正文排版</h2>
+
+<p>正文排版是本次改造的核心。</p>
+
+<p>需要重点优化：</p>
+
+<ul>
+  <li>正文列宽</li>
+  <li>标题层级</li>
+  <li>段落留白</li>
+  <li>列表、引用、代码块和表格样式</li>
+  <li>标题与段落之间的节奏关系</li>
+</ul>
+
+<p>目标不是做成文档站，而是让博客长文读起来更像经过编辑处理的出版页面。</p>
+
+<h2 id="3-目录">3. 目录</h2>
+
+<p>保留现有自动目录能力，延续右侧固定、移动端折叠的方案。</p>
+
+<p>目录只作为阅读辅助，不作为视觉中心：</p>
+
+<ul>
+  <li>桌面端弱化工具感</li>
+  <li>移动端默认收起</li>
+  <li>当前项高亮表达保持轻量</li>
+</ul>
+
+<h2 id="4-继续阅读">4. 继续阅读</h2>
+
+<p>相关文章区块改造为“继续阅读”，强调顺滑的阅读延伸，而不是标准化推荐模块。</p>
+
+<p>优先延续专题和相近议题的阅读路径。</p>
+
+<h1 id="视觉语言">视觉语言</h1>
+
+<h2 id="1-总体气质">1. 总体气质</h2>
+
+<p>整体视觉采用“夜间编辑部”而不是“深色程序员主题”。</p>
+
+<p>特征如下：</p>
+
+<ul>
+  <li>深色底，但不是纯黑</li>
+  <li>含墨蓝、烟灰、暖纸张感的综合色温</li>
+  <li>保留理性气质，但弱化工具界面感</li>
+</ul>
+
+<h2 id="2-排版语气">2. 排版语气</h2>
+
+<p>排版比装饰更重要。</p>
+
+<p>核心做法：</p>
+
+<ul>
+  <li>首页主标题具备更强张力</li>
+  <li>正文标题层级清晰</li>
+  <li>辅助文字和元信息刻意降噪</li>
+  <li>卡片弱组件化，强版面化</li>
+</ul>
+
+<h2 id="3-组件表达">3. 组件表达</h2>
+
+<p>不采用典型 SaaS 面板视觉。</p>
+
+<p>将以以下方式替代：</p>
+
+<ul>
+  <li>刊物式分隔线</li>
+  <li>更轻的卡片边界</li>
+  <li>更像导读条目和栏目块的列表样式</li>
+  <li>更克制的 hover 和滚动反馈</li>
+</ul>
+
+<h2 id="4-动效原则">4. 动效原则</h2>
+
+<p>只做少量高价值动效：</p>
+
+<ul>
+  <li>首屏分层出现</li>
+  <li>卡片轻微位移或高亮</li>
+  <li>目录和阅读进度的安静反馈</li>
+</ul>
+
+<p>禁止使用炫技型大动效，避免破坏阅读专注。</p>
+
+<h1 id="范围边界">范围边界</h1>
+
+<p>本次改造只处理博客壳层与阅读体验层，不改动内容立场。</p>
+
+<h2 id="会修改的内容">会修改的内容</h2>
+
+<ul>
+  <li>首页模板结构</li>
+  <li>默认布局的导航和页脚</li>
+  <li>文章页头部和相关文章区域结构</li>
+  <li>全站样式系统</li>
+  <li>少量与阅读体验直接相关的脚本</li>
+  <li>归档、标签、关于等页面的展示层</li>
+</ul>
+
+<h2 id="不修改的内容">不修改的内容</h2>
+
+<ul>
+  <li>已有文章正文内容</li>
+  <li>作者观点和论证</li>
+  <li>文章 frontmatter 语义</li>
+  <li>站点构建方式</li>
+  <li>标签和专题的核心数据来源</li>
+</ul>
+
+<h1 id="验收标准">验收标准</h1>
+
+<p>本次设计完成的标准如下：</p>
+
+<ol>
+  <li>首页第一屏不出现作者自我介绍，但能清晰建立站点判断气质。</li>
+  <li>首页能形成“导语 -&gt; 重点文章 -&gt; 专题/近期文章”的清晰阅读路径。</li>
+  <li>文章页正文阅读体验明显提升，尤其是长文排版、代码块和引用样式。</li>
+  <li>目录继续可用，但不会抢正文入口。</li>
+  <li>整站风格与当前内容调性一致，不会让博客看起来像另一种人格。</li>
+  <li>归档、标签、关于等页面在新视觉体系下保持统一。</li>
+  <li>Jekyll 构建通过，关键页面可正常渲染。</li>
+</ol>
+
+<h1 id="实施建议">实施建议</h1>
+
+<p>实现阶段建议按以下顺序推进：</p>
+
+<ol>
+  <li>先重构全站视觉 token 和基础排版体系</li>
+  <li>再重做首页第一屏与内容区块</li>
+  <li>接着优化文章页头部、正文和继续阅读区</li>
+  <li>最后统一归档、标签、关于等次级页面的壳层表达</li>
+</ol>
+
+<p>这样可以在不触碰文章内容的前提下，最大化提升阅读体验与整站辨识度。</p>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

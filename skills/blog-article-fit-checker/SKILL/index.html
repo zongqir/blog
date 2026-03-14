@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文章类型匹配与质量尺子 | 我的博客</title>
+    <meta name="description" content="判断技术博客属于哪类文章，并给出对应的质量尺子。Use when the user wants to know what kind of article a draft really is, whether it is being judged by the wrong standard, whether quality rules are over-shaping the article, or which quality checks actually apply. Focuses on article-type matching, fit-for-purpose quality review, and anti-template judgment rather than universal publish gates.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>文章类型匹配与质量尺子 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="文章类型匹配与质量尺子" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="判断技术博客属于哪类文章，并给出对应的质量尺子。Use when the user wants to know what kind of article a draft really is, whether it is being judged by the wrong standard, whether quality rules are over-shaping the article, or which quality checks actually apply. Focuses on article-type matching, fit-for-purpose quality review, and anti-template judgment rather than universal publish gates." />
+<meta property="og:description" content="判断技术博客属于哪类文章，并给出对应的质量尺子。Use when the user wants to know what kind of article a draft really is, whether it is being judged by the wrong standard, whether quality rules are over-shaping the article, or which quality checks actually apply. Focuses on article-type matching, fit-for-purpose quality review, and anti-template judgment rather than universal publish gates." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-article-fit-checker/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-article-fit-checker/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="文章类型匹配与质量尺子" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"判断技术博客属于哪类文章，并给出对应的质量尺子。Use when the user wants to know what kind of article a draft really is, whether it is being judged by the wrong standard, whether quality rules are over-shaping the article, or which quality checks actually apply. Focuses on article-type matching, fit-for-purpose quality review, and anti-template judgment rather than universal publish gates.","headline":"文章类型匹配与质量尺子","url":"https://blog.zongqir.com/skills/blog-article-fit-checker/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="文章类型匹配与质量尺子">文章类型匹配与质量尺子</h1>
+
+<h2 id="核心定位">核心定位</h2>
+
+<p>这个 skill 不回答“这篇是不是标准技术博客”。</p>
+
+<p>它先回答三件事：</p>
+
+<ol>
+  <li>这篇文章本质上是哪一类。</li>
+  <li>现在是不是在被错误的质量标准要求。</li>
+  <li>这篇文章该用哪把尺子，而不是被哪套模板硬套。</li>
+</ol>
+
+<p>它的职责不是把文章修成“方案文”或者“复盘文”。<br />
+它的职责是阻止错误模板把文章写坏。</p>
+
+<p>补充参考：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">references/write-principles.md</code> 归档了原始 <code class="language-plaintext highlighter-rouge">write.md</code>。</li>
+  <li>其中最重要的保留口径是：先有突出亮点，再谈完整性。</li>
+  <li>这个参考文件不是第二套总章程，而是给当前 skill 和相关 blog skill 提供共同参考。</li>
+</ol>
+
+<h2 id="硬底线">硬底线</h2>
+
+<p>不分文章类型，先过三条最低要求：</p>
+
+<ol>
+  <li>这篇文章在说什么问题或观点。</li>
+  <li>作者的判断依据是什么。</li>
+  <li>作者目前不确定什么，或者边界在哪里。</li>
+</ol>
+
+<p>如果这三条都答不上来，文章通常还不适合继续往发布走。</p>
+
+<h2 id="亮点优先">亮点优先</h2>
+
+<p>不要要求一篇文章面面俱到。<br />
+先判断这篇文章最值得读者带走的一个点是什么。</p>
+
+<p>亮点通常落在这几类里：</p>
+
+<ol>
+  <li>一个高价值决策。</li>
+  <li>一个关键踩坑。</li>
+  <li>一个可复用框架。</li>
+  <li>一个反直觉结论。</li>
+  <li>一个可验证结果。</li>
+</ol>
+
+<p>如果一篇文章主亮点已经成立，就不要为了追求“完整模板”把它写散。</p>
+
+<p>再补一条亮点边界：</p>
+
+<ol>
+  <li>不要把接近行业公认基线的东西误写成主亮点。</li>
+  <li>像监控、告警、重试、幂等、死信、隔离、限流、降级这类公共卫生项，默认更适合写成前提、背景、欠账或边界，而不是“新的重大认识”。</li>
+  <li>真正值得成为文章亮点的，通常是基线之上的判断、权衡、结构代价和系统边界。</li>
+</ol>
+
+<h2 id="瑕疵声明">瑕疵声明</h2>
+
+<p>允许文章不完整，但必须把不完整写出来。<br />
+可以有瑕疵，不能装作没有瑕疵。</p>
+
+<p>常见可接受表达：</p>
+
+<ol>
+  <li>这是阶段性判断，还缺长期数据。</li>
+  <li>这里主要是个人偏好，不是团队标准。</li>
+  <li>这部分尚未验证，先记录观察点。</li>
+</ol>
+
+<h2 id="默认文章类型">默认文章类型</h2>
+
+<p>先判断主类型，再看是否有次类型。<br />
+不要一上来把一篇文章判成“全都要”。</p>
+
+<h3 id="1-方案--复盘文">1. 方案 / 复盘文</h3>
+
+<p>适用信号：</p>
+
+<ol>
+  <li>文章在回答“当时怎么选”“最后怎么做”。</li>
+  <li>正文会展开方案、权衡、实现、结果。</li>
+  <li>读者期待拿到可复用的做法或迁移顺序。</li>
+</ol>
+
+<p>这类文章适合看：</p>
+
+<ol>
+  <li>决策点。</li>
+  <li>trade-off。</li>
+  <li>落地路径。</li>
+  <li>验证方式。</li>
+</ol>
+
+<h3 id="2-判断文">2. 判断文</h3>
+
+<p>适用信号：</p>
+
+<ol>
+  <li>文章重点是把一个问题看清、说准。</li>
+  <li>文章核心价值是判断，而不是完整方案。</li>
+  <li>作者当时未必已经有完整落地路径。</li>
+</ol>
+
+<p>这类文章适合看：</p>
+
+<ol>
+  <li>问题有没有说准。</li>
+  <li>前提和边界是否交代清楚。</li>
+  <li>判断依据是否成立。</li>
+  <li>有没有把不知道的部分硬补成结论。</li>
+</ol>
+
+<p>不默认要求：</p>
+
+<ol>
+  <li>完整落地方案。</li>
+  <li>迁移步骤。</li>
+  <li>结果指标。</li>
+</ol>
+
+<h3 id="3-拆解文">3. 拆解文</h3>
+
+<p>适用信号：</p>
+
+<ol>
+  <li>文章重点在拆对象、拆层次、拆矛盾。</li>
+  <li>文章价值来自把复杂问题看清，而不是给最终方案。</li>
+  <li>正文往往围绕对象、边界、职责、故障面推进。</li>
+</ol>
+
+<p>这类文章适合看：</p>
+
+<ol>
+  <li>拆分维度是否稳定。</li>
+  <li>各层关系是否清楚。</li>
+  <li>抽象词有没有压回具体对象。</li>
+  <li>有没有把并列信息误写成主线节点。</li>
+</ol>
+
+<p>不默认要求：</p>
+
+<ol>
+  <li>最终实施方案。</li>
+  <li>前后指标对比。</li>
+  <li>统一决策框架。</li>
+</ol>
+
+<h3 id="4-观察文">4. 观察文</h3>
+
+<p>适用信号：</p>
+
+<ol>
+  <li>文章重点是描述现象、识别模式、指出系统状态。</li>
+  <li>文章主要价值是让读者少误判，而不是给出完整打法。</li>
+  <li>内容更像“我后来越来越确定什么”，不是“我已经完整做完什么”。</li>
+</ol>
+
+<p>这类文章适合看：</p>
+
+<ol>
+  <li>观察对象是否具体。</li>
+  <li>现象和判断之间有没有跳步。</li>
+  <li>有没有把局部经验写成普遍规律。</li>
+  <li>有没有拿空洞感悟冒充洞见。</li>
+</ol>
+
+<p>不默认要求：</p>
+
+<ol>
+  <li>完整闭环结果。</li>
+  <li>统一操作手册。</li>
+  <li>每节都落到执行步骤。</li>
+</ol>
+
+<h3 id="5-过程文">5. 过程文</h3>
+
+<p>适用信号：</p>
+
+<ol>
+  <li>文章重点是记录当时怎么犹豫、怎么分叉、怎么慢慢想清楚。</li>
+  <li>价值来自真实过程，而不是最后整理出的标准答案。</li>
+  <li>文中允许保留未闭合的问题。</li>
+</ol>
+
+<p>这类文章适合看：</p>
+
+<ol>
+  <li>过程是否真实。</li>
+  <li>分叉与犹豫是否有信息量。</li>
+  <li>有没有为了显得完整把过程写成结果。</li>
+  <li>有没有把后来知道的结论强塞回当时视角。</li>
+</ol>
+
+<p>不默认要求：</p>
+
+<ol>
+  <li>全部问题都收束成结论。</li>
+  <li>一定有最佳实践。</li>
+  <li>一定有复用模板。</li>
+</ol>
+
+<h2 id="判断顺序">判断顺序</h2>
+
+<p>按这个顺序走，不要跳：</p>
+
+<ol>
+  <li>先看开头承诺的是什么。</li>
+  <li>再看正文主要在提供什么价值。</li>
+  <li>再看读者真正会从这篇里拿走什么。</li>
+  <li>最后再判断哪些质量项适用，哪些不适用。</li>
+</ol>
+
+<p>如果一篇文章主承诺是“看清问题”，就不要拿“为什么不给完整落地方案”判它不过线。<br />
+如果一篇文章主承诺是“给出方案复盘”，那就不能只停在抽象判断。</p>
+
+<h2 id="常见误判">常见误判</h2>
+
+<h3 id="1-把所有文章都按方案文判断">1. 把所有文章都按方案文判断</h3>
+
+<p>这是最常见的问题。</p>
+
+<p>表现通常是：</p>
+
+<ol>
+  <li>强行要求落地步骤。</li>
+  <li>强行要求结果指标。</li>
+  <li>强行要求统一决策框架。</li>
+  <li>强行要求“为什么选 A 不选 B”必须完整闭环。</li>
+</ol>
+
+<p>这会把判断文、拆解文、观察文、过程文全部写假。</p>
+
+<h3 id="2-把没有完整方案误判成质量差">2. 把“没有完整方案”误判成“质量差”</h3>
+
+<p>有些文章的价值就在于把问题看准。<br />
+当时没有完整方案，不是缺陷；硬补一套方案才是缺陷。</p>
+
+<h3 id="3-把没有指标误判成没有价值">3. 把“没有指标”误判成“没有价值”</h3>
+
+<p>不是每篇文章都在讲结果。<br />
+有些文章写的是系统状态、问题拆解、边界识别，这些不一定天然带前后指标。</p>
+
+<h3 id="4-把没有框架误判成结构不清">4. 把“没有框架”误判成“结构不清”</h3>
+
+<p>结构清楚，不等于必须有方法论框架。<br />
+很多文章只要对象、边界、推进线清楚，就已经成立。</p>
+
+<h3 id="5-把行业基线误判成文章洞见">5. 把行业基线误判成文章洞见</h3>
+
+<p>这也是高频误判。</p>
+
+<p>表现通常是：</p>
+
+<ol>
+  <li>把成熟团队默认会关注的公共卫生项写成主发现。</li>
+  <li>把“以前没做到，现在补上了”写成高阶判断，而不是阶段性欠账。</li>
+  <li>文章停留在“原来这个要做”，没有继续展开更高一层的系统问题。</li>
+</ol>
+
+<p>这会让文章的亮点错位，也可能向读者暴露错误成熟度信号。</p>
+
+<h2 id="低质量信号">低质量信号</h2>
+
+<p>这部分不是通用模板，而是跨类型都成立的坏信号。</p>
+
+<h3 id="通用低质量信号">通用低质量信号</h3>
+
+<ol>
+  <li>文章承诺和正文实际提供的内容不一致。</li>
+  <li>抽象词很多，但具体对象、动作、状态很少。</li>
+  <li>为了显得完整，补了作者当时并没有的方案、指标或结论。</li>
+  <li>用方法论口气盖过真实内容，看起来像在发表正确意见。</li>
+  <li>把行业基线写成主洞见，导致文章亮点和作者能力画像一起错位。</li>
+</ol>
+
+<h3 id="类型错配信号">类型错配信号</h3>
+
+<ol>
+  <li>判断文被写成假方案文。</li>
+  <li>拆解文被写成观点拼盘。</li>
+  <li>观察文被写成空洞感悟。</li>
+  <li>过程文被事后整理成过度工整的标准答案。</li>
+  <li>方案文却没有真正交代决策点、代价和落地对象。</li>
+</ol>
+
+<h2 id="类型化自检">类型化自检</h2>
+
+<p>不是每篇都过同一张清单。<br />
+先判断类型，再用对应自检。</p>
+
+<h3 id="1-方案--复盘文自检">1. 方案 / 复盘文自检</h3>
+
+<ol>
+  <li>有没有把决策点说清。</li>
+  <li>有没有交代为什么这样选。</li>
+  <li>有没有写清对象、代价和边界。</li>
+  <li>有没有给出落地路径或验证方式。</li>
+</ol>
+
+<h3 id="2-判断文自检">2. 判断文自检</h3>
+
+<ol>
+  <li>问题有没有说准。</li>
+  <li>判断依据是否可理解。</li>
+  <li>有没有把不知道的部分假装知道。</li>
+  <li>读完后读者能不能明白“为什么会这样判断”。</li>
+  <li>有没有把行业基线本身写成主发现，而没有继续推进到真正值得判断的那一层。</li>
+</ol>
+
+<h3 id="3-拆解文自检">3. 拆解文自检</h3>
+
+<ol>
+  <li>拆分维度是否稳定。</li>
+  <li>对象和边界是否清楚。</li>
+  <li>各层关系是否能被读者跟住。</li>
+  <li>有没有用空概念代替真实系统状态。</li>
+  <li>有没有把公共卫生项写得煞有其事，反而压住了更关键的结构关系。</li>
+</ol>
+
+<h3 id="4-观察文自检">4. 观察文自检</h3>
+
+<ol>
+  <li>观察对象是否具体。</li>
+  <li>现象和判断之间是否有足够支撑。</li>
+  <li>有没有拿局部现象硬推普遍规律。</li>
+  <li>有没有把感受写成分析。</li>
+</ol>
+
+<h3 id="5-过程文自检">5. 过程文自检</h3>
+
+<ol>
+  <li>过程是否真实而不是事后排演。</li>
+  <li>犹豫和分叉是否带来新信息。</li>
+  <li>有没有为了收尾把未解问题硬写成已解决。</li>
+  <li>读者能不能理解作者当时为什么会那样想。</li>
+</ol>
+
+<h2 id="发布强度档位">发布强度档位</h2>
+
+<p>除了“文章类型”，还可以补看“发布强度档位”。<br />
+这不是第二套类型系统，而是一个更粗的门槛辅助。</p>
+
+<h3 id="1-决策复盘档">1. 决策复盘档</h3>
+
+<p>适用：架构选型、线上故障复盘、重大技术取舍。</p>
+
+<p>建议重点看：</p>
+
+<ol>
+  <li>开头是否说清问题、影响、成功标准。</li>
+  <li>有没有至少一个明确决策及依据。</li>
+  <li>有没有 trade-off、失败路径或回滚点。</li>
+  <li>有没有验证方式。</li>
+</ol>
+
+<h3 id="2-实践笔记档">2. 实践笔记档</h3>
+
+<p>适用：工具实践、迁移过程、阶段性总结。</p>
+
+<p>建议重点看：</p>
+
+<ol>
+  <li>场景和约束是否清楚。</li>
+  <li>有没有核心步骤或关键片段。</li>
+  <li>有没有至少一个坑和处理方式。</li>
+  <li>有没有不建议照搬的场景。</li>
+</ol>
+
+<h3 id="3-个人感想档">3. 个人感想档</h3>
+
+<p>适用：职业反思、方法论感受、学习心得。</p>
+
+<p>建议重点看：</p>
+
+<ol>
+  <li>是否明确是个人视角。</li>
+  <li>有没有至少一个具体经历或触发事件。</li>
+  <li>有没有说明这条感想不成立的场景。</li>
+</ol>
+
+<h2 id="输出要求">输出要求</h2>
+
+<p>使用这个 skill 时，默认输出四部分：</p>
+
+<ol>
+  <li>文章主类型：
+    <ul>
+      <li>主类型是什么。</li>
+      <li>有没有次类型。</li>
+    </ul>
+  </li>
+  <li>当前错配：
+    <ul>
+      <li>现在被什么错误标准要求了。</li>
+      <li>这些要求为什么会把文章写坏。</li>
+    </ul>
+  </li>
+  <li>适用质量尺子：
+    <ul>
+      <li>这类文章该检查什么。</li>
+      <li>不该强求什么。</li>
+    </ul>
+  </li>
+  <li>修正建议：
+    <ul>
+      <li>哪些通用模板要求要拿掉。</li>
+      <li>接下来更适合用哪个 blog skill。</li>
+      <li>如存在行业基线外显风险，要明确指出问题出在亮点选错、framing 错位，还是边界声明不足。</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要拿一套模板判断所有文章。</li>
+  <li>不要把“没有方案”自动判成质量差。</li>
+  <li>不要把“没有指标”自动判成没价值。</li>
+  <li>不要为了过门禁逼作者补自己当时没有的内容。</li>
+  <li>不要把文章修成比真实过程更工整的假成品。</li>
+  <li>不要把行业基线默认当成文章亮点，除非文章真正讨论的是这些基线为什么在特定场景下会失效、冲突或长歪。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

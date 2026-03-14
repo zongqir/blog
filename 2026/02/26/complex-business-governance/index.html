@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>复杂业务治理：思考 | 我的博客</title>
+    <meta name="description" content="在 ToB 里做久了才明白，复杂度治理真正的起点不是代码，而是写代码之前的判断。">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>复杂业务治理：思考 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="复杂业务治理：思考" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="在 ToB 里做久了才明白，复杂度治理真正的起点不是代码，而是写代码之前的判断。" />
+<meta property="og:description" content="在 ToB 里做久了才明白，复杂度治理真正的起点不是代码，而是写代码之前的判断。" />
+<link rel="canonical" href="https://blog.zongqir.com/2026/02/26/complex-business-governance/" />
+<meta property="og:url" content="https://blog.zongqir.com/2026/02/26/complex-business-governance/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-02-26T10:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="复杂业务治理：思考" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-02-26T10:00:00+08:00","datePublished":"2026-02-26T10:00:00+08:00","description":"在 ToB 里做久了才明白，复杂度治理真正的起点不是代码，而是写代码之前的判断。","headline":"复杂业务治理：思考","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zongqir.com/2026/02/26/complex-business-governance/"},"url":"https://blog.zongqir.com/2026/02/26/complex-business-governance/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-post">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      
+
+
+
+
+
+
+
+  
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+  
+  
+
+
+<div class="reading-progress" aria-hidden="true">
+  <span class="reading-progress-bar" data-reading-progress></span>
+</div>
+
+<article class="post">
+  <div class="post-grid" data-post-grid>
+    <header class="post-header">
+      <div class="post-header-topline">
+        <p class="post-cover-kicker">复杂业务治理</p>
+        
+          <p class="post-series">收录于 工程治理体系</p>
+        
+      </div>
+      <section class="post-cover">
+        <h1>复杂业务治理：思考</h1>
+        
+          <p class="post-summary">在 ToB 里做久了才明白，复杂度治理真正的起点不是代码，而是写代码之前的判断。</p>
+        
+      </section>
+      <div class="post-meta-panel">
+        <p class="post-meta">
+          <span class="meta-pill">发布于 <time datetime="2026-02-26T10:00:00+08:00">2026-02-26</time></span>
+          
+            <span class="meta-pill">更新于 <time datetime="2026-02-26T10:00:00+08:00">2026-02-26</time></span>
+          
+          <span class="meta-pill">阅读约 5 分钟</span>
+        </p>
+        
+          <p class="post-meta-tags">
+            
+              <a class="tag-chip" href="/tags/#复杂业务治理">复杂业务治理</a>
+            
+              <a class="tag-chip" href="/tags/#ddd">DDD</a>
+            
+              <a class="tag-chip" href="/tags/#架构设计">架构设计</a>
+            
+              <a class="tag-chip" href="/tags/#tob">ToB</a>
+            
+          </p>
+        
+      </div>
+    </header>
+
+    <aside class="post-toc" data-post-toc hidden>
+      <button class="post-toc-toggle" type="button" data-post-toc-toggle aria-expanded="false" aria-controls="post-toc-nav">
+        章节导航
+      </button>
+      <div class="post-toc-shell" data-post-toc-shell>
+        <p class="post-toc-title">章节导航</p>
+        <nav id="post-toc-nav" class="post-toc-nav" data-post-toc-nav aria-label="文章目录"></nav>
+      </div>
+    </aside>
+
+    <section class="post-content" data-post-content>
+      <p>这两年我做 ToB，越来越确信一件事：</p>
+
+<p>复杂系统不是“写坏”的，很多时候是“接需求那一刻就注定会复杂”。</p>
+
+<p>以前我也会把复杂度治理理解成“写更干净的代码、用更高级的模式”。现在回头看，那些都重要，但都偏后置。真正拉开差距的是前面的几个判断动作：这个需求是不是该进主干、我们到底在解决什么问题、变化应该落在代码还是配置。</p>
+
+<p>下面这篇不是方法大全，只是我最近几年反复验证过、且能落地的一套工作习惯。</p>
+
+<h2 id="先说一个小事一次差点进主干的导出需求">先说一个小事：一次“差点进主干”的导出需求</h2>
+
+<p>前阵子一个新人接到一线需求，要做一个“特异化数据导出”。他已经准备在大类里加逻辑了，被我拦下来了。</p>
+
+<p>我只问了一个问题：这个需求是高频通用，还是一次性割接？</p>
+
+<p>答案是一次性。</p>
+
+<p>如果是这样，我宁可走一次运维通道，用受控脚本交付，也不愿意把临时逻辑合进主干。原因很现实：一次性需求进主干之后，维护成本是永久的，而且最后通常没人记得“当初为什么这么写”。</p>
+
+<p>很多人听到这里会担心安全问题，这个担心非常对。真正的关键不是“用不用 Python”，而是有没有治理闭环。我们内部的底线是：</p>
+
+<ol>
+  <li>研发不直接连线上主库，必须走运维平台或受控执行器。</li>
+  <li>先在影子数据 dry-run，看影响范围和校验结果。</li>
+  <li>执行有审批，过程留脚本版本、参数、执行人和时间窗。</li>
+  <li>高风险操作必须有回滚方案，最好保证幂等。</li>
+</ol>
+
+<p>所以“跑一下脚本”这句话本身没错，错的是把它理解成“随便跑”。</p>
+
+<h2 id="需求做完不难抽象做对才难">需求做完不难，抽象做对才难</h2>
+
+<p>另一个常见场景是“加字段”。</p>
+
+<p>有次产品提需求：给资产加一个新的分类字段。</p>
+
+<p>如果只看当前票据，这事两小时能做完。但我当时卡住没做，先追问了一句：这是为了“业务组”本身，还是为了“可扩展分类”？</p>
+
+<p>因为一旦今天按业务组分、明天按地域分、后天按部门分，系统就会进入“无限加字段”模式。你每次都交付得很快，但结构会越来越重，最后谁都不敢动。</p>
+
+<p>后来我们改成了标签系统（EAV 思路），把“字段”升级成“能力”：客户自己定义标签、自己打标、自己组合筛选。这样一来，不是只解了一个字段，而是解了一类需求。</p>
+
+<p>当然，这类方案一定会被追问性能和一致性，我也很认同这种追问。比如“组合筛选并分页时，同步延迟怎么办？检索组件不可用怎么办？”</p>
+
+<p>我们的处理是：</p>
+
+<p>写侧仍然以主事务存储为准，保证标签变更的确定性；读侧通过异步事件同步到检索侧；当同步延迟超阈值时显式告诉用户“数据更新中”；检索侧不可用时自动降级到主库受限查询，至少保证核心链路可用。</p>
+
+<p>它不是完美一致，而是可解释、可监控、可降级的最终一致。</p>
+
+<h2 id="把变化放进配置把风险关进笼子">把变化放进配置，把风险关进笼子</h2>
+
+<p>我们还有一类复杂度来自外部集成。比如对接多种第三方数据源，每家格式都不一样。</p>
+
+<p>一开始很多同学的直觉是写适配器类。前几个还行，数量一多就会发现系统已经变成适配器博物馆。</p>
+
+<p>后来我们改成元数据驱动：把字段映射、转换规则放到配置里，核心代码只负责解析和执行规则。接入新数据源时，尽可能做到“配规则即可上线”。</p>
+
+<p>但配置化并不等于放飞。非通用逻辑我们通过插件机制下放，核心系统只定义标准和生命周期，不承担插件内部实现。</p>
+
+<p>这里有个经常被忽略的问题：如果外部团队写的插件死循环或内存泄漏，会不会把主系统拖垮？</p>
+
+<p>如果只是进程内隔离，风险仍然很大。我们后来倾向更强隔离级别，把资源配额、超时、并发都控制住，再配合熔断和舱壁。你可以让插件失败，但不能让核心系统陪葬。</p>
+
+<h2 id="说到-ddd我们做的是轻落地不是教科书落地">说到 DDD：我们做的是“轻落地”，不是“教科书落地”</h2>
+
+<p>我们落 DDD，初衷很务实，不是为了术语完整，而是因为旧系统已经出现了两个明显信号：</p>
+
+<ol>
+  <li>代码看得懂技术动作，看不懂业务意图。</li>
+  <li>服务虽然拆了，改需求还是要跨服务连环改。</li>
+</ol>
+
+<p>我们没有大改工程目录，外壳仍是 MVC，但逻辑上做了几件关键事：</p>
+
+<ol>
+  <li>用事件风暴重画流程，先把边界说清楚，再谈服务拆分。</li>
+  <li>推充血模型，把状态流转和校验放回 DO，Service 只做编排。</li>
+  <li>用 Repository 做依赖倒置，Domain 不再直接依赖 DAO。</li>
+  <li>把 DO 和 PO 分开，用对象映射工具降低转换成本。</li>
+</ol>
+
+<p>这套方式的好处是团队上手成本不高，但边界感明显增强。</p>
+
+<p>另外我们在聚合持久化上吃到了文档型存储的红利。很多团队在关系型数据库上实现聚合根会被级联保存和事务细节拖住，而文档模型下“一个文档一个聚合”天然顺手很多。这不是说某种数据库一定更好，而是它和当时的聚合形态更匹配。</p>
+
+<h2 id="还有一个小习惯定时任务不写业务逻辑">还有一个小习惯：定时任务不写业务逻辑</h2>
+
+<p>这件事看起来很小，但能少很多事故。</p>
+
+<p>我们把定时任务当成一种输入适配器，角色类似 Controller。它可以触发应用服务，但不应该自己长出业务规则。轻量兜底任务可直接调 Service，重型任务尽量走异步消息链路，统一进入应用服务。</p>
+
+<p>这样至少保证一件事：同一个业务规则只有一份，不会白天 API 一套、夜里 Job 一套。</p>
+
+<h2 id="最后聊聊-aiddd-让-ai-更像工程师而不是代码喷子">最后聊聊 AI：DDD 让 AI 更像工程师，而不是“代码喷子”</h2>
+
+<p>现在大家都在用 AI 写代码，我自己的体感是：结构越清楚，AI 越靠谱。</p>
+
+<p>DDD 天然给了它边界。限界上下文清楚后，AI 不太会乱调用别的域；领域层越纯，AI 生成的逻辑和单测越稳定；DTO/PO/Converter 这些体力活交给 AI，团队就能把精力放在真正需要人判断的地方。</p>
+
+<p>所以我现在越来越把这件事理解为分工问题：人定义模型和边界，AI 负责批量实现和验证。</p>
+
+<h2 id="写在最后">写在最后</h2>
+
+<p>如果要我把这些年复杂业务治理的经验压成一句话，我会说：</p>
+
+<p><strong>先判断，再编码；先抽象，再实现。</strong></p>
+
+<p>写好代码当然重要，但那只是中段动作。很多系统真正的分水岭，其实发生在你写第一行代码之前。<br />
+当你开始习惯性地拦截伪需求、追问业务本质、把变化装进可治理的边界里，系统才会慢慢从“能跑”走向“能长期演进”。</p>
+
+    </section>
+
+    
+    <section class="post-related">
+      <p class="section-kicker">继续阅读</p>
+      <h2>把同一类问题继续读下去</h2>
+      <p class="post-related-tip">优先按专题与标签延展，减少读完一篇就中断的情况。</p>
+      <ul class="post-related-list">
+        
+        <li class="post-related-item">
+          <div>
+            <a href="/2026/03/12/dlq-governance-why-dlq-is-not-the-end/">死信队列的工程治理：为什么进入死信，不等于问题结束</a>
+            
+              <p>很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。</p>
+            
+          </div>
+          <span>2026-03-12</span>
+        </li>
+        
+        <li class="post-related-item">
+          <div>
+            <a href="/2025/06/10/saas-three-foundations/">SaaS 不是“上云”而已：多租户、边界管理与商业模型的三重基石</a>
+            
+              <p>SaaS 不是把系统搬上云这么简单。真正决定成败的，是多租户复利、边界治理与商业模型三件事能否统一设计并长期演进。</p>
+            
+          </div>
+          <span>2025-06-10</span>
+        </li>
+        
+        <li class="post-related-item">
+          <div>
+            <a href="/2024/08/08/mq-over-task-scheduler/">多租户采集承载怎么拆：共享池、专属池和 MQ 怎么分工</a>
+            
+              <p>我们做多租户 SaaS 数据采集时，没有继续把系统往租户调度平台那条路上推，而是把大多数租户放进共享承载面，把大租户拆到专属承载面，再把消息分发和消费进度交回 MQ。</p>
+            
+          </div>
+          <span>2024-08-08</span>
+        </li>
+        
+      </ul>
+    </section>
+    
+  </div>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

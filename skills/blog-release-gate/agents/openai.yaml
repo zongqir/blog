@@ -1,0 +1,4 @@
+interface:
+  display_name: "博客发布门禁"
+  short_description: "统一处理从写作阶段到发布前门禁、页面核验和上线确认"
+  default_prompt: "Use $blog-release-gate to determine which writing/release stage a technical blog draft is in, what publish gates remain, and whether it is ready to go live."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "文章类型尺子"
+  short_description: "先判断文章类型，再决定该用哪套质量标准"
+  default_prompt: "Use $blog-article-fit-checker to determine what kind of technical blog draft this is, whether it is being judged by the wrong standard, and what quality checks actually apply."

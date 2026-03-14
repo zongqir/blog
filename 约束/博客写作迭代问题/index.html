@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客写作迭代问题 | 我的博客</title>
+    <meta name="description" content="个人笔记与随想">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客写作迭代问题 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客写作迭代问题" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="个人笔记与随想" />
+<meta property="og:description" content="个人笔记与随想" />
+<link rel="canonical" href="https://blog.zongqir.com/%E7%BA%A6%E6%9D%9F/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C%E8%BF%AD%E4%BB%A3%E9%97%AE%E9%A2%98/" />
+<meta property="og:url" content="https://blog.zongqir.com/%E7%BA%A6%E6%9D%9F/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C%E8%BF%AD%E4%BB%A3%E9%97%AE%E9%A2%98/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客写作迭代问题" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"个人笔记与随想","headline":"博客写作迭代问题","url":"https://blog.zongqir.com/%E7%BA%A6%E6%9D%9F/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C%E8%BF%AD%E4%BB%A3%E9%97%AE%E9%A2%98/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="博客写作迭代问题">博客写作迭代问题</h1>
+
+<p>这份记录只总结这轮写博客时暴露出来的非技术问题。
+不是文章内容对错，而是写法、顺序、语气、信息组织上的问题。</p>
+
+<h2 id="1-起手不要掉进技术名词">1. 起手不要掉进技术名词</h2>
+
+<p>这轮最早的版本，一上来就想讲 <code class="language-plaintext highlighter-rouge">Pulsar / Kafka / etcd / zk</code>。
+这个方向不对。</p>
+
+<p>真正有效的起手，应该先回答：</p>
+
+<ol>
+  <li>业务在做什么。</li>
+  <li>当时卡住的是什么现实问题。</li>
+  <li>为什么这个问题值得写。</li>
+</ol>
+
+<p>如果第一段就开始说组件，读者会直接把文章理解成选型文或中间件文。
+但很多时候，真正要写的是业务压力怎么把系统一步步推到某个决策上。</p>
+
+<h2 id="2-不要用悬空词代替背景">2. 不要用悬空词代替背景</h2>
+
+<p>像“产品成型”“系统演进”“业务复杂度提升”这种词，很容易显得像在说话，但没有提供真正的信息。</p>
+
+<p>真正有用的背景，应该写成：</p>
+
+<ol>
+  <li>最开始是项目制还是平台化。</li>
+  <li>一个集群服务一个租户，还是多个租户共用。</li>
+  <li>当时系统最优先解决的是交付、排障、资源利用率，还是别的东西。</li>
+</ol>
+
+<p>背景要能让读者知道：为什么当时会那样做，而不是只知道后来做成了什么。</p>
+
+<h2 id="3-不要把当时写成一个空时间词">3. 不要把“当时”写成一个空时间词</h2>
+
+<p>这轮还有一个反复出现的问题：句子里写了“当时”，但读者还是不知道“当时”到底是什么状态。</p>
+
+<p>真正有用的“当时”，至少要落到下面几件事里：</p>
+
+<ol>
+  <li>哪些前提已经定了，不再讨论了。</li>
+  <li>这次到底在讨论哪一层，topic、consumer、还是资源治理。</li>
+  <li>卡住的是容量、隔离性、运维成本，还是别的现实问题。</li>
+</ol>
+
+<p>如果只写“当时我们开始思考”“当时系统卡住了”，读者脑子里还是没有画面。</p>
+
+<h2 id="4-先写清楚已经定了什么再写还在讨论什么">4. 先写清楚已经定了什么，再写还在讨论什么</h2>
+
+<p>很多文章之所以读起来像空谈，不是因为方案错了，而是因为讨论边界没立住。</p>
+
+<p>比如：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">topic 已经按租户拆了</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">线上消费已经按这个模型跑起来了</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">这次不是重做 topic 设计，而是在讨论消费和承载怎么接住它</code>。</li>
+</ol>
+
+<p>这些前提如果不先写，后面所有方案都会显得像在半空中飘。</p>
+
+<h2 id="5-不要把问题直接跳成方案">5. 不要把“问题”直接跳成“方案”</h2>
+
+<p>这轮反复出现的问题是：</p>
+
+<ol>
+  <li>前面刚说系统吃力。</li>
+  <li>下一句就跳到“所以我们需要一套调度系统”。</li>
+</ol>
+
+<p>中间缺了一段最重要的内容：</p>
+
+<ol>
+  <li>到底遇到了哪些具体问题。</li>
+  <li>这些问题为什么不能继续靠原有方式硬扛。</li>
+  <li>当时希望新方案解决什么。</li>
+</ol>
+
+<p>只有把 <code class="language-plaintext highlighter-rouge">问题 -&gt; 期望 -&gt; 方案</code> 写完整，方案才不会显得像拍脑袋。</p>
+
+<h2 id="6-不要把工具写成起点">6. 不要把工具写成起点</h2>
+
+<p>这轮还有一个典型问题：容易把 <code class="language-plaintext highlighter-rouge">etcd</code> 写成文章主线。</p>
+
+<p>但实际顺序往往是：</p>
+
+<ol>
+  <li>先有系统问题。</li>
+  <li>再有调度系统设想。</li>
+  <li>最后才到 etcd / zk 这种实现手段。</li>
+</ol>
+
+<p>如果顺序写反，文章会变成“围绕工具展开”，而不是“围绕决策展开”。</p>
+
+<p>工具是落地手段，不是叙事起点。</p>
+
+<h2 id="7-不要解释这篇文章怎么写">7. 不要解释“这篇文章怎么写”</h2>
+
+<p>像下面这类句子，读起来通常都很别扭：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">这篇我不想从……开始讲</code></li>
+  <li><code class="language-plaintext highlighter-rouge">真正值得写清楚的是……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">如果不写清楚，文章会很假</code></li>
+</ol>
+
+<p>这些句子的问题，不在语法，而在位置。
+它们让作者像站在台上解释自己的写作思路，而不是在讲事情本身。</p>
+
+<p>正文应该直接进入内容，不要把“写法说明”写进正文里。</p>
+
+<h2 id="8-不要把判断框架直接写成正文">8. 不要把判断框架直接写成正文</h2>
+
+<p>这轮还有一种很重的 AI 味来源：文章在写事情之前，先把“我要怎么判断这件事”摆出来。</p>
+
+<p>比如：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">如果我要判断这条路有没有走偏，我会先看三件事</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">先把问题问对</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">先看三个维度，再看几种方案</code>。</li>
+</ol>
+
+<p>这些句子的问题不是内容错，而是它们把正文写成了方法论演示。</p>
+
+<p>真正该保留的是后面的判断维度本身，比如容量、隔离性、演进成本；<br />
+真正该删掉的是这层“我现在要开始讲方法了”的起手。</p>
+
+<h2 id="9-少用不是-a而是-b的对抗句式">9. 少用“不是 A，而是 B”的对抗句式</h2>
+
+<p>这类句式偶尔用一下可以，但一多就会很像模型写作：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">不是……而是……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">真正重要的不是……而是……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">问题不在……而在……</code></li>
+</ol>
+
+<p>为什么容易出问题：</p>
+
+<ol>
+  <li>它会不断人为制造一个靶子。</li>
+  <li>它会让语气显得很“讲道理”。</li>
+  <li>连续出现时，会很像在修辞，不像在记录经验。</li>
+</ol>
+
+<p>能直接说结论时，就直接说，不要总靠对照句推进。</p>
+
+<h2 id="10-少对读者说话多对事情说话">10. 少对读者说话，多对事情说话</h2>
+
+<p>这轮一个明确问题是第二人称。</p>
+
+<p>比如：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">你开始遇到……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">你会发现……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">你是不是愿意……</code></li>
+</ol>
+
+<p>这种写法很容易带出一种“作者在当面教育读者”的感觉。</p>
+
+<p>更合适的方式通常是：</p>
+
+<ol>
+  <li>写成第一人称经验。</li>
+  <li>写成中性叙述。</li>
+  <li>写成具体场景，而不是对读者发问。</li>
+</ol>
+
+<h2 id="11-不要怕厚但要防空">11. 不要怕厚，但要防空</h2>
+
+<p>这轮一个明显教训是：为了去 AI 味、去总结味，前面一度把背景削太狠。</p>
+
+<p>结果不是更清楚，而是更悬。</p>
+
+<p>真正的问题从来不是“写得厚”，而是：</p>
+
+<ol>
+  <li>有没有新信息。</li>
+  <li>有没有具体上下文。</li>
+  <li>有没有真实判断过程。</li>
+</ol>
+
+<p>背景、来路、阶段变化，这些不是赘肉，很多时候正是文章骨架。</p>
+
+<h2 id="12-博客要写为什么当时会那么想">12. 博客要写“为什么当时会那么想”</h2>
+
+<p>技术博客最容易写成结果汇报。</p>
+
+<p>但真正有价值的部分，往往是：</p>
+
+<ol>
+  <li>当时为什么会相信这条路。</li>
+  <li>当时参考了什么。</li>
+  <li>当时没有看到什么。</li>
+  <li>后来哪些东西开始变重。</li>
+</ol>
+
+<p>这部分如果写出来，文章才像经验。
+如果只写“最后结论”，文章就会像结案报告。</p>
+
+<h2 id="13-文章里的图要服务于理解不是为了显得专业">13. 文章里的图，要服务于理解，不是为了显得专业</h2>
+
+<p>这轮中间提到想加图，这是对的，但也要注意边界。</p>
+
+<p>图最适合放在这些地方：</p>
+
+<ol>
+  <li>一个系统角色很多，文字已经开始绕。</li>
+  <li>一个状态流转很关键，靠段落不好讲。</li>
+  <li>读者需要先看到整体，再理解细节。</li>
+</ol>
+
+<p>图不该承担这些作用：</p>
+
+<ol>
+  <li>为了显得文章更专业。</li>
+  <li>为了给文章“加料”。</li>
+  <li>为了替代正文里本该写清楚的逻辑。</li>
+</ol>
+
+<h2 id="14-用户说背景没说清楚时不要补一句过渡要回头重建开头">14. 用户说“背景没说清楚”时，不要补一句过渡，要回头重建开头</h2>
+
+<p>这轮一个直接教训是：<br />
+当用户指出“背景没说清楚”“没看懂当时是什么情况”时，不能只在原文前面补一句连接话。</p>
+
+<p>更有效的处理方式通常是：</p>
+
+<ol>
+  <li>回到文章开头，重写前两三段。</li>
+  <li>明确写出当时的系统状态和讨论边界。</li>
+  <li>再重新检查后面的方案段是不是终于有落点了。</li>
+</ol>
+
+<p>如果开头没立住，只修中间和结尾，整篇还是会像悬空分析。</p>
+
+<h2 id="15-这轮最值得保留的写法方向">15. 这轮最值得保留的写法方向</h2>
+
+<p>后面逐步校正出来的方向是对的：</p>
+
+<ol>
+  <li>先写业务和场景。</li>
+  <li>再写项目制到 SaaS 的变化。</li>
+  <li>再写一租户一 Pod 为什么当时成立。</li>
+  <li>然后写哪些具体问题把系统推向调度。</li>
+  <li>最后才写 etcd / zk 这种实现细节。</li>
+</ol>
+
+<p>这个顺序比“上来先讲工具”自然得多，也更像真实博客。</p>
+
+<h2 id="16-后续写博客时的自检问题">16. 后续写博客时的自检问题</h2>
+
+<p>每次起稿前，先问这几句：</p>
+
+<ol>
+  <li>这篇是从业务问题起，还是从技术名词起。</li>
+  <li>开头有没有说清楚“已经定了什么、不再讨论什么、现在只讨论什么”。</li>
+  <li>文章有没有把“问题 -&gt; 期望 -&gt; 方案”写完整。</li>
+  <li>有没有把工具写成主角。</li>
+  <li>有没有把判断框架直接写成正文，导致像方法论广播。</li>
+  <li>有没有用太多“不是……而是……”。</li>
+  <li>有没有在正文里解释“这篇文章要怎么写”。</li>
+  <li>有没有对读者说太多话，而不是对事情本身说话。</li>
+  <li>有没有把重要背景误删成“为了简洁”。</li>
+</ol>
+
+<p>如果这 9 条里中 3 条以上，基本就说明文章已经开始写偏了。</p>
+
+<h2 id="17-不要把修写法做成删主体">17. 不要把“修写法”做成“删主体”</h2>
+
+<p>这轮又暴露出一个很重的问题：<br />
+在处理 AI 味、提纲味、对读者说话、元说明这些写法问题时，很容易一刀切，最后把正文主体也一起删掉。</p>
+
+<p>这不是“风格调整过猛”这么简单，而是会直接破坏文章的真实判断链路。</p>
+
+<p>这次最典型的错误是：</p>
+
+<ol>
+  <li>把“写法有问题”和“内容没价值”混在了一起。</li>
+  <li>看到提纲感强、句式模型化，就直接整段删除。</li>
+  <li>没有区分哪些段落是在说废话，哪些段落其实在承载核心判断。</li>
+</ol>
+
+<p>结果就是：</p>
+
+<ol>
+  <li>AI 味确实少了。</li>
+  <li>但文章真正有价值的东西也被一起清空了。</li>
+  <li>最后留下来的不是更自然的博客，而是一个被删薄了的壳。</li>
+</ol>
+
+<p>这轮最该记住的一点不是“以后少删一点”，而是：</p>
+
+<p><strong>先判断这段有没有真实信息，再决定是改写还是删除。</strong></p>
+
+<p>具体一点说：</p>
+
+<ol>
+  <li>如果一段在讲真实背景、真实犹豫、真实 trade-off、真实建模分叉，它首先应该被保留。</li>
+  <li>如果它的问题只是标题像提纲、句子像模型、语气像汇报，那就重写表达，不要直接删除。</li>
+  <li>只有在一段既没有新信息，也没有真实判断，只是在重复包装时，才应该直接删。</li>
+</ol>
+
+<p>这次事故里，本来不该被大删的内容包括：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">为什么当时没自然想到 MQ</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">MQ 本质上承接了什么</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">一个 topic 多租户 / 多个 topic 多租户 / 分桶</code> 这组真正的建模分叉。</li>
+  <li><code class="language-plaintext highlighter-rouge">哪些职责可以放回 MQ，哪些不能</code> 这组边界判断。</li>
+</ol>
+
+<p>这些内容的问题是写法，不是内容本身。</p>
+
+<h3 id="后续强制自检">后续强制自检</h3>
+
+<p>在做大幅删改前，先问这 4 句：</p>
+
+<ol>
+  <li>我现在删掉的是废话，还是作者真正的判断。</li>
+  <li>这段是应该重写，还是应该删除。</li>
+  <li>删完之后，文章的核心论点还在不在。</li>
+  <li>如果删掉这段，读者还能不能看明白“为什么当时会那么想”。</li>
+</ol>
+
+<p>只要这 4 句里有 2 句答不上来，就不能继续大删。</p>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

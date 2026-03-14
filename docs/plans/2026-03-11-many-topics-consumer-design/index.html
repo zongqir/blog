@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>一个 consumer 订很多 topic 新文设计 | 我的博客</title>
+    <meta name="description" content="个人笔记与随想">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>一个 consumer 订很多 topic 新文设计 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="一个 consumer 订很多 topic 新文设计" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="个人笔记与随想" />
+<meta property="og:description" content="个人笔记与随想" />
+<link rel="canonical" href="https://blog.zongqir.com/docs/plans/2026-03-11-many-topics-consumer-design/" />
+<meta property="og:url" content="https://blog.zongqir.com/docs/plans/2026-03-11-many-topics-consumer-design/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-11T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="一个 consumer 订很多 topic 新文设计" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-03-11T00:00:00+08:00","datePublished":"2026-03-11T00:00:00+08:00","description":"个人笔记与随想","headline":"一个 consumer 订很多 topic 新文设计","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zongqir.com/docs/plans/2026-03-11-many-topics-consumer-design/"},"url":"https://blog.zongqir.com/docs/plans/2026-03-11-many-topics-consumer-design/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="背景">背景</h1>
+
+<p>这份设计最初按“姊妹篇”思路展开，后来在起稿前收敛成单篇完整文章。</p>
+
+<p>最终方向不是拆成两篇，而是保留一篇完整文章，同时把两部分内容合在一起：</p>
+
+<ul>
+  <li>前半段回答风险识别：<code class="language-plaintext highlighter-rouge">一个 consumer 订很多 topic，危险在哪里</code></li>
+  <li>后半段回答演进决策：<code class="language-plaintext highlighter-rouge">知道危险以后，系统通常会怎么往下演进，以及状态到底长在哪一层</code></li>
+</ul>
+
+<p>这篇最终不做方案百科。主线是“演进路线”，暗线是“状态应该长在哪一层”。</p>
+
+<h1 id="用户已确认的写作方向">用户已确认的写作方向</h1>
+
+<h2 id="开头方向">开头方向</h2>
+
+<p>采用 A 版开头：</p>
+
+<p><code class="language-plaintext highlighter-rouge">一个 consumer 订很多 topic，这件事真正难的不是能不能连上，而是后面怎么收场。</code></p>
+
+<h2 id="文章落点">文章落点</h2>
+
+<p>用户希望读者最后拿走两样东西：</p>
+
+<ol>
+  <li>一条真实的演进路线：从先硬扛，到分片，到 Router，再到推动上游改模型。</li>
+  <li>一套架构边界观：系统一定会有状态，但状态不应该散落在每个 consumer 进程里。</li>
+</ol>
+
+<h2 id="关键真实判断">关键真实判断</h2>
+
+<p>以下判断必须保留，不能在后续起稿中被“润色”掉：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">100 个 topic 左右可以考虑先硬扛。</code></li>
+  <li>真正的长期问题，不该永远在下游 consumer 侧补锅。</li>
+  <li>长期更想推动上游一起改模型，而不是让下游继续背所有复杂度。</li>
+</ol>
+
+<h1 id="推荐写法方案">推荐写法方案</h1>
+
+<p>最终采用“演进路线 + 状态边界双线型”：</p>
+
+<ul>
+  <li>明线：系统在不同规模下会怎么自然变想法</li>
+  <li>暗线：每一步把状态放到了哪里，为什么有些状态能接受，有些状态会把系统越做越黏</li>
+</ul>
+
+<p>不采用纯方案枚举，也不采用纯状态哲学。</p>
+
+<h1 id="标题">标题</h1>
+
+<p>最终采用第一版标题：</p>
+
+<p><code class="language-plaintext highlighter-rouge">一个 consumer 订很多 topic，真正难的是后面怎么收场</code></p>
+
+<p>备选标题不再使用，避免在正文起稿阶段反复摇摆。</p>
+
+<h1 id="文章结构">文章结构</h1>
+
+<h2 id="1-一个-consumer-订很多-topic难的不是连上而是后面怎么收场">1. 一个 consumer 订很多 topic，难的不是连上，而是后面怎么收场</h2>
+
+<p>任务：</p>
+
+<ul>
+  <li>承接旧文，明确旧文只写风险，这篇只写后续演进</li>
+  <li>把问题从“技术能不能做到”改成“系统后面会不会越来越难收拾”</li>
+</ul>
+
+<p>不要在这里展开风险细节，也不要提前讲 Router 或上游改模型。</p>
+
+<h2 id="2-先别急着选方案先看你到底在扛哪三类问题">2. 先别急着选方案，先看你到底在扛哪三类问题</h2>
+
+<p>任务：</p>
+
+<ul>
+  <li>把问题压缩成三类：集群资源、进程压力、多租户业务语义</li>
+  <li>给后文建立统一坐标系</li>
+</ul>
+
+<p>这一节是路线的起点，不是旧文的重复版。</p>
+
+<h2 id="3-topic-还不多的时候先硬扛其实是可以的">3. topic 还不多的时候，先硬扛其实是可以的</h2>
+
+<p>任务：</p>
+
+<ul>
+  <li>明确写出 <code class="language-plaintext highlighter-rouge">100 个 topic 左右可以考虑先硬扛</code></li>
+  <li>讲清为什么这时可以接受：代价还局限在局部，没有开始反噬系统结构</li>
+  <li>写出先硬扛的现实收益：实现简单、部署简单、观测简单、推进快</li>
+</ul>
+
+<p>注意：</p>
+
+<ul>
+  <li>这里不是鼓吹硬扛，而是承认它在小规模时是务实起步</li>
+  <li>不能写成绝对阈值，只能写成经验判断</li>
+</ul>
+
+<h2 id="4-数量一上来问题开始从能不能跑变成怎么拆故障域">4. 数量一上来，问题开始从能不能跑变成怎么拆故障域</h2>
+
+<p>任务：</p>
+
+<ul>
+  <li>说明数量继续上涨后，问题性质开始变化</li>
+  <li>从资源占用，转成故障域、恢复抖动、很多租户一起受影响</li>
+  <li>自然引出下一步：系统会开始想分片</li>
+</ul>
+
+<p>这一节的重点不是“3000 是不是一定不行”，而是“再往上以后，问题开始变成结构问题”。</p>
+
+<h2 id="5-人为分片能止血但状态也开始长出来了">5. 人为分片能止血，但状态也开始长出来了</h2>
+
+<p>任务：</p>
+
+<ul>
+  <li>写多 consumer 按规则分片订 topic 为什么自然出现</li>
+  <li>写它的收益：压小单进程 topic 数、缩小故障域、降低恢复波及面</li>
+  <li>写它的代价：租户到 shard 的映射、拆分规则、迁移规则都开始形成新状态</li>
+</ul>
+
+<p>必须写清楚：</p>
+
+<ul>
+  <li>真正讨厌的不是“系统里有状态”</li>
+  <li>真正讨厌的是“每个 consumer 实例自带半套世界观”</li>
+</ul>
+
+<h2 id="6-再往前走真正该解决的不是分片技巧而是模型本身">6. 再往前走，真正该解决的不是分片技巧，而是模型本身</h2>
+
+<p>任务：</p>
+
+<ul>
+  <li>写 Router 为什么会被想到</li>
+  <li>Router 不是为了炫技，而是为了把下游 consumer 世界重新扁平化</li>
+  <li>写出它的本质收益：把状态从下游 consumer 进程中拿走，集中到更可控的一层</li>
+  <li>同时写出它的成本：多一跳 IO、多一层服务、多一套运维对象</li>
+</ul>
+
+<p>结尾自然引到下一步：如果 Router 看起来仍然像补丁，问题就该回到上游模型。</p>
+
+<h2 id="7-最后我们更想推动上游一起改而不是让下游永远背锅">7. 最后我们更想推动上游一起改，而不是让下游永远背锅</h2>
+
+<p>任务：</p>
+
+<ul>
+  <li>把长期方向写清楚：推动上游改成更干净的消息模型</li>
+  <li>说明这不一定当下就推得动，但它代表长期正确方向</li>
+  <li>用一句话收束全篇：系统一定会有状态，关键不是消灭状态，而是别让每个 consumer 进程各自记一份世界</li>
+</ul>
+
+<p>最后结论必须落在：</p>
+
+<ul>
+  <li>长期问题不该永远在下游补</li>
+  <li>更干净的方向通常是推动上游一起改模型</li>
+</ul>
+
+<h1 id="与旧文的互链规则">与旧文的互链规则</h1>
+
+<h2 id="旧文补链">旧文补链</h2>
+
+<p>在旧文开头或结尾补一句：</p>
+
+<p><code class="language-plaintext highlighter-rouge">如果问题已经不只是风险判断，而是系统接下来该怎么演进，可以接着看《一个 consumer 订很多 topic，真正难的是后面怎么收场》。</code></p>
+
+<h2 id="新文开头承接">新文开头承接</h2>
+
+<p>新文开头建议直接写：</p>
+
+<p><code class="language-plaintext highlighter-rouge">上一篇只拆了风险。这一篇接着写：如果不能一直这么扛，系统通常会怎么往下演进，状态又会长到哪里去。</code></p>
+
+<h1 id="frontmatter-建议">Frontmatter 建议</h1>
+
+<ul>
+  <li>文件日期：<code class="language-plaintext highlighter-rouge">2024-08-08</code></li>
+  <li>时间建议：<code class="language-plaintext highlighter-rouge">00:24:00 +08:00</code></li>
+  <li>tags 建议：
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">架构设计</code></li>
+      <li><code class="language-plaintext highlighter-rouge">工程治理</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Pulsar</code></li>
+      <li><code class="language-plaintext highlighter-rouge">ToB</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>是否挂入现有系列，可在起稿时按当前系列策略再确认。</p>
+
+<h1 id="起稿时的硬性约束">起稿时的硬性约束</h1>
+
+<ol>
+  <li>不要把新文写成方案大全或术语讲解。</li>
+  <li>不要重新复述旧文里的风险拆解。</li>
+  <li>每一节都必须同时回答两件事：
+    <ul>
+      <li>为什么系统会走到这一步</li>
+      <li>这一步把状态放到了哪里</li>
+    </ul>
+  </li>
+  <li>保留“100 个 topic 左右可以先硬扛”的现实判断，不要磨平成空泛建议。</li>
+  <li>长期方向必须落到“推动上游改模型”，不能只停在 Router。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

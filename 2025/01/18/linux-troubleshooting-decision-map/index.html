@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>生产故障排查实战：从 top 到 GC 的五层决策图 | 我的博客</title>
+    <meta name="description" content="一套可复制的 Linux 故障排查路径：先全局体检，再按 CPU/IO/网络/内存分支深入，最后补齐 Limits 与 Runtime 隐形故障。">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>生产故障排查实战：从 top 到 GC 的五层决策图 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="生产故障排查实战：从 top 到 GC 的五层决策图" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="一套可复制的 Linux 故障排查路径：先全局体检，再按 CPU/IO/网络/内存分支深入，最后补齐 Limits 与 Runtime 隐形故障。" />
+<meta property="og:description" content="一套可复制的 Linux 故障排查路径：先全局体检，再按 CPU/IO/网络/内存分支深入，最后补齐 Limits 与 Runtime 隐形故障。" />
+<link rel="canonical" href="https://blog.zongqir.com/2025/01/18/linux-troubleshooting-decision-map/" />
+<meta property="og:url" content="https://blog.zongqir.com/2025/01/18/linux-troubleshooting-decision-map/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-01-18T10:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="生产故障排查实战：从 top 到 GC 的五层决策图" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-01-18T10:00:00+08:00","datePublished":"2025-01-18T10:00:00+08:00","description":"一套可复制的 Linux 故障排查路径：先全局体检，再按 CPU/IO/网络/内存分支深入，最后补齐 Limits 与 Runtime 隐形故障。","headline":"生产故障排查实战：从 top 到 GC 的五层决策图","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zongqir.com/2025/01/18/linux-troubleshooting-decision-map/"},"url":"https://blog.zongqir.com/2025/01/18/linux-troubleshooting-decision-map/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-post">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      
+
+
+
+
+
+
+
+  
+    
+    
+      
+      
+    
+  
+  
+    
+      
+      
+      
+        
+        
+          
+        
+          
+        
+          
+            
+            
+        
+      
+    
+      
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+      
+    
+      
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+      
+    
+      
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+      
+    
+      
+      
+        
+      
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+      
+    
+      
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+      
+    
+  
+
+
+<div class="reading-progress" aria-hidden="true">
+  <span class="reading-progress-bar" data-reading-progress></span>
+</div>
+
+<article class="post">
+  <div class="post-grid" data-post-grid>
+    <header class="post-header">
+      <div class="post-header-topline">
+        <p class="post-cover-kicker">故障排查</p>
+        
+          <p class="post-series">收录于 SRE 故障实战</p>
+        
+      </div>
+      <section class="post-cover">
+        <h1>生产故障排查实战：从 top 到 GC 的五层决策图</h1>
+        
+          <p class="post-summary">一套可复制的 Linux 故障排查路径：先全局体检，再按 CPU/IO/网络/内存分支深入，最后补齐 Limits 与 Runtime 隐形故障。</p>
+        
+      </section>
+      <div class="post-meta-panel">
+        <p class="post-meta">
+          <span class="meta-pill">发布于 <time datetime="2025-01-18T10:00:00+08:00">2025-01-18</time></span>
+          
+            <span class="meta-pill">更新于 <time datetime="2025-01-18T10:00:00+08:00">2025-01-18</time></span>
+          
+          <span class="meta-pill">阅读约 7 分钟</span>
+        </p>
+        
+          <p class="post-meta-tags">
+            
+              <a class="tag-chip" href="/tags/#故障排查">故障排查</a>
+            
+              <a class="tag-chip" href="/tags/#linux">Linux</a>
+            
+              <a class="tag-chip" href="/tags/#sre">SRE</a>
+            
+              <a class="tag-chip" href="/tags/#性能优化">性能优化</a>
+            
+          </p>
+        
+      </div>
+    </header>
+
+    <aside class="post-toc" data-post-toc hidden>
+      <button class="post-toc-toggle" type="button" data-post-toc-toggle aria-expanded="false" aria-controls="post-toc-nav">
+        章节导航
+      </button>
+      <div class="post-toc-shell" data-post-toc-shell>
+        <p class="post-toc-title">章节导航</p>
+        <nav id="post-toc-nav" class="post-toc-nav" data-post-toc-nav aria-label="文章目录"></nav>
+      </div>
+    </aside>
+
+    <section class="post-content" data-post-content>
+      <p>线上故障发生时，最怕的不是没有工具，而是没有路径。命令敲了一堆却没有形成判断闭环，最后很容易在错误方向上浪费时间。本文给出一套可复用的排查决策图：先用 1 分钟完成全局体检，再基于指标进入对应分支，最后检查那些最容易被忽略的“隐形杀手”。</p>
+
+<h2 id="-1-核心排查决策图-the-decision-map">🗺 1. 核心排查决策图 (The Decision Map)</h2>
+
+<p><em>在操作前，请先在脑海中建立此路径，避免乱敲命令。</em></p>
+
+<pre><code class="language-mermaid">graph TD
+    Start(报警/故障开始) --&gt; Level0[Level 0: 全局体检 top]
+    Level0 --&gt; |Load &gt; CPU核数| Check_CPU{检查CPU状态}
+
+    %% CPU 分支
+    Check_CPU -- us 用户态高 --&gt; Code_Issue[应用逻辑: 死循环/高计算]
+    Check_CPU -- sy 内核态高 --&gt; Sys_Issue[系统瓶颈: 锁竞争/上下文切换]
+    Check_CPU -- wa 等待高 --&gt; IO_Issue[磁盘瓶颈: 读写饱和]
+    Check_CPU -- id 闲置但Load高 --&gt; D_State[进程假死: 锁/硬件故障]
+
+    %% 网络分支
+    Level0 -- CPU/Load正常但接口慢 --&gt; Net_Check[Level 1: 网络与连接]
+    Net_Check -- Recv-Q堆积 --&gt; App_Slow[应用层处理慢/GC卡顿]
+    Net_Check -- Send-Q堆积 --&gt; Net_Congest[网络层拥堵/对端慢]
+
+    %% 隐形杀手
+    Level0 -- 一切看似正常但报错 --&gt; Hidden_Check[Level 2: 隐形杀手]
+    Hidden_Check --&gt; Limits[文件句柄/Conntrack限制]
+    Hidden_Check --&gt; Runtime[Runtime内伤: Full GC/死锁]
+</code></pre>
+
+<hr />
+
+<h2 id="-2-level-0-快速体检-黄金-1-分钟">🚑 2. Level 0: 快速体检 (黄金 1 分钟)</h2>
+
+<p><strong>目的：</strong> 确认是 CPU、IO 还是内存炸了。<br />
+<strong>命令：</strong> <code class="language-plaintext highlighter-rouge">top</code>（按 <code class="language-plaintext highlighter-rouge">1</code> 展开 CPU 核心）</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>关注指标</th>
+      <th>阈值参考</th>
+      <th>含义</th>
+      <th>下一步跳转</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Load Average</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">&gt; CPU 核数 * 0.7</code></td>
+      <td>系统过载，任务排队中</td>
+      <td>查 CPU 详情</td>
+    </tr>
+    <tr>
+      <td><strong>%us (User)</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">&gt; 70%</code></td>
+      <td>用户进程在疯狂计算</td>
+      <td>跳转 <code class="language-plaintext highlighter-rouge">3.1 应用逻辑问题</code></td>
+    </tr>
+    <tr>
+      <td><strong>%sy (System)</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">&gt; 30%</code></td>
+      <td>内核忙于调度或管理</td>
+      <td>跳转 <code class="language-plaintext highlighter-rouge">3.2 系统争用问题</code></td>
+    </tr>
+    <tr>
+      <td><strong>%wa (IO Wait)</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">&gt; 30%</code></td>
+      <td>CPU 在等待磁盘</td>
+      <td>跳转 <code class="language-plaintext highlighter-rouge">3.3 磁盘 IO 问题</code></td>
+    </tr>
+    <tr>
+      <td><strong>Mem/Swap</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">Swap Used &gt; 0</code></td>
+      <td>内存不足，发生交换</td>
+      <td>跳转 <code class="language-plaintext highlighter-rouge">3.5 内存问题</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="-3-level-1-深度定位对症下药">🔍 3. Level 1: 深度定位（对症下药）</h2>
+
+<h3 id="31-场景-a-应用逻辑高负载-us-高">3.1 场景 A: 应用逻辑高负载 (<code class="language-plaintext highlighter-rouge">us</code> 高)</h3>
+
+<ul>
+  <li><strong>特征：</strong> 程序在做高频计算、正则匹配、序列化或死循环。</li>
+  <li><strong>排查步骤：</strong>
+    <ol>
+      <li><strong>定位进程：</strong> <code class="language-plaintext highlighter-rouge">top</code> 界面按 <code class="language-plaintext highlighter-rouge">P</code>（大写），记录榜首 <code class="language-plaintext highlighter-rouge">PID</code>。</li>
+      <li><strong>定位线程：</strong> <code class="language-plaintext highlighter-rouge">top -H -p &lt;PID&gt;</code>，找到最耗 CPU 的线程 ID（<code class="language-plaintext highlighter-rouge">TID</code>）。</li>
+      <li><strong>定位代码（Java/Go）：</strong></li>
+    </ol>
+    <ul>
+      <li><strong>Java:</strong> <code class="language-plaintext highlighter-rouge">jstack &lt;PID&gt; | grep -A 20 &lt;TID的16进制&gt;</code></li>
+      <li><strong>Go:</strong> <code class="language-plaintext highlighter-rouge">go tool pprof</code></li>
+      <li><strong>其他:</strong> <code class="language-plaintext highlighter-rouge">perf top -p &lt;PID&gt;</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="32-场景-b-系统争用-sy-高">3.2 场景 B: 系统争用 (<code class="language-plaintext highlighter-rouge">sy</code> 高)</h3>
+
+<ul>
+  <li><strong>特征：</strong> 锁竞争激烈、线程频繁创建销毁、上下文切换风暴。</li>
+  <li><strong>排查步骤：</strong>
+    <ol>
+      <li><strong>看切换次数：</strong> <code class="language-plaintext highlighter-rouge">vmstat 1</code>。如果 <code class="language-plaintext highlighter-rouge">cs</code>（Context Switch）<code class="language-plaintext highlighter-rouge">&gt; 100k/s</code>，系统处于极度消耗中。</li>
+      <li><strong>找元凶：</strong> <code class="language-plaintext highlighter-rouge">pidstat -w 1</code>（查看 <code class="language-plaintext highlighter-rouge">cswch/s</code> 最高者）。</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="33-场景-c-磁盘-io-瓶颈-wa-高">3.3 场景 C: 磁盘 IO 瓶颈 (<code class="language-plaintext highlighter-rouge">wa</code> 高)</h3>
+
+<ul>
+  <li><strong>特征：</strong> 磁盘读写慢，拖累系统。</li>
+  <li><strong>排查步骤：</strong>
+    <ol>
+      <li><strong>确认设备：</strong> <code class="language-plaintext highlighter-rouge">iostat -d -x -k 1</code>。关注 <code class="language-plaintext highlighter-rouge">%util</code>（接近 100% 即饱和）和 <code class="language-plaintext highlighter-rouge">await</code>（响应时间，SSD <code class="language-plaintext highlighter-rouge">&gt; 5ms</code> 需警惕）。</li>
+      <li><strong>找读写大户：</strong></li>
+    </ol>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">iotop -o -P</code></li>
+      <li>（无 iotop 时）<code class="language-plaintext highlighter-rouge">pidstat -d 1</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="34-场景-d-网络接口响应慢">3.4 场景 D: 网络/接口响应慢</h3>
+
+<ul>
+  <li><strong>特征：</strong> CPU/IO 都不高，但请求超时。这是最复杂的场景。</li>
+  <li><strong>排查步骤：</strong>
+    <ol>
+      <li><strong>看流量水位：</strong> <code class="language-plaintext highlighter-rouge">sar -n DEV 1</code>。确认网卡带宽是否打满。</li>
+      <li><strong>看连接队列（黄金标准）：</strong> <code class="language-plaintext highlighter-rouge">ss -nt</code></li>
+    </ol>
+    <ul>
+      <li><strong><code class="language-plaintext highlighter-rouge">Recv-Q</code> 堆积：应用之过。</strong> 应用处理不过来，数据积压在内核。查代码、查 GC、查锁。</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">Send-Q</code> 堆积：网络之过。</strong> 网络拥堵或客户端接收太慢。查链路（<code class="language-plaintext highlighter-rouge">mtr</code>）、查客户端。
+        <ol>
+          <li><strong>看连接数：</strong> <code class="language-plaintext highlighter-rouge">ss -s</code>。关注 <code class="language-plaintext highlighter-rouge">TIME-WAIT</code> 是否过高（端口耗尽）。</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="35-场景-e-内存与-swap">3.5 场景 E: 内存与 Swap</h3>
+
+<ul>
+  <li><strong>特征：</strong> 服务间歇性卡顿，或者直接 OOM（Out of Memory）。</li>
+  <li><strong>排查步骤：</strong>
+    <ol>
+      <li><strong>看交换：</strong> <code class="language-plaintext highlighter-rouge">vmstat 1</code>。重点观察 <code class="language-plaintext highlighter-rouge">si</code> 和 <code class="language-plaintext highlighter-rouge">so</code>。只要这两个数持续大于 0，说明内存不够用，系统在读写硬盘当内存，性能会明显下降。</li>
+      <li><strong>看泄露：</strong> <code class="language-plaintext highlighter-rouge">top</code> 按 <code class="language-plaintext highlighter-rouge">M</code> 排序。</li>
+    </ol>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="-4-level-2-隐形杀手排查高阶必看">👻 4. Level 2: 隐形杀手排查（高阶必看）</h2>
+
+<p><em>当上述硬件资源都正常，但系统依然不可用时，请检查以下软限制和内伤。</em></p>
+
+<h3 id="41-操作系统软限制-limits">4.1 操作系统软限制 (Limits)</h3>
+
+<p>很多故障是因为到达了 OS 设定的保护上限。</p>
+
+<ul>
+  <li><strong>文件句柄（Open Files）：</strong>
+    <ul>
+      <li>检查：<code class="language-plaintext highlighter-rouge">cat /proc/sys/fs/file-nr</code>（已用 vs 上限）或应用日志报错 <code class="language-plaintext highlighter-rouge">Too many open files</code>。</li>
+      <li>解决：调整 <code class="language-plaintext highlighter-rouge">ulimit -n</code>。</li>
+    </ul>
+  </li>
+  <li><strong>连接跟踪表（Conntrack）：</strong>
+    <ul>
+      <li>现象：新连接连不上，但没有应用日志，只有内核静默丢包。</li>
+      <li>检查：<code class="language-plaintext highlighter-rouge">dmesg | grep conntrack</code> 或查看 <code class="language-plaintext highlighter-rouge">/proc/sys/net/netfilter/nf_conntrack_count</code>。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="42-运行时内伤-runtime-health">4.2 运行时内伤 (Runtime Health)</h3>
+
+<p>操作系统健康不等于应用程序健康。</p>
+
+<ul>
+  <li><strong>GC 卡顿（Java/Flink）：</strong>
+    <ul>
+      <li>检查：<code class="language-plaintext highlighter-rouge">jstat -gcutil &lt;PID&gt; 1000</code>。</li>
+      <li>判断：<code class="language-plaintext highlighter-rouge">FGC</code> 频率极高或 <code class="language-plaintext highlighter-rouge">FGCT</code> 时间过长，导致 STW（Stop The World）。</li>
+    </ul>
+  </li>
+  <li><strong>死锁/线程池耗尽：</strong>
+    <ul>
+      <li>检查：应用日志中是否有 <code class="language-plaintext highlighter-rouge">Thread pool exhausted</code>，或请求一直在等待。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="43-历史回溯-history">4.3 历史回溯 (History)</h3>
+
+<p>如果现在系统正常，但刚才卡了一下，用 <code class="language-plaintext highlighter-rouge">sar</code> 复盘。</p>
+
+<ul>
+  <li><strong>命令：</strong> <code class="language-plaintext highlighter-rouge">sar -u</code>（CPU）、<code class="language-plaintext highlighter-rouge">sar -r</code>（内存）、<code class="language-plaintext highlighter-rouge">sar -n DEV</code>（网络）<br />
+再加 <code class="language-plaintext highlighter-rouge">-f /var/log/sa/saXX</code> 查看当天历史记录。</li>
+</ul>
+
+<hr />
+
+<h2 id="-5-应急与受限环境-busybox容器">🛠 5. 应急与受限环境 (BusyBox/容器)</h2>
+
+<p><em>当没有 <code class="language-plaintext highlighter-rouge">iotop</code>、<code class="language-plaintext highlighter-rouge">pidstat</code>、<code class="language-plaintext highlighter-rouge">mpstat</code> 时，使用以下内置工具替代。</em></p>
+
+<ul>
+  <li><strong>替代 <code class="language-plaintext highlighter-rouge">iostat</code>：</strong> 使用 <code class="language-plaintext highlighter-rouge">vmstat 1</code>，关注 <code class="language-plaintext highlighter-rouge">bi/bo</code>（块读写）和 CPU <code class="language-plaintext highlighter-rouge">wa</code>。</li>
+  <li><strong>替代 <code class="language-plaintext highlighter-rouge">netstat</code>：</strong> 使用 <code class="language-plaintext highlighter-rouge">cat /proc/net/tcp</code>（硬核）或 <code class="language-plaintext highlighter-rouge">ip link</code>。</li>
+  <li><strong>替代 <code class="language-plaintext highlighter-rouge">lsof</code>：</strong> 使用 <code class="language-plaintext highlighter-rouge">ls -l /proc/&lt;PID&gt;/fd</code>。</li>
+  <li><strong>查看系统报错：</strong> <code class="language-plaintext highlighter-rouge">dmesg | tail</code>（内核最后的呼救，一定要看）。</li>
+</ul>
+
+<hr />
+
+<h2 id="-附录一键巡检命令清单copy-paste">📝 附录：一键巡检命令清单（Copy-Paste）</h2>
+
+<p><em>遇到故障，直接复制这组命令执行，截图保存现场。</em></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"=== 1. Load &amp; CPU ==="</span>
+top <span class="nt">-b</span> <span class="nt">-n</span> 1 | <span class="nb">head</span> <span class="nt">-n</span> 10
+
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">=== 2. Memory ==="</span>
+free <span class="nt">-h</span>
+
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">=== 3. IO &amp; Context Switch ==="</span>
+vmstat 1 5
+
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">=== 4. Disk Activity ==="</span>
+<span class="c"># 如果有 iostat</span>
+iostat <span class="nt">-d</span> <span class="nt">-x</span> <span class="nt">-k</span> 1 2 <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"iostat not found"</span>
+
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">=== 5. Network Queues (App Lag vs Net Lag) ==="</span>
+ss <span class="nt">-nt</span> | <span class="nb">grep </span>ESTAB | <span class="nb">head</span> <span class="nt">-n</span> 10
+
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">=== 6. Kernel Errors (OOM/Hardware) ==="</span>
+dmesg <span class="nt">-T</span> | <span class="nb">tail</span> <span class="nt">-n</span> 10
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="-架构师寄语">💡 架构师寄语</h3>
+
+<blockquote>
+  <p>不要迷信工具，要相信逻辑。<br />
+CPU 跑满查代码，Recv-Q 满查应用；<br />
+IO 跑满查磁盘，Send-Q 满查网络；<br />
+资源都闲还卡顿，去查 Lock、Limits 和 GC。</p>
+</blockquote>
+
+    </section>
+
+    
+    <section class="post-related">
+      <p class="section-kicker">继续阅读</p>
+      <h2>把同一类问题继续读下去</h2>
+      <p class="post-related-tip">优先按专题与标签延展，减少读完一篇就中断的情况。</p>
+      <ul class="post-related-list">
+        
+        <li class="post-related-item">
+          <div>
+            <a href="/2026/03/12/dlq-governance-why-dlq-is-not-the-end/">死信队列的工程治理：为什么进入死信，不等于问题结束</a>
+            
+              <p>很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。</p>
+            
+          </div>
+          <span>2026-03-12</span>
+        </li>
+        
+      </ul>
+    </section>
+    
+  </div>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

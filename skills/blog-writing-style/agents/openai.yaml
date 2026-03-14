@@ -1,0 +1,4 @@
+interface:
+  display_name: "博客文风"
+  short_description: "约束技术博客的真实感、自然度与去 AI 味表达"
+  default_prompt: "Use $blog-writing-style to rewrite a technical blog draft so it reads natural, grounded, and human."

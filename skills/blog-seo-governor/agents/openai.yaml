@@ -1,0 +1,4 @@
+interface:
+  display_name: "博客 SEO"
+  short_description: "统一处理 SEO、标签体系、相关文章和首页运营规则"
+  default_prompt: "Use $blog-seo-governor to generate or review SEO metadata, tags, series, internal links, related posts, and publish-time SEO gates for a Jekyll technical blog."

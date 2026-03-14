@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客写透度审查 | 我的博客</title>
+    <meta name="description" content="审查技术博客哪里没写透，并直接把关键内容写透。Use when the user feels a draft is hard to follow, key reasoning is too thin, system state is not visible enough, trade-offs are named but not展开, or AI-style editing has over-compressed the author&#39;s real thinking. Focuses on identifying thin spots, deciding what must be expanded, and rewriting those parts with more substance rather than simplifying or polishing.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客写透度审查 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客写透度审查" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="审查技术博客哪里没写透，并直接把关键内容写透。Use when the user feels a draft is hard to follow, key reasoning is too thin, system state is not visible enough, trade-offs are named but not展开, or AI-style editing has over-compressed the author’s real thinking. Focuses on identifying thin spots, deciding what must be expanded, and rewriting those parts with more substance rather than simplifying or polishing." />
+<meta property="og:description" content="审查技术博客哪里没写透，并直接把关键内容写透。Use when the user feels a draft is hard to follow, key reasoning is too thin, system state is not visible enough, trade-offs are named but not展开, or AI-style editing has over-compressed the author’s real thinking. Focuses on identifying thin spots, deciding what must be expanded, and rewriting those parts with more substance rather than simplifying or polishing." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-depth-reviewer/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-depth-reviewer/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客写透度审查" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"审查技术博客哪里没写透，并直接把关键内容写透。Use when the user feels a draft is hard to follow, key reasoning is too thin, system state is not visible enough, trade-offs are named but not展开, or AI-style editing has over-compressed the author’s real thinking. Focuses on identifying thin spots, deciding what must be expanded, and rewriting those parts with more substance rather than simplifying or polishing.","headline":"博客写透度审查","url":"https://blog.zongqir.com/skills/blog-depth-reviewer/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="博客写透度审查">博客写透度审查</h1>
+
+<h2 id="核心定位">核心定位</h2>
+
+<p>这个 skill 不负责把文章写短、写顺、写漂亮。<br />
+它负责判断：哪里没写透，以及哪里应该直接补写。</p>
+
+<p>它主要做四件事：</p>
+
+<ol>
+  <li>找出文章里最难懂、最薄、最容易让人跟丢的地方。</li>
+  <li>判断这些地方是“该展开”还是“只是啰嗦”。</li>
+  <li>直接把关键段落写透，而不是只给抽象建议。</li>
+  <li>保留作者原本判断，不把补写变成另一篇文章。</li>
+</ol>
+
+<p>它不是总检，不是文风统一器，也不是大纲重排器。</p>
+
+<h2 id="这个-skill-解决什么问题">这个 skill 解决什么问题</h2>
+
+<p>适合处理这些情况：</p>
+
+<ol>
+  <li>文章不算错，但读者看不太懂作者到底在说什么。</li>
+  <li>结论有了，但依据太薄。</li>
+  <li>系统状态不可见，只剩抽象判断。</li>
+  <li>代价、边界、故障面被点到为止，没有展开。</li>
+  <li>trade-off 写了名字，但没有落到现实动作和代价。</li>
+  <li>AI 在改稿时把人的真实表达压短了、抹平了、整理过头了。</li>
+  <li>技术密度明显不足，读者只能看到术语或结论，看不到对象、状态、动作和代价。</li>
+  <li>技术密度分配错位，简单部分写得很满，真正复杂和值钱的技术判断反而写得很轻。</li>
+</ol>
+
+<h2 id="默认边界">默认边界</h2>
+
+<p>这个 skill 默认不处理这些问题：</p>
+
+<ol>
+  <li>二级三级标题怎么重排。</li>
+  <li>文风怎么更自然、更有人味。</li>
+  <li>是否存在 AI 味或翻译腔。</li>
+  <li>是否可发布。</li>
+  <li>frontmatter、SEO、标签、专题和首页聚合。</li>
+</ol>
+
+<p>如果问题主要是结构，优先用 <code class="language-plaintext highlighter-rouge">$blog-outline-doctor</code>。<br />
+如果问题主要是文风，优先用 <code class="language-plaintext highlighter-rouge">$blog-writing-style</code>。<br />
+如果问题主要是总检分诊，优先用 <code class="language-plaintext highlighter-rouge">$blog-quality-gate</code>。</p>
+
+<h2 id="核心判断">核心判断</h2>
+
+<h3 id="1-先区分没写透和只是长">1. 先区分“没写透”和“只是长”</h3>
+
+<p>不要默认“多几句就是啰嗦”。<br />
+先判断这些句子是不是在补关键内容：</p>
+
+<ol>
+  <li>判断依据。</li>
+  <li>系统状态。</li>
+  <li>触发条件。</li>
+  <li>代价出现的方式。</li>
+  <li>没解决什么。</li>
+</ol>
+
+<p>如果一段在补这些东西，它就不是废话。<br />
+如果只是换一种说法重复原结论，才算冗余。</p>
+
+<h3 id="2-找该展开的地方">2. 找“该展开的地方”</h3>
+
+<p>最常见的没写透位置有这些：</p>
+
+<ol>
+  <li>只给结论，不给为什么这样判断。</li>
+  <li>只写“复杂度变高了”，不写哪个状态开始多、哪个动作开始慢。</li>
+  <li>只写“故障域变大了”，不写到底从一个点怎么扩成一片。</li>
+  <li>只写“后面会很难维护”，不写难在配置、迁移、接管、排查还是恢复。</li>
+  <li>只写“trade-off”，不写两边分别牺牲了什么、保住了什么。</li>
+  <li>只写“这里我开始别扭了”，不写别扭感是被什么现实触发的。</li>
+</ol>
+
+<h3 id="3-写透不等于写长">3. 写透不等于写长</h3>
+
+<p>写透的目标不是把所有东西都铺开。<br />
+目标是让读者跟得上作者的判断路径。</p>
+
+<p>优先补这些内容：</p>
+
+<ol>
+  <li>现实触发点。</li>
+  <li>对象关系。</li>
+  <li>状态变化。</li>
+  <li>代价出现方式。</li>
+  <li>当前改法没解决什么。</li>
+</ol>
+
+<p>不要为了“完整”自动补这些东西：</p>
+
+<ol>
+  <li>与当前问题无关的百科背景。</li>
+  <li>作者没打算展开的支线。</li>
+  <li>一整套方法论包装。</li>
+  <li>并不服务当前判断的大段定义。</li>
+</ol>
+
+<h3 id="4-笔墨要向最值钱的地方倾斜">4. 笔墨要向最值钱的地方倾斜</h3>
+
+<p>不要把篇幅平均分给每个部分。<br />
+技术文章不是信息越多越显得有水平，而是最关键的判断有没有被写透。</p>
+
+<p>重点看这些失衡信号：</p>
+
+<ol>
+  <li>简单背景和常识性铺垫写了很多，真正复杂的判断只带过一句。</li>
+  <li>知识点、概念点很多，但没有一个被真正展开成强洞察。</li>
+  <li>容易写的内容写得很满，真正有代价、有取舍的地方写得很轻。</li>
+  <li>段落看起来都不短，但篇幅没有明显向高价值判断倾斜。</li>
+</ol>
+
+<p>如果读者读完只觉得“信息很多”，却说不出文章最强的一个判断，通常不是内容不够，而是笔墨花错了地方。</p>
+
+<p>默认处理原则：</p>
+
+<ol>
+  <li>简单内容写到够支撑后文判断为止，不要反复铺陈。</li>
+  <li>把篇幅优先留给最关键的判断依据、系统状态变化、代价落点和边界。</li>
+  <li>遇到“简单内容写很多，复杂内容写不够”，优先判断为写透度问题，不要先当作文风问题处理。</li>
+  <li>不要为了段落均匀、结构工整或信息看起来很多，就把真正值钱的部分压短。</li>
+</ol>
+
+<h3 id="5-技术密度不够通常不是少写点术语能解决">5. 技术密度不够，通常不是“少写点术语”能解决</h3>
+
+<p>技术密度不足，不是指文章里技术名词少。<br />
+更常见的情况是：名词有了，但技术判断还没有落到具体对象和变化上。</p>
+
+<p>重点看这些信号：</p>
+
+<ol>
+  <li>写了组件名、机制名、模式名，但没写它在当前场景里到底解决什么问题。</li>
+  <li>写了“复杂”“隔离”“治理”“稳定性”这类词，但没写哪个状态变了、哪个动作变慢了、哪个对象被影响了。</li>
+  <li>一段里有结论，但没有最基本的判断依据，读者只能被迫相信作者。</li>
+  <li>技术段落读起来像摘要，信息类型只有名词，没有关系、动作和代价。</li>
+</ol>
+
+<p>默认补写方向：</p>
+
+<ol>
+  <li>把抽象词压回对象。</li>
+  <li>把对象补成关系。</li>
+  <li>把关系补成动作。</li>
+  <li>把动作补上代价和边界。</li>
+</ol>
+
+<h2 id="写透检查维度">写透检查维度</h2>
+
+<h3 id="1-判断路径有没有写出来">1. 判断路径有没有写出来</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>作者当时为什么会那样想。</li>
+  <li>哪一步开始改变了原来的判断。</li>
+  <li>后来为什么不愿意继续往那条路推。</li>
+</ol>
+
+<p>如果只剩结论，没有判断路径，通常就是没写透。</p>
+
+<h3 id="2-系统状态有没有可见">2. 系统状态有没有可见</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>当时系统是什么样。</li>
+  <li>哪个状态开始变多。</li>
+  <li>哪个动作开始变慢。</li>
+  <li>哪个环节开始变难改、难迁、难接管、难排查。</li>
+</ol>
+
+<p>只写抽象名词，不写系统状态，通常会让技术文章发空。</p>
+
+<h3 id="3-触发点有没有出现">3. 触发点有没有出现</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>作者为什么会在那个时间点开始重新看这个问题。</li>
+  <li>是租户数起来了，还是流量分布变了，还是故障模式变了。</li>
+  <li>是不是有一个现实压力把问题从“能跑”逼成“必须回答”。</li>
+</ol>
+
+<p>没有触发点，很多判断都会像凭空冒出来。</p>
+
+<h3 id="4-代价有没有展开">4. 代价有没有展开</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>代价到底落在什么对象上。</li>
+  <li>是资源利用率差、实例数膨胀、迁移难、恢复慢，还是值班复杂度上升。</li>
+  <li>是短期代价，还是长期维护代价。</li>
+</ol>
+
+<p>只写“有代价”“会更复杂”，不算写透。</p>
+
+<h3 id="5-没解决什么有没有写">5. 没解决什么有没有写</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>这个改法解决了什么。</li>
+  <li>它没解决什么。</li>
+  <li>它只是把问题挪到了哪。</li>
+</ol>
+
+<p>如果只写优点，不写没解决什么，文章通常会显得薄。</p>
+
+<h3 id="6-技术密度是不是落在了该落的地方">6. 技术密度是不是落在了该落的地方</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>技术细节是不是都堆在容易写的背景段，而关键判断本身仍然是薄的。</li>
+  <li>真正决定结论成立的那几个机制、状态变化、代价落点，是否得到了足够篇幅。</li>
+  <li>是不是讲了很多周边知识，但对当前文章的主判断帮助很小。</li>
+  <li>读者读完后，能不能说清文章里最关键的技术判断凭什么成立。</li>
+</ol>
+
+<p>如果技术信息很多，但关键判断仍然站不住，通常不是“信息量不足”，而是技术密度落错了地方。</p>
+
+<h2 id="直接补写的规则">直接补写的规则</h2>
+
+<h3 id="1-只补关键段">1. 只补关键段</h3>
+
+<p>默认补 1 到 5 处最关键的位置，不整篇泛扩。</p>
+
+<p>优先补：</p>
+
+<ol>
+  <li>开头没立住的关键背景。</li>
+  <li>中间最薄的判断依据。</li>
+  <li>最需要展开的系统状态和代价。</li>
+  <li>结尾本该补上的当前边界或未解决问题。</li>
+</ol>
+
+<h3 id="2-补写时保留作者原意">2. 补写时保留作者原意</h3>
+
+<p>补写不是重新发明观点。<br />
+只能做这些事：</p>
+
+<ol>
+  <li>把原本已经存在的判断说透。</li>
+  <li>把被压缩掉的因果链补出来。</li>
+  <li>把抽象词压回对象、状态、动作、代价。</li>
+</ol>
+
+<p>不要做这些事：</p>
+
+<ol>
+  <li>擅自改变文章主类型。</li>
+  <li>擅自追加作者没表达过的新立场。</li>
+  <li>把局部判断补成一整套体系。</li>
+  <li>替作者做他原文里没有做出的最终拍板。</li>
+</ol>
+
+<h3 id="3-优先补为什么和怎么变重">3. 优先补“为什么”和“怎么变重”</h3>
+
+<p>最优先补的通常不是术语定义，而是：</p>
+
+<ol>
+  <li>为什么作者开始这样判断。</li>
+  <li>系统是怎么一点点变重的。</li>
+  <li>代价是怎么落到现实链路上的。</li>
+  <li>这个改法为什么仍然不够。</li>
+</ol>
+
+<h2 id="默认输出">默认输出</h2>
+
+<p>使用这个 skill 时，默认输出三部分：</p>
+
+<ol>
+  <li>没写透的位置：
+    <ul>
+      <li>指出 1 到 5 个最关键的薄点。</li>
+      <li>说明这里薄在判断依据、系统状态、触发点、代价，还是边界。</li>
+    </ul>
+  </li>
+  <li>为什么这里不能再压：
+    <ul>
+      <li>说明这不是废话，而是读者理解判断所必需的信息。</li>
+    </ul>
+  </li>
+  <li>直接补写后的版本：
+    <ul>
+      <li>直接把关键段写透。</li>
+      <li>保留作者原意。</li>
+      <li>不擅自改文章类型和立场。</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要把“写透”误做成“写长”。</li>
+  <li>不要把局部判断强行补成全景方法论。</li>
+  <li>不要为了自洽补作者没打算展开的支线。</li>
+  <li>不要把作者试探性的判断改成确定结论。</li>
+  <li>不要把这个 skill 用成文风美化器，它负责的是补内容厚度。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

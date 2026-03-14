@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客 AI 味诊断 | 我的博客</title>
+    <meta name="description" content="诊断技术博客里的 AI 味、拼凑感和生成痕迹。Use when the user wants to assess whether a draft feels AI-generated, identify patchwork structure, detect fake depth, or find overperformed expert tone. Focus on evidence-based smell diagnosis rather than claiming true authorship.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>博客 AI 味诊断 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="博客 AI 味诊断" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="诊断技术博客里的 AI 味、拼凑感和生成痕迹。Use when the user wants to assess whether a draft feels AI-generated, identify patchwork structure, detect fake depth, or find overperformed expert tone. Focus on evidence-based smell diagnosis rather than claiming true authorship." />
+<meta property="og:description" content="诊断技术博客里的 AI 味、拼凑感和生成痕迹。Use when the user wants to assess whether a draft feels AI-generated, identify patchwork structure, detect fake depth, or find overperformed expert tone. Focus on evidence-based smell diagnosis rather than claiming true authorship." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-ai-smell-checker/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-ai-smell-checker/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="博客 AI 味诊断" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"诊断技术博客里的 AI 味、拼凑感和生成痕迹。Use when the user wants to assess whether a draft feels AI-generated, identify patchwork structure, detect fake depth, or find overperformed expert tone. Focus on evidence-based smell diagnosis rather than claiming true authorship.","headline":"博客 AI 味诊断","url":"https://blog.zongqir.com/skills/blog-ai-smell-checker/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="博客-ai-味诊断">博客 AI 味诊断</h1>
+
+<h2 id="核心定位">核心定位</h2>
+
+<p>这个 skill 不负责判断“这篇是不是 AI 写的”。</p>
+
+<p>它只做一件更可靠的事：</p>
+
+<p>找出文章里<strong>为什么会让人觉得像 AI 生成</strong>。</p>
+
+<p>也就是说，它默认输出的是：</p>
+
+<ol>
+  <li>哪些地方有 AI 味。</li>
+  <li>这些 AI 味具体体现在哪。</li>
+  <li>为什么读起来会像模型在生成。</li>
+  <li>先改哪里最有效。</li>
+</ol>
+
+<p>它不输出：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">这是 AI 写的。</code></li>
+  <li><code class="language-plaintext highlighter-rouge">这不是 AI 写的。</code></li>
+  <li>没有证据支撑的真伪判断。</li>
+</ol>
+
+<h2 id="这个-skill-看什么">这个 skill 看什么</h2>
+
+<p>重点查下面这几类高风险生成痕迹：</p>
+
+<h3 id="1-拼凑感">1. 拼凑感</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>开头承诺了一套结构，正文却写成了另一套。</li>
+  <li>中途不断飞出新节点，像写着写着想到什么就补什么。</li>
+  <li>标题之间没有明显关系，只是相关知识点并排摆着。</li>
+</ol>
+
+<h3 id="2-句子和段落过度平均">2. 句子和段落过度平均</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>每句都差不多长。</li>
+  <li>每段都差不多满。</li>
+  <li>节奏太匀，没有轻重。</li>
+  <li>每段结尾都像一个小总结。</li>
+</ol>
+
+<p>这种文章通常看起来很工整，但不像真实写作者。<br />
+真实技术文章经常会在局部停住，不会每段都收得很干净。</p>
+
+<h3 id="3-过度完整">3. 过度完整</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>背景、定义、意义、方案、总结都齐。</li>
+  <li>文章像优等生标准答案，几乎没有停顿和留白。</li>
+  <li>原文本来只想讲一个局部判断，最后被补成一套全景方法论。</li>
+  <li>作者没定义术语，文章却自动补了一整套概念说明。</li>
+</ol>
+
+<p>过度完整不一定更好。<br />
+它经常会把真实复盘里本来成立的局部判断，修成一篇没有现场感的完整作文。</p>
+
+<h3 id="4-空心技术细节">4. 空心技术细节</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>技术细节看起来正确，但没有信息量。</li>
+  <li>用泛公式、泛估算、泛框架假装深度。</li>
+  <li>只写“资源压力、状态治理、复杂度上升”这种大词，不写具体连接、队列、cursor、backlog、恢复过程。</li>
+  <li>组件名很多，但没有写对象关系、状态变化和代价出现的方式。</li>
+</ol>
+
+<p>技术真实感不等于术语密度。<br />
+更重要的是写清：</p>
+
+<ol>
+  <li>哪个状态多起来了。</li>
+  <li>哪个恢复动作开始变慢了。</li>
+  <li>哪类故障开始从点状变片状。</li>
+  <li>哪种配置开始越来越难改。</li>
+</ol>
+
+<h3 id="5-假洞察">5. 假洞察</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>句子看起来高级，但谁都能说。</li>
+  <li>只是把原文换成一个更大的抽象词，再说一遍。</li>
+  <li>用“这背后反映的是”“更深层的问题在于”“归根结底，这是一个……问题”抬高语气。</li>
+</ol>
+
+<p>如果要上升抽象，必须立刻落回具体对象和动作。<br />
+洞察不是把“负载问题”改写成“系统治理问题”，而是写清它为什么会在那个阶段变成治理问题。</p>
+
+<h3 id="6-过度表演的人味">6. 过度表演的人味</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>大量使用 <code class="language-plaintext highlighter-rouge">其实</code>、<code class="language-plaintext highlighter-rouge">当然</code>、<code class="language-plaintext highlighter-rouge">通常</code>、<code class="language-plaintext highlighter-rouge">真正</code>、<code class="language-plaintext highlighter-rouge">这也是为什么</code>。</li>
+  <li>标题和过渡句像一个疲惫老专家在总结，而不是在复盘事情。</li>
+  <li>为了“像人”，刻意堆犹豫、转折、感慨。</li>
+</ol>
+
+<h3 id="7-方法论腔和元说明腔">7. 方法论腔和元说明腔</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>正文里先讲“我要怎么分析这件事”。</li>
+  <li>正文里解释“这篇怎么写”“这一段为什么先写”。</li>
+  <li>把方法框架直接铺在读者脸上，像培训材料，不像博客。</li>
+  <li>大量使用“这里想讨论的是”“这一部分主要说明”“接下来我们看”这种带路句。</li>
+</ol>
+
+<h3 id="8-判断太圆">8. 判断太圆</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>每个观点都兼顾多方、全面平衡。</li>
+  <li>没有偏好、没有犹豫、没有不耐烦，也没有具体取舍。</li>
+  <li>读完只觉得“都对”，但感受不到作者真实站位。</li>
+</ol>
+
+<p>这种问题往往不是“客观”，而是把作者修没了。</p>
+
+<h3 id="9-背景悬空">9. 背景悬空</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>开头没交代系统阶段、已定前提、当前讨论边界。</li>
+  <li>看完前几段还不知道为什么会讨论这个问题。</li>
+  <li>明明是独立文章，却默认读者知道上文。</li>
+</ol>
+
+<h3 id="10-现场感不足">10. 现场感不足</h3>
+
+<p>典型症状：</p>
+
+<ol>
+  <li>有 topic、有 consumer、有 shard。</li>
+  <li>术语都对，但没有现实触发点。</li>
+  <li>看不出作者为什么会在那个点开始别扭、犹豫或转向。</li>
+</ol>
+
+<p>例子看起来正确，但没有现场感，也是典型 AI 痕迹之一。</p>
+
+<h2 id="检查顺序">检查顺序</h2>
+
+<h3 id="1-先看开头是不是悬空">1. 先看开头是不是悬空</h3>
+
+<p>检查这四件事有没有出现：</p>
+
+<ol>
+  <li>当时系统处在什么阶段。</li>
+  <li>哪些前提已经定了。</li>
+  <li>现在只讨论什么。</li>
+  <li>真正卡住什么。</li>
+</ol>
+
+<p>如果这四件事缺了两件以上，整篇很容易从开头就带 AI 味。</p>
+
+<h3 id="2-再看承诺和兑现是不是脱节">2. 再看承诺和兑现是不是脱节</h3>
+
+<p>重点检查：</p>
+
+<ol>
+  <li>开头列出来的几种方案，正文有没有真的按这个展开。</li>
+  <li>有没有中途新长出来的重要节点。</li>
+  <li>结尾是不是在总结一个开头没承诺过的方向。</li>
+</ol>
+
+<p>这种脱节是“按块生成感”的核心来源之一。</p>
+
+<h3 id="3-再看技术细节是不是空">3. 再看技术细节是不是空</h3>
+
+<p>优先抓这种句子：</p>
+
+<ol>
+  <li>正确但空的公式。</li>
+  <li>听起来专业但没有具体对象的抽象词。</li>
+  <li>只写大风险，不写具体机制和观测面。</li>
+  <li>只报组件名，不写对象关系、状态变化和代价。</li>
+</ol>
+
+<h3 id="4-最后看语气是不是演过头了">4. 最后看语气是不是演过头了</h3>
+
+<p>重点检查：</p>
+
+<ol>
+  <li>有没有过多总结腔。</li>
+  <li>有没有过多“不是 A，而是 B”。</li>
+  <li>有没有站在台上点评系统的口气。</li>
+  <li>有没有刻意模拟经验感的副词堆叠。</li>
+  <li>有没有靠连接词硬拽逻辑，而不是靠事实顺序和对象关系成立。</li>
+</ol>
+
+<p>少靠这些连接词制造逻辑感：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">因此</code></li>
+  <li><code class="language-plaintext highlighter-rouge">然而</code></li>
+  <li><code class="language-plaintext highlighter-rouge">与此同时</code></li>
+  <li><code class="language-plaintext highlighter-rouge">进一步而言</code></li>
+  <li><code class="language-plaintext highlighter-rouge">换言之</code></li>
+  <li><code class="language-plaintext highlighter-rouge">某种程度上</code></li>
+  <li><code class="language-plaintext highlighter-rouge">从另一个角度看</code></li>
+</ol>
+
+<h2 id="输出要求">输出要求</h2>
+
+<p>使用这个 skill 时，默认输出四部分：</p>
+
+<ol>
+  <li>总体判断：
+    <ul>
+      <li>这篇最重的 AI 味是哪一类。</li>
+    </ul>
+  </li>
+  <li>证据位：
+    <ul>
+      <li>逐条指出原文中最像 AI 的地方。</li>
+    </ul>
+  </li>
+  <li>原因说明：
+    <ul>
+      <li>为什么这会让人觉得像 AI，而不是像真实复盘。</li>
+    </ul>
+  </li>
+  <li>修改优先级：
+    <ul>
+      <li>先改开头、先改标题线、先删空技术细节，还是先压语气。</li>
+    </ul>
+  </li>
+</ol>
+
+<p>如果适合继续改写，额外补一句：</p>
+
+<ol>
+  <li>更适合转给 <code class="language-plaintext highlighter-rouge">$blog-writing-style</code></li>
+  <li>还是更适合先转给 <code class="language-plaintext highlighter-rouge">$blog-outline-doctor</code></li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要把“有 AI 味”写成“确定是 AI 生成”。</li>
+  <li>不要只给抽象结论，必须给证据位。</li>
+  <li>不要只说“更自然一点”，必须说清楚哪里假、哪里空、哪里拼。</li>
+  <li>不要把所有问题都归到文风，结构和承诺兑现脱节往往更关键。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文章事实风险审查 | 我的博客</title>
+    <meta name="description" content="审查技术文章里的事实风险、脑补痕迹和证据不足的结论。Use when the user wants to review whether a draft contains fabricated experience, overstated claims, unsupported facts, or risky technical assertions. Focus on evidence, confidence levels, and factual risk rather than style polishing.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>文章事实风险审查 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="文章事实风险审查" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="审查技术文章里的事实风险、脑补痕迹和证据不足的结论。Use when the user wants to review whether a draft contains fabricated experience, overstated claims, unsupported facts, or risky technical assertions. Focus on evidence, confidence levels, and factual risk rather than style polishing." />
+<meta property="og:description" content="审查技术文章里的事实风险、脑补痕迹和证据不足的结论。Use when the user wants to review whether a draft contains fabricated experience, overstated claims, unsupported facts, or risky technical assertions. Focus on evidence, confidence levels, and factual risk rather than style polishing." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-fact-risk-review/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-fact-risk-review/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="文章事实风险审查" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"审查技术文章里的事实风险、脑补痕迹和证据不足的结论。Use when the user wants to review whether a draft contains fabricated experience, overstated claims, unsupported facts, or risky technical assertions. Focus on evidence, confidence levels, and factual risk rather than style polishing.","headline":"文章事实风险审查","url":"https://blog.zongqir.com/skills/blog-fact-risk-review/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="文章事实风险审查">文章事实风险审查</h1>
+
+<h2 id="核心定位">核心定位</h2>
+
+<p>这个 skill 不负责做“绝对真伪判定”。</p>
+
+<p>它负责做的是：</p>
+
+<ol>
+  <li>找出文章里哪些内容可能是假的。</li>
+  <li>找出哪些内容不像假的，但证据不够。</li>
+  <li>找出哪些内容其实只是推测，却被写成了事实。</li>
+  <li>找出哪些技术结论、时间表述、组织关系、规模数字容易出错。</li>
+</ol>
+
+<p>也就是说，它输出的是<strong>事实风险</strong>，不是“最终判决”。</p>
+
+<h2 id="重点检查什么">重点检查什么</h2>
+
+<h3 id="1-伪造经历和伪造案例">1. 伪造经历和伪造案例</h3>
+
+<p>优先抓这些句子：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">我当时做了……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">我们线上已经……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">后来验证下来……</code></li>
+  <li><code class="language-plaintext highlighter-rouge">实际结果证明……</code></li>
+</ol>
+
+<p>如果作者没有明确给过这类经历素材，这些句子都属于高风险。</p>
+
+<h3 id="2-把推测写成事实">2. 把推测写成事实</h3>
+
+<p>优先抓这些情况：</p>
+
+<ol>
+  <li>没有证据，却写成确定结论。</li>
+  <li>本来只是可能原因，却写成唯一原因。</li>
+  <li>本来只是行业常见情况，却写成“我们就是这样”。</li>
+</ol>
+
+<p>重点看这些词：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">一定</code></li>
+  <li><code class="language-plaintext highlighter-rouge">就是</code></li>
+  <li><code class="language-plaintext highlighter-rouge">本质上就是</code></li>
+  <li><code class="language-plaintext highlighter-rouge">真实情况是</code></li>
+  <li><code class="language-plaintext highlighter-rouge">最后证明</code></li>
+</ol>
+
+<h3 id="3-技术结论超出证据">3. 技术结论超出证据</h3>
+
+<p>典型问题：</p>
+
+<ol>
+  <li>从一个局部现象推到系统级结论。</li>
+  <li>只写一个大方向判断，没有证据位。</li>
+  <li>用正确但空的技术话替代真实风险。</li>
+</ol>
+
+<p>比如：</p>
+
+<ol>
+  <li>只写“内存压力很大”，不写连接、队列、ack、cursor、backlog、恢复过程。</li>
+  <li>只写“隔离性变差”，不写到底谁影响谁。</li>
+  <li>只写“稳定性下降”，不写重启、恢复、故障域。</li>
+</ol>
+
+<h3 id="4-时间版本规模组织关系">4. 时间、版本、规模、组织关系</h3>
+
+<p>这些地方最容易不小心写错：</p>
+
+<ol>
+  <li>时间线：<code class="language-plaintext highlighter-rouge">当时</code>、<code class="language-plaintext highlighter-rouge">后来</code>、<code class="language-plaintext highlighter-rouge">现在</code> 到底分别指什么。</li>
+  <li>版本和阶段：系统在哪个阶段，哪些东西已经上线，哪些还只是讨论。</li>
+  <li>规模数字：topic 数、租户数、partition 数、实例数，是事实还是举例。</li>
+  <li>组织关系：是不是独立部门、是不是跨团队协作、是谁在推进这件事。</li>
+</ol>
+
+<h3 id="5-引用上文和承接关系">5. 引用上文和承接关系</h3>
+
+<p>如果文章承接上一篇，要检查：</p>
+
+<ol>
+  <li>上下文是否真的在前文出现过。</li>
+  <li>这篇是否仍然能让没看过上文的人知道最关键的前提。</li>
+</ol>
+
+<p>如果文章是独立文章，就要检查有没有偷偷默认读者知道上文。</p>
+
+<h2 id="审查顺序">审查顺序</h2>
+
+<h3 id="1-先标确定事实和作者判断">1. 先标“确定事实”和“作者判断”</h3>
+
+<p>每一段先分成两类：</p>
+
+<ol>
+  <li>确定事实：
+    <ul>
+      <li>已发生的系统状态</li>
+      <li>明确给出的数字</li>
+      <li>明确给出的历史决策</li>
+    </ul>
+  </li>
+  <li>作者判断：
+    <ul>
+      <li>为什么这样想</li>
+      <li>倾向哪种方案</li>
+      <li>觉得哪里风险更大</li>
+    </ul>
+  </li>
+</ol>
+
+<p>这一步的目的，是避免把“判断”误写成“事实”。</p>
+
+<h3 id="2-再找高风险句子">2. 再找高风险句子</h3>
+
+<p>高风险句子通常有三类：</p>
+
+<ol>
+  <li>作者没提供素材却写得像亲身经历。</li>
+  <li>没有证据却写得像铁结论。</li>
+  <li>时间、规模、责任归属写得过满。</li>
+</ol>
+
+<h3 id="3-再标证据等级">3. 再标证据等级</h3>
+
+<p>默认用这三档：</p>
+
+<ol>
+  <li>低风险：
+    <ul>
+      <li>作者明确提供过素材。</li>
+      <li>文章里有足够上下文支撑。</li>
+    </ul>
+  </li>
+  <li>中风险：
+    <ul>
+      <li>判断方向合理，但证据不够。</li>
+      <li>建议改成“倾向于”“可能”“常见情况”。</li>
+    </ul>
+  </li>
+  <li>高风险：
+    <ul>
+      <li>像脑补经历。</li>
+      <li>像伪造结果。</li>
+      <li>像把推测写成事实。</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="输出要求">输出要求</h2>
+
+<p>使用这个 skill 时，默认输出三部分：</p>
+
+<ol>
+  <li>事实风险清单：
+    <ul>
+      <li>哪些句子风险最高。</li>
+      <li>风险属于哪一类。</li>
+    </ul>
+  </li>
+  <li>风险原因：
+    <ul>
+      <li>为什么这句证据不够。</li>
+      <li>为什么这句像脑补。</li>
+      <li>为什么这句时间或规模可能写错。</li>
+    </ul>
+  </li>
+  <li>改写建议：
+    <ul>
+      <li>删掉</li>
+      <li>改成推测</li>
+      <li>改成作者判断</li>
+      <li>补充事实前提或证据</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要因为句子写得自信，就默认它是真的。</li>
+  <li>不要因为方向合理，就默认作者真的经历过。</li>
+  <li>不要把“可能是假的”直接写成“就是假的”。</li>
+  <li>不要只说“建议核实”，要指出为什么这里需要核实。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

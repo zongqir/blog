@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SaaS 不是“上云”而已：多租户、边界管理与商业模型的三重基石 | 我的博客</title>
+    <meta name="description" content="SaaS 不是把系统搬上云这么简单。真正决定成败的，是多租户复利、边界治理与商业模型三件事能否统一设计并长期演进。">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>SaaS 不是“上云”而已：多租户、边界管理与商业模型的三重基石 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="SaaS 不是“上云”而已：多租户、边界管理与商业模型的三重基石" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="SaaS 不是把系统搬上云这么简单。真正决定成败的，是多租户复利、边界治理与商业模型三件事能否统一设计并长期演进。" />
+<meta property="og:description" content="SaaS 不是把系统搬上云这么简单。真正决定成败的，是多租户复利、边界治理与商业模型三件事能否统一设计并长期演进。" />
+<link rel="canonical" href="https://blog.zongqir.com/2025/06/10/saas-three-foundations/" />
+<meta property="og:url" content="https://blog.zongqir.com/2025/06/10/saas-three-foundations/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-06-10T10:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="SaaS 不是“上云”而已：多租户、边界管理与商业模型的三重基石" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-06-10T10:00:00+08:00","datePublished":"2025-06-10T10:00:00+08:00","description":"SaaS 不是把系统搬上云这么简单。真正决定成败的，是多租户复利、边界治理与商业模型三件事能否统一设计并长期演进。","headline":"SaaS 不是“上云”而已：多租户、边界管理与商业模型的三重基石","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zongqir.com/2025/06/10/saas-three-foundations/"},"url":"https://blog.zongqir.com/2025/06/10/saas-three-foundations/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-post">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      
+
+
+
+
+
+
+
+  
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+  
+  
+
+
+<div class="reading-progress" aria-hidden="true">
+  <span class="reading-progress-bar" data-reading-progress></span>
+</div>
+
+<article class="post">
+  <div class="post-grid" data-post-grid>
+    <header class="post-header">
+      <div class="post-header-topline">
+        <p class="post-cover-kicker">SaaS</p>
+        
+          <p class="post-series">收录于 工程治理体系</p>
+        
+      </div>
+      <section class="post-cover">
+        <h1>SaaS 不是“上云”而已：多租户、边界管理与商业模型的三重基石</h1>
+        
+          <p class="post-summary">SaaS 不是把系统搬上云这么简单。真正决定成败的，是多租户复利、边界治理与商业模型三件事能否统一设计并长期演进。</p>
+        
+      </section>
+      <div class="post-meta-panel">
+        <p class="post-meta">
+          <span class="meta-pill">发布于 <time datetime="2025-06-10T10:00:00+08:00">2025-06-10</time></span>
+          
+            <span class="meta-pill">更新于 <time datetime="2025-06-10T10:00:00+08:00">2025-06-10</time></span>
+          
+          <span class="meta-pill">阅读约 8 分钟</span>
+        </p>
+        
+          <p class="post-meta-tags">
+            
+              <a class="tag-chip" href="/tags/#saas">SaaS</a>
+            
+              <a class="tag-chip" href="/tags/#tob">ToB</a>
+            
+              <a class="tag-chip" href="/tags/#架构设计">架构设计</a>
+            
+              <a class="tag-chip" href="/tags/#工程治理">工程治理</a>
+            
+          </p>
+        
+      </div>
+    </header>
+
+    <aside class="post-toc" data-post-toc hidden>
+      <button class="post-toc-toggle" type="button" data-post-toc-toggle aria-expanded="false" aria-controls="post-toc-nav">
+        章节导航
+      </button>
+      <div class="post-toc-shell" data-post-toc-shell>
+        <p class="post-toc-title">章节导航</p>
+        <nav id="post-toc-nav" class="post-toc-nav" data-post-toc-nav aria-label="文章目录"></nav>
+      </div>
+    </aside>
+
+    <section class="post-content" data-post-content>
+      <p>很多团队做了两三年 SaaS 之后，都会遇到同一个问题：系统明明已经云化，为什么交付成本还是高、版本还是难迭代、客户需求还是不断撕裂主线？<br />
+原因通常不是“技术不够先进”，而是从第一天就把 SaaS 理解窄了。SaaS 不只是部署方式变化，而是商业契约、交付模型、软件形态三件事同时变化。少看任何一层，后面都要补课。</p>
+
+<p>今天我想系统聊一件事: 一个 SaaS 团队到底在做什么。<br />
+我做后端业务很多年，越做越觉得，真正拉开差距的不是“会不会上云”，而是有没有想清楚三个根问题：</p>
+
+<ol>
+  <li>SaaS 对企业到底解决了什么核心问题。</li>
+  <li>在满足多数客户的前提下，怎么做个性化且不撕裂主线。</li>
+  <li>我们到底靠什么赚钱，收费模型如何反向约束产品和技术。</li>
+</ol>
+
+<p>这三个问题如果不一起想，团队很容易进入一种表面繁荣: 功能越来越多，客户越来越杂，代码越来越重，但复用率和毛利率并没有同步提升。</p>
+
+<h2 id="先把词讲清楚saas-不是一个词而是三件事叠加">先把词讲清楚：SaaS 不是一个词，而是三件事叠加</h2>
+
+<p>这几年大家都在聊 SaaS、多租户、低代码、云化，但很多讨论只停在技术层。<br />
+我的理解更简单: 不要把 SaaS 当名词，要把它当三次迁移的叠加。</p>
+
+<ol>
+  <li>商业契约迁移：从一次性买断转向持续订阅。</li>
+  <li>交付迁移：从客户机房部署转向服务商托管。</li>
+  <li>软件形态迁移：从“为一个客户写一套代码”转向“为一个行业定义默认工作方式”。</li>
+</ol>
+
+<p>很多团队只盯第二件事，觉得把系统托管到云上就完成了 SaaS 化。<br />
+但如果第一件事和第三件事没跟上，本质上只是“在线项目制”，不是 SaaS。</p>
+
+<p>真正的分水岭是这一句:<br />
+<strong>SaaS 代表软件从一次性商品，变成长期服务关系。</strong></p>
+
+<h2 id="从项目制到行业操作系统saas-本质是标准化博弈">从项目制到行业操作系统：SaaS 本质是标准化博弈</h2>
+
+<p>传统定制软件在做的是“把某一个客户的流程数字化”。<br />
+SaaS 在做的是“替一个行业给出一套默认且持续演化的工作方式”。</p>
+
+<p>我习惯用一个二维坐标解释这件事：</p>
+
+<ol>
+  <li>X 轴：行业里各家公司今天实际上是怎么干活的。</li>
+  <li>Y 轴：这些公司希望自己怎么干活，或者说应该怎么干活。</li>
+</ol>
+
+<p>项目制通常沿着 X 轴复刻现状。<br />
+SaaS 的野心是给出一条更标准、更可复制、也更可治理的路径，逐步把客户从 X 轴推向 Y 轴。</p>
+
+<p>这会带来一个很现实的 trade-off：<br />
+你越是坚持标准，越可能在短期遭遇“为什么不能按我们历史习惯做”的阻力；<br />
+你越是迎合所有现状，越会在中长期失去主线和复利。</p>
+
+<p>所以做 SaaS 必须有一点“产品上的克制与傲慢”:</p>
+
+<ol>
+  <li>克制在于不把所有需求都做进主线。</li>
+  <li>傲慢在于敢于给出工作流观点，并推动行业默认水平上移。</li>
+</ol>
+
+<h2 id="基石一多租户真正的价值不是省机器而是复利">基石一：多租户真正的价值，不是省机器，而是复利</h2>
+
+<p>谈 SaaS 就绕不开租户。广义上，一个租户通常就是一个客户组织。<br />
+很多人把多租户理解为“同一套系统塞更多客户，节约成本”。这个理解不算错，但太浅。</p>
+
+<p>我更认同的视角是：多租户是让产品、运维和认知同时产生复利的基础设施。<br />
+如果没有多租户心智，你做的还是批量外包，不是 SaaS。</p>
+
+<h3 id="四层隔离是基本盘">四层隔离是基本盘</h3>
+
+<p>一个成熟的多租户系统，至少要把隔离做到四层：</p>
+
+<ol>
+  <li>数据隔离：A 公司不能看到 B 公司的任何数据，包括主库、日志、报表、导出。</li>
+  <li>权限隔离：同租户内部不同角色也只能看各自该看的范围。</li>
+  <li>资源隔离：大租户高并发不能把其他租户拖慢或拖垮。</li>
+  <li>故障隔离：单租户异常不能扩大成全局事故。</li>
+</ol>
+
+<p>这四层如果只停在 PPT 上，后面谈复利都是空话。</p>
+
+<h3 id="多租户带来的三类复利">多租户带来的三类复利</h3>
+
+<ol>
+  <li>产品演化复利：一次字段优化、一次流程改进、一次推荐策略调整，可以覆盖全部或大多数租户。</li>
+  <li>运维治理复利：一套监控体系、一条故障定位路径、一套容量模型，可以跨租户复用。</li>
+  <li>行业认知复利：你能看到真实的行业平均线、头部实践和无效功能，再反哺产品默认方案。</li>
+</ol>
+
+<p>这也是为什么优秀的 SaaS 团队会对可观测性极度执着。<br />
+他们不是在“排查一个 bug”，而是在建立“多租户可复用的诊断体系”。</p>
+
+<h3 id="可观测性至少要回答的五个问题">可观测性至少要回答的五个问题</h3>
+
+<ol>
+  <li>某个租户的错误率、延迟、QPS 分别是多少。</li>
+  <li>某个租户为什么会觉得慢，是资源瓶颈还是流程配置问题。</li>
+  <li>某个功能被谁在用、用到了哪一步、在哪一步流失。</li>
+  <li>哪些模块被高频使用，哪些模块是产品认为重要但无人使用。</li>
+  <li>某次变更对全量租户和头部租户分别造成了什么影响。</li>
+</ol>
+
+<p>只有回答得出这些问题，多租户的“网络效应”才会真的发生。</p>
+
+<h2 id="基石二决定-saas-生死的不是代码量而是边界管理">基石二：决定 SaaS 生死的，不是代码量，而是边界管理</h2>
+
+<p>很多号称 SaaS 的系统，最后都会死在一个词上: 边界。<br />
+我见过最典型的三种边界失守。</p>
+
+<ol>
+  <li>产品边界失守：什么都做，最后什么都不精，主线越来越碎。</li>
+  <li>客户边界失守：客户要什么就做什么，最终变成“以 SaaS 名义做外包”。</li>
+  <li>技术边界失守：把个性需求直接写进主干，升级像做外科手术。</li>
+</ol>
+
+<h3 id="需求评审时先做归位再做实现">需求评审时，先做“归位”，再做“实现”</h3>
+
+<p>每个需求进来，我建议团队先问一句: 这个诉求应该挂在哪里。<br />
+如果挂错层，短期上线很快，长期维护成本会指数级上升。</p>
+
+<p>一个可执行的分层方式是：</p>
+
+<ol>
+  <li>平台内核：十年维度稳定、全租户共享、不会轻易改动的能力。</li>
+  <li>行业插件：面向某垂直行业的预设流程和规则模板。</li>
+  <li>客户规则：只属于单客户，必须放在配置、脚本、规则引擎或插件，不进主线。</li>
+</ol>
+
+<p>这套分层不是“架构美学”，而是成本控制手段。<br />
+你把客户规则写进内核，本质是在给未来所有版本埋雷。</p>
+
+<h3 id="还有一个关键边界谁来解决什么问题">还有一个关键边界：谁来解决什么问题</h3>
+
+<p>很多客户需求，本质上不是产品能力问题，而是管理问题或组织问题。<br />
+例如“员工不会用系统”“KPI 设计不清晰”“内部流程没人推进”等。</p>
+
+<p>深一点的 SaaS 团队会明确三件事：</p>
+
+<ol>
+  <li>哪些问题必须产品化，才能规模复用。</li>
+  <li>哪些问题应该由培训、实施、顾问、生态伙伴解决。</li>
+  <li>哪些问题即便客户强烈要求，也不该承诺产品承担。</li>
+</ol>
+
+<p>这个边界一旦不清，团队会被无限需求拖入低复用泥潭。</p>
+
+<h2 id="基石三收费模式和成本模式必须成对出现">基石三：收费模式和成本模式必须成对出现</h2>
+
+<p>SaaS 团队常见误区是“技术做得不错，商业模型模糊”。<br />
+模型一模糊，后果非常现实：你不知道某租户究竟赚钱还是亏钱，自然也不知道该给他什么级别的隔离、资源和 SLA。</p>
+
+<p>我一直强调一句话: 收费模式会反向塑造技术形态。</p>
+
+<ol>
+  <li>按席位或版本收费：你必须把权限、模块、版本边界切清楚。</li>
+  <li>按用量收费：你必须从第一天就具备计量、配额、账单、审计能力。</li>
+  <li>按结果收费：你必须控制关键业务链路并提供可验证归因。</li>
+</ol>
+
+<p>这不是财务问题，也不是销售问题，这是架构问题。<br />
+因为它决定了你如何做资源池、隔离等级、容量规划和成本核算。</p>
+
+<h2 id="怎么做出能长期演进的-saas四个判断维度">怎么做出“能长期演进”的 SaaS：四个判断维度</h2>
+
+<p>我自己现在会用四个维度评估一个团队的成熟度，这部分也最容易落地。</p>
+
+<h3 id="1-时间维度判断">1) 时间维度判断</h3>
+
+<p>看一个需求，不先问“怎么实现”，先问“这个决定写入系统三年后会不会后悔”。<br />
+很多时候我们会优先选一个短期麻烦、长期省事的方案，因为 SaaS 本来就是长期复利游戏。</p>
+
+<h3 id="2-抽象维度判断">2) 抽象维度判断</h3>
+
+<p>当三个客户提了看起来不同的诉求，团队能不能抽象出一个平台能力。<br />
+如果每次都“按需求写接口”，最后只会得到一座越来越重的 if/else 博物馆。</p>
+
+<h3 id="3-经济维度判断">3) 经济维度判断</h3>
+
+<p>听到“大客户特殊需求”时，不能只讨论开发工期，还要评估单位经济影响：</p>
+
+<ol>
+  <li>是一次性收益，还是长期成本项。</li>
+  <li>会不会引发连锁特例，拖慢后续版本。</li>
+  <li>是否影响现有计费模型和资源公平性。</li>
+</ol>
+
+<h3 id="4-组织维度判断">4) 组织维度判断</h3>
+
+<p>系统设计不只是代码结构，也是分工结构。<br />
+你要清楚哪些能力必须产品化，哪些交给实施，哪些交给生态伙伴。<br />
+分工清楚，团队才能把研发产能投入到可复用主线。</p>
+
+<h2 id="一个合格-saas-工程师的判断信号">一个合格 SaaS 工程师的判断信号</h2>
+
+<p>我会用下面这些信号判断工程师是否具备 SaaS 思维：</p>
+
+<ol>
+  <li>看到需求先问“共性还是个性”，而不是先写实现。</li>
+  <li>评估方案会考虑“对全租户影响”和“对未来计费影响”。</li>
+  <li>聊架构时自然会谈租户模型、隔离策略、扩展点和规则引擎。</li>
+  <li>面对个性诉求，优先考虑配置化或插件化，而不是主线加分支。</li>
+  <li>讨论可观测性时不只看系统指标，也看租户级和业务级指标。</li>
+</ol>
+
+<p>换句话说，优秀的 SaaS 工程师，设计的是“可演化系统”，不是“一次性交付代码”。</p>
+
+<h2 id="不适用边界不是所有业务都适合第一天就做标准多租户">不适用边界：不是所有业务都适合第一天就做标准多租户</h2>
+
+<p>这里也要把边界说清楚，不然容易把 SaaS 写成万能答案。<br />
+以下场景通常不适合一开始就强推标准多租户：</p>
+
+<ol>
+  <li>强监管和强数据主权场景，必须物理隔离或专属环境。</li>
+  <li>行业流程还在剧烈变化，标准尚未稳定。</li>
+  <li>客户极度分散且个性需求占比过高，短期共性难抽象。</li>
+</ol>
+
+<p>这时更务实的路线是“可迁移架构”：</p>
+
+<ol>
+  <li>先把领域边界和核心模型抽象清楚。</li>
+  <li>允许阶段性混合交付，积累共性数据。</li>
+  <li>共性形成后再回收进统一主线。</li>
+</ol>
+
+<h2 id="发布前可执行清单面向团队落地">发布前可执行清单（面向团队落地）</h2>
+
+<p>如果你要把上面这些观点变成团队动作，可以直接用这份清单：</p>
+
+<ol>
+  <li>是否明确了平台内核、行业插件、客户规则三层边界。</li>
+  <li>是否定义并落地了数据、权限、资源、故障四层隔离。</li>
+  <li>需求评审是否包含“归位判断”，并要求记录归位结论。</li>
+  <li>个性诉求是否优先通过配置、规则引擎、插件实现。</li>
+  <li>是否建立租户级可观测性与业务级可观测性。</li>
+  <li>是否能按租户计算收入、成本和毛利。</li>
+  <li>是否把收费模式和资源/SLA 分层打通。</li>
+  <li>是否有高风险变更的回滚点和灰度策略。</li>
+  <li>是否能持续识别“看似重要但无人使用”的功能。</li>
+  <li>是否建立了客户问题与产品问题的分流机制。</li>
+</ol>
+
+<p>这 10 条里只要有 3-4 条长期缺失，你的 SaaS 大概率会逐步退化成项目制。</p>
+
+<h2 id="写在最后">写在最后</h2>
+
+<p>如果要把这篇文章压成一句话，我的答案是：<br />
+<strong>SaaS 的本质，不是把软件放到云上，而是把行业经验沉淀成可复用、可计量、可持续演进的服务系统。</strong></p>
+
+<p>多租户决定你有没有复利底座，边界管理决定你能不能长期演进，商业模型决定你最终能不能活得健康。<br />
+三件事分开讲都不难，难的是把它们在同一个系统里统一起来，而且持续很多年。</p>
+
+    </section>
+
+    
+    <section class="post-related">
+      <p class="section-kicker">继续阅读</p>
+      <h2>把同一类问题继续读下去</h2>
+      <p class="post-related-tip">优先按专题与标签延展，减少读完一篇就中断的情况。</p>
+      <ul class="post-related-list">
+        
+        <li class="post-related-item">
+          <div>
+            <a href="/2026/03/12/dlq-governance-why-dlq-is-not-the-end/">死信队列的工程治理：为什么进入死信，不等于问题结束</a>
+            
+              <p>很多团队配了死信队列，却没有真正建立异常治理能力。问题不是消息失败了，而是某个业务结果没有兑现。</p>
+            
+          </div>
+          <span>2026-03-12</span>
+        </li>
+        
+        <li class="post-related-item">
+          <div>
+            <a href="/2026/02/26/complex-business-governance/">复杂业务治理：思考</a>
+            
+              <p>在 ToB 里做久了才明白，复杂度治理真正的起点不是代码，而是写代码之前的判断。</p>
+            
+          </div>
+          <span>2026-02-26</span>
+        </li>
+        
+        <li class="post-related-item">
+          <div>
+            <a href="/2024/08/08/mq-over-task-scheduler/">多租户采集承载怎么拆：共享池、专属池和 MQ 怎么分工</a>
+            
+              <p>我们做多租户 SaaS 数据采集时，没有继续把系统往租户调度平台那条路上推，而是把大多数租户放进共享承载面，把大租户拆到专属承载面，再把消息分发和消费进度交回 MQ。</p>
+            
+          </div>
+          <span>2024-08-08</span>
+        </li>
+        
+      </ul>
+    </section>
+    
+  </div>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文章质量门禁 | 我的博客</title>
+    <meta name="description" content="对技术博客做总检、门禁判断和修复分诊。Use when the user wants to know whether a draft is publishable, what the highest-priority problems are, or which existing blog skills should be used next. Focuses on readiness assessment across structure, style, AI smell, factual risk, and decision quality.">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>文章质量门禁 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="文章质量门禁" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="对技术博客做总检、门禁判断和修复分诊。Use when the user wants to know whether a draft is publishable, what the highest-priority problems are, or which existing blog skills should be used next. Focuses on readiness assessment across structure, style, AI smell, factual risk, and decision quality." />
+<meta property="og:description" content="对技术博客做总检、门禁判断和修复分诊。Use when the user wants to know whether a draft is publishable, what the highest-priority problems are, or which existing blog skills should be used next. Focuses on readiness assessment across structure, style, AI smell, factual risk, and decision quality." />
+<link rel="canonical" href="https://blog.zongqir.com/skills/blog-quality-gate/SKILL/" />
+<meta property="og:url" content="https://blog.zongqir.com/skills/blog-quality-gate/SKILL/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="文章质量门禁" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"对技术博客做总检、门禁判断和修复分诊。Use when the user wants to know whether a draft is publishable, what the highest-priority problems are, or which existing blog skills should be used next. Focuses on readiness assessment across structure, style, AI smell, factual risk, and decision quality.","headline":"文章质量门禁","url":"https://blog.zongqir.com/skills/blog-quality-gate/SKILL/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-page">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <h1 id="文章质量门禁">文章质量门禁</h1>
+
+<h2 id="核心定位">核心定位</h2>
+
+<p>这个 skill 是总检，不是细修。</p>
+
+<p>它回答的是这几个问题：</p>
+
+<ol>
+  <li>这篇文章现在能不能过线。</li>
+  <li>最大的问题在结构、文风、AI 味、事实风险，还是信息密度。</li>
+  <li>先改哪里最划算。</li>
+  <li>应该交给哪个已有 skill 继续处理。</li>
+</ol>
+
+<p>它默认不直接大改全文。<br />
+它更像一个门禁和分诊器。</p>
+
+<p>先补一条总原则：</p>
+
+<ol>
+  <li>不要拿一套模板判断所有文章。</li>
+  <li>总检前先判断文章类型。</li>
+  <li>文章类型错了，后面的质量结论通常也会一起错。</li>
+</ol>
+
+<p>默认先用 <code class="language-plaintext highlighter-rouge">$blog-article-fit-checker</code> 判断这篇是方案文、判断文、拆解文、观察文，还是过程文。<br />
+这个 skill 不再默认要求所有文章都给出落地步骤、结果指标、决策框架或完整闭环。</p>
+
+<h2 id="检查维度">检查维度</h2>
+
+<h3 id="1-开头是否立住">1. 开头是否立住</h3>
+
+<p>检查这些事有没有在前 200 字内说清：</p>
+
+<ol>
+  <li>当时系统处在什么阶段。</li>
+  <li>哪些前提已经定了。</li>
+  <li>现在只讨论什么。</li>
+  <li>真正卡住什么。</li>
+</ol>
+
+<p>如果这是独立文章，开头必须能独立成立。<br />
+如果这是承接上文的文章，就必须写清承接关系。</p>
+
+<h3 id="2-标题和大纲是否有逻辑">2. 标题和大纲是否有逻辑</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>二级标题是不是一条线往前推。</li>
+  <li>三级标题是不是服务对应二级标题。</li>
+  <li>开头承诺和后文展开是不是对得上。</li>
+  <li>有没有中途飞出新节点，导致拼凑感。</li>
+</ol>
+
+<h3 id="3-文风是否自然">3. 文风是否自然</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>有没有总结腔、汇报腔、演讲腔。</li>
+  <li>有没有说教味、布道味、营销味。</li>
+  <li>有没有第二人称和强行共情。</li>
+  <li>有没有元说明腔和方法论广播。</li>
+</ol>
+
+<h3 id="4-技术内容是否扎实">4. 技术内容是否扎实</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>有没有空技术细节。</li>
+  <li>有没有泛公式、泛框架冒充深度。</li>
+  <li>有没有具体对象、具体状态、具体风险。</li>
+  <li>当前文章类型真正需要的关键信息有没有交代到位。</li>
+</ol>
+
+<h3 id="5-事实风险是否可控">5. 事实风险是否可控</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>有没有伪造经历或脑补案例。</li>
+  <li>有没有把推测写成事实。</li>
+  <li>有没有时间、规模、组织关系写得过满。</li>
+  <li>有没有明显需要证据但没给证据的结论。</li>
+</ol>
+
+<h3 id="6-整体信息密度是否过线">6. 整体信息密度是否过线</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>每段是不是都在提供新信息。</li>
+  <li>有没有重复包装同一个意思。</li>
+  <li>有没有为了去 AI 味把真内容一起删掉。</li>
+  <li>重点段落有没有展开到位。</li>
+</ol>
+
+<p>再额外看技术密度是否失衡：</p>
+
+<ol>
+  <li>技术密度不足：有结论、有术语，但没有足够对象、状态、动作和代价去支撑判断。</li>
+  <li>技术密度过高：术语和机制很多，但主线被淹没，读者抓不住文章到底在回答什么。</li>
+  <li>技术密度错位：简单部分写太多，真正关键的技术判断写太少。</li>
+  <li>技术密度失衡时，先判断它属于写透度问题、文风组织问题，还是两者都有。</li>
+</ol>
+
+<h3 id="7-文章类型和质量标准是否匹配">7. 文章类型和质量标准是否匹配</h3>
+
+<p>重点看：</p>
+
+<ol>
+  <li>这篇文章真正属于哪一类。</li>
+  <li>现在是不是在被错误模板要求。</li>
+  <li>哪些质量项适用，哪些不适用。</li>
+  <li>有没有因为错配标准把文章写假、写空、写成套路。</li>
+</ol>
+
+<h3 id="8-职业信号风险是否可控">8. 职业信号风险是否可控</h3>
+
+<p>这部分不看“有没有观点”，而看文章会不会向同行、面试官、潜在合作方传递错误能力画像。</p>
+
+<p>重点看：</p>
+
+<ol>
+  <li>文章会不会让读者误以为作者缺乏基本风险意识、系统观或工程优先级判断。</li>
+  <li>文章会不会因为 framing 错位，把局部问题写成作者唯一关注点。</li>
+  <li>文章会不会因为前提、边界、代价没写清，让读者倒推出作者只看到了机制，没有看到系统。</li>
+  <li>文章会不会把阶段性补课写成主洞见，反而暴露能力短板。</li>
+</ol>
+
+<p>再单独检查一类高频风险：</p>
+
+<ol>
+  <li>行业基线外显风险：像监控、告警、重试、幂等、隔离、死信、回放、限流、降级、权限、审计这类接近成熟工程团队默认基线的东西，是否被写成了“新的重大认识”。</li>
+  <li>如果这类内容必须写，是否被准确降级成前提、背景、欠账、阶段性缺口或边界声明，而不是全文主亮点。</li>
+  <li>真正值得展开的难点，是否落在基线之上的结构权衡，而不是停在“原来这里要做这个”。</li>
+</ol>
+
+<h2 id="门禁结论">门禁结论</h2>
+
+<p>默认只给三档：</p>
+
+<h3 id="1-可发布">1. 可发布</h3>
+
+<p>可以进入发布前检查。<br />
+允许还有细小优化点，但主线、事实风险、文风、逻辑都已经过线。</p>
+
+<h3 id="2-接近可发布">2. 接近可发布</h3>
+
+<p>主线已经立住，但还有 1 到 3 个关键问题。<br />
+修完这些问题才建议继续往发布走。</p>
+
+<h3 id="3-明显不过线">3. 明显不过线</h3>
+
+<p>这篇现在还停留在草稿阶段。<br />
+通常是开头没立住、标题线断了、AI 味太重、事实风险明显，或者几类问题一起存在。</p>
+
+<h2 id="输出要求">输出要求</h2>
+
+<p>使用这个 skill 时，默认输出五部分：</p>
+
+<ol>
+  <li>总评：
+    <ul>
+      <li>可发布 / 接近可发布 / 明显不过线</li>
+    </ul>
+  </li>
+  <li>文章类型：
+    <ul>
+      <li>主类型是什么</li>
+      <li>当前判断是否错配</li>
+    </ul>
+  </li>
+  <li>致命问题：
+    <ul>
+      <li>不解决就不能过线的问题</li>
+    </ul>
+  </li>
+  <li>重要问题：
+    <ul>
+      <li>会明显拉低质量，但不一定致命</li>
+    </ul>
+  </li>
+  <li>修复路径：
+    <ul>
+      <li>类型错配 -&gt; <code class="language-plaintext highlighter-rouge">$blog-article-fit-checker</code></li>
+      <li>结构问题 -&gt; <code class="language-plaintext highlighter-rouge">$blog-outline-doctor</code></li>
+      <li>内容没写透 -&gt; <code class="language-plaintext highlighter-rouge">$blog-depth-reviewer</code></li>
+      <li>文风问题 -&gt; <code class="language-plaintext highlighter-rouge">$blog-writing-style</code></li>
+      <li>技术密度不足 / 错位 -&gt; <code class="language-plaintext highlighter-rouge">$blog-depth-reviewer</code></li>
+      <li>技术密度过高 / 术语堆叠 -&gt; <code class="language-plaintext highlighter-rouge">$blog-writing-style</code></li>
+      <li>AI 味问题 -&gt; <code class="language-plaintext highlighter-rouge">$blog-ai-smell-checker</code></li>
+      <li>事实问题 -&gt; <code class="language-plaintext highlighter-rouge">$blog-fact-risk-review</code></li>
+      <li>职业信号风险 / 行业基线外显风险 -&gt; 先判断是否属于类型错配、framing 错位或边界声明缺失，再转 <code class="language-plaintext highlighter-rouge">$blog-article-fit-checker</code>、<code class="language-plaintext highlighter-rouge">$blog-outline-doctor</code> 或 <code class="language-plaintext highlighter-rouge">$blog-writing-style</code></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="红线">红线</h2>
+
+<ol>
+  <li>不要只给一句“整体还行”。</li>
+  <li>不要只讲优点，不讲不过线的问题。</li>
+  <li>不要把所有问题混成一类，要指出问题属于哪一维。</li>
+  <li>不要越权替代细分 skill 做整篇深改，这个 skill 的职责是判断和分诊。</li>
+  <li>不要因为某个题材可能暴露风险，就简单给出“不要写”。</li>
+  <li>真正要判断的通常不是题材能不能写，而是它是不是被写成了错误的主亮点、错误的成熟度信号，或错误的能力画像。</li>
+</ol>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>

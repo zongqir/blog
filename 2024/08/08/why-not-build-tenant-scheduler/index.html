@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>我们差点自己做了一套租户调度系统 | 我的博客</title>
+    <meta name="description" content="在一个 SaaS 数据入库场景里，我们最早靠一租户一 Pod 跑通了链路；真正把系统往前推的，不是某个中间件，而是多租户承载压力逼着我们去想调度系统。">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>我们差点自己做了一套租户调度系统 | 我的博客</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="我们差点自己做了一套租户调度系统" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="在一个 SaaS 数据入库场景里，我们最早靠一租户一 Pod 跑通了链路；真正把系统往前推的，不是某个中间件，而是多租户承载压力逼着我们去想调度系统。" />
+<meta property="og:description" content="在一个 SaaS 数据入库场景里，我们最早靠一租户一 Pod 跑通了链路；真正把系统往前推的，不是某个中间件，而是多租户承载压力逼着我们去想调度系统。" />
+<link rel="canonical" href="https://blog.zongqir.com/2024/08/08/why-not-build-tenant-scheduler/" />
+<meta property="og:url" content="https://blog.zongqir.com/2024/08/08/why-not-build-tenant-scheduler/" />
+<meta property="og:site_name" content="我的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-08-08T00:20:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="我们差点自己做了一套租户调度系统" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-08-08T00:20:00+08:00","datePublished":"2024-08-08T00:20:00+08:00","description":"在一个 SaaS 数据入库场景里，我们最早靠一租户一 Pod 跑通了链路；真正把系统往前推的，不是某个中间件，而是多租户承载压力逼着我们去想调度系统。","headline":"我们差点自己做了一套租户调度系统","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.zongqir.com/2024/08/08/why-not-build-tenant-scheduler/"},"url":"https://blog.zongqir.com/2024/08/08/why-not-build-tenant-scheduler/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script>
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var path = window.location.pathname || "/";
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+        var targetHost = "blog.zongqir.com";
+
+        // Keep a single canonical host to avoid broken paths on legacy URLs.
+        if (host === "zongqir.github.io") {
+          if (path === "/blog") {
+            path = "/";
+          } else if (path.indexOf("/blog/") === 0) {
+            path = path.slice(5) || "/";
+          }
+          window.location.replace("https://" + targetHost + path + search + hash);
+        } else if (host === "zongqir.com" || host === "www.zongqir.com") {
+          window.location.replace("https://" + targetHost + path + search + hash);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/atom+xml" title="我的博客" href="/feed.xml">
+  </head>
+  <body class="layout-post">
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-orb atmosphere-orb-left"></span>
+      <span class="atmosphere-orb atmosphere-orb-right"></span>
+      <span class="atmosphere-grid"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">我的博客</span>
+          <span class="brand-title">复杂系统与工程判断</span>
+        </a>
+        <nav class="main-nav">
+          <a class="" href="/">首页</a>
+          <a class="" href="/archive/">归档</a>
+          <a class="" href="/tags/">标签</a>
+          <a class="" href="/about/">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      
+
+
+
+
+
+
+
+
+<div class="reading-progress" aria-hidden="true">
+  <span class="reading-progress-bar" data-reading-progress></span>
+</div>
+
+<article class="post">
+  <div class="post-grid" data-post-grid>
+    <header class="post-header">
+      <div class="post-header-topline">
+        <p class="post-cover-kicker">架构设计</p>
+        
+      </div>
+      <section class="post-cover">
+        <h1>我们差点自己做了一套租户调度系统</h1>
+        
+          <p class="post-summary">在一个 SaaS 数据入库场景里，我们最早靠一租户一 Pod 跑通了链路；真正把系统往前推的，不是某个中间件，而是多租户承载压力逼着我们去想调度系统。</p>
+        
+      </section>
+      <div class="post-meta-panel">
+        <p class="post-meta">
+          <span class="meta-pill">发布于 <time datetime="2024-08-08T00:20:00+08:00">2024-08-08</time></span>
+          
+            <span class="meta-pill">更新于 <time datetime="2024-08-08T00:20:00+08:00">2024-08-08</time></span>
+          
+          <span class="meta-pill">阅读约 11 分钟</span>
+        </p>
+        
+          <p class="post-meta-tags">
+            
+              <a class="tag-chip" href="/tags/#架构设计">架构设计</a>
+            
+              <a class="tag-chip" href="/tags/#工程治理">工程治理</a>
+            
+              <a class="tag-chip" href="/tags/#tob">ToB</a>
+            
+              <a class="tag-chip" href="/tags/#saas">SaaS</a>
+            
+          </p>
+        
+      </div>
+    </header>
+
+    <aside class="post-toc" data-post-toc hidden>
+      <button class="post-toc-toggle" type="button" data-post-toc-toggle aria-expanded="false" aria-controls="post-toc-nav">
+        章节导航
+      </button>
+      <div class="post-toc-shell" data-post-toc-shell>
+        <p class="post-toc-title">章节导航</p>
+        <nav id="post-toc-nav" class="post-toc-nav" data-post-toc-nav aria-label="文章目录"></nav>
+      </div>
+    </aside>
+
+    <section class="post-content" data-post-content>
+      <p>在我们的 SaaS 里，有一个很核心的数据入库场景。<br />
+它对上的本质，就是数据消费。</p>
+
+<p>当时的事情没有那么抽象，说白了就是三步：</p>
+
+<ol>
+  <li>接客户的数据。</li>
+  <li>按客户自己的规则做处理和编排。</li>
+  <li>把结果写回平台内部或者下游系统。</li>
+</ol>
+
+<p>那时候的多租户也很朴素：一个租户一个容器，靠 Kubernetes 做隔离和编排。<br />
+这套逻辑是从更早的项目制交付阶段延续下来的：最开始基本是一个集群服务一个租户，后面为了满足 SaaS 化，才逐步改成多租户共集群，再用 Kubernetes 去做租户级隔离和编排。<br />
+所以那时候的整体思路也很自然：客户一个个接进来，链路一个个补起来，先把消费和处理跑通，再慢慢把共性抽出来。</p>
+
+<p>所以最开始面对的问题也很直接：</p>
+
+<ol>
+  <li>消费链路先跑稳。</li>
+  <li>每个客户先能独立交付。</li>
+  <li>出了问题能快速定位到具体客户。</li>
+</ol>
+
+<p>也正因为那时还是项目制往 SaaS 过渡的阶段，一租户一套承载方式几乎是顺手的选择。<br />
+它不高级，但特别符合当时的交付和排障习惯。</p>
+
+<h2 id="最开始的背景其实就是先把消费链路跑起来">最开始的背景，其实就是先把消费链路跑起来</h2>
+
+<p>最早那段时间，采集系统承载的对象并不复杂，但异构程度已经很高。</p>
+
+<p>大致会遇到这些情况：</p>
+
+<ol>
+  <li>不同客户接不同的数据源和业务事件。</li>
+  <li>平台负责把这些消息接进来，做转换、编排、下游调用，再写回内部存储。</li>
+  <li>很多客户的配置、调用链、失败模式都有明显差异。</li>
+</ol>
+
+<p>在这个阶段，系统最重要的是确定性。<br />
+也就是说，哪条链路归谁、哪个客户出问题去哪看、某次变更影响的是谁，这些都要尽量清楚。</p>
+
+<p>所以当时的一些现实前提是：</p>
+
+<ol>
+  <li>客户数量还不算特别多，很多动作还能按客户处理。</li>
+  <li>项目制交付思路还很重，系统天然会围着单客户可控去设计。</li>
+  <li>发布、回滚、排障这些动作，即使做得笨一点，也能接受。</li>
+</ol>
+
+<p>在这种背景下，最早那一版很自然就是：<strong>一租户一 Pod。</strong></p>
+
+<h2 id="一租户一-pod为什么在最开始其实是对的">一租户一 Pod，为什么在最开始其实是对的</h2>
+
+<p>现在回头看，很多人会觉得这条路“太土”，但在那个阶段它其实非常合理。</p>
+
+<p>它至少解决了三个最现实的问题：</p>
+
+<ol>
+  <li>隔离问题。
+某个租户炸了，先看它自己的实例，不容易波及其他租户。</li>
+  <li>排障问题。
+日志、资源、进程状态都按租户切开，值班时很直观。</li>
+  <li>上线风险问题。
+当时对多租户链路还没有完全摸透，一租户一实例是最容易建立信心的形态。</li>
+</ol>
+
+<p>说白了，这套方案的价值就在一个“稳”字。<br />
+每个租户归谁管、出了问题去哪看、要扩容时该动哪个实例，都是清楚的。</p>
+
+<h2 id="产品一旦进入多租户阶段问题就不一样了">产品一旦进入多租户阶段，问题就不一样了</h2>
+
+<p>真正让这套方式开始吃力的，是业务形态开始变了。<br />
+前面是项目制思路更重，后面开始明显往 SaaS 化、多租户化走。</p>
+
+<p>最明显的变化，不是吞吐数字本身，而是系统承载对象变了。</p>
+
+<p>系统开始出现一组以前没有那么尖锐、但现在必须正面处理的问题：</p>
+
+<ol>
+  <li>租户数量持续增长，接入、下线、变更都更频繁。</li>
+  <li>租户流量分布越来越不均衡，长尾多，高峰租户也开始明显出现。</li>
+  <li>下游依赖越来越异构，不同租户的真实处理成本差得很远。</li>
+  <li>平台不能只关心“能不能消费”，还得关心租户隔离、公平性和运维效率。</li>
+</ol>
+
+<p>这时候，一租户一 Pod 已经不是“有点笨”的问题了，开始变成系统性地不划算。</p>
+
+<p>最直接的几个现象是：</p>
+
+<ol>
+  <li>很多长尾租户流量不高，却长期各自占着一个 Pod。</li>
+  <li>高峰租户又会把单 Pod 打满，扩容动作只能跟着租户一个个追。</li>
+  <li>升级、治理、限流、灰度、排障，全都按租户复制执行。</li>
+  <li>系统维护的已经不再是一条采集链路，而是一大批租户实例的编排工作。</li>
+</ol>
+
+<p>也就是从这个阶段开始，我们第一次强烈感觉到：</p>
+
+<p><strong>问题的重点已经转成了“租户怎么承载”。</strong></p>
+
+<h2 id="到了这里先冒出来的是需要一套调度系统">到了这里，先冒出来的是“需要一套调度系统”</h2>
+
+<p>到了这一步，脑子里先出来的已经是一层新的系统能力：<br />
+既然一租户一 Pod 已经不适合继续扩大，就需要一套东西来决定“哪个租户由哪个 worker 承载”。</p>
+
+<p>当时真正卡住的，已经不是单点实现，而是一组很具体的问题：</p>
+
+<ol>
+  <li>新租户接入还在跟着部署动作走，越来越重。</li>
+  <li>长尾租户太多，很多实例长期空着，但资源还是得一直留着。</li>
+  <li>高峰租户一来，扩容动作又只能围着单租户去追。</li>
+  <li>节点一旦出问题，租户迁移和接管都很依赖人工介入。</li>
+  <li>平台缺少一个统一视角去看“现在到底是谁在承载哪些租户”。</li>
+  <li>很多治理动作还是按实例做，没法真正按租户视角统一处理。</li>
+</ol>
+
+<p>所以当时对“调度系统”的期望也很明确：</p>
+
+<ol>
+  <li>租户承载不要再和部署强绑定。</li>
+  <li>一个 worker 可以承接多个租户，先把资源利用率提上来。</li>
+  <li>租户迁移、接管、扩缩容最好能变成系统能力。</li>
+  <li>平台需要一个统一的分配真相，而不是靠人工记忆和脚本补洞。</li>
+  <li>后续限流、分级、隔离，也要有一个统一落点，不要继续散在部署层面。</li>
+</ol>
+
+<p>顺着这些问题和期望往下想，调度系统这件事就很自然了：</p>
+
+<ol>
+  <li>如果一租户一 Pod 太重，那就别再让租户和实例静态绑定。</li>
+  <li>如果租户和实例不静态绑定，那就需要一个地方保存分配真相。</li>
+  <li>如果分配真相要让多个 worker 感知、接管、迁移，那就需要中心状态和变更机制。</li>
+</ol>
+
+<p>所以当时真正摆上桌面的，先是“一套租户调度系统”的设想。<br />
+它吸引人的地方也非常具体：</p>
+
+<p>我们当时看中的，主要就是这几件事：</p>
+
+<ol>
+  <li>可以把“租户承载”从静态部署动作里拿出来。</li>
+  <li>可以让一个 worker 承担多个租户，先把资源利用率提上来。</li>
+  <li>节点挂掉时，租户可以被别的 worker 接走，不用再等人工处理。</li>
+  <li>平台终于可以有一个统一的地方，去做扩缩容、迁移和分配。</li>
+</ol>
+
+<p>从那个时点看，这套调度系统设想几乎像标准答案。</p>
+
+<h2 id="后面才开始拆这套调度系统具体怎么落地">后面才开始拆：这套调度系统具体怎么落地</h2>
+
+<p>调度系统的想法一旦出现，后面才会顺着往下拆实现问题：</p>
+
+<ol>
+  <li>worker 怎么注册和保活。</li>
+  <li>租户分配结果放在哪里。</li>
+  <li>worker 靠什么感知变更。</li>
+  <li>重分配时怎么保证新旧状态不打架。</li>
+</ol>
+
+<p>再往下，问题才会变成：中心状态放哪里，变更到底怎么传。<br />
+到了这一步，etcd、zk 这类组件才开始进入方案讨论。</p>
+
+<p>如果当时继续推进，大概率就会形成类似这样的组合：</p>
+
+<ol>
+  <li>一个负责计算分配结果的调度器。</li>
+  <li>一组负责真正处理租户链路的 worker。</li>
+  <li>一个中心状态存储，保存 worker 状态、租户元数据、分配结果、版本信息。</li>
+  <li>一套基于 watch 或类似机制的变更传播方式。</li>
+</ol>
+
+<p>本质上，前面想清楚的是调度系统本身，后面才是 etcd / zk 这类部件怎么放进来。</p>
+
+<p>用图来表示，当时脑子里的系统大概就是这样：</p>
+
+<pre><code class="language-mermaid">graph TD
+    Tenants[租户配置/租户元数据] --&gt; Scheduler[调度器]
+    Workers[Worker 心跳/容量/状态] --&gt; Scheduler
+    Scheduler --&gt; Store[中心状态存储 etcd/zk]
+    Store --&gt; W1[Worker A]
+    Store --&gt; W2[Worker B]
+    Store --&gt; W3[Worker C]
+    W1 --&gt; T1[租户集合]
+    W2 --&gt; T2[租户集合]
+    W3 --&gt; T3[租户集合]
+</code></pre>
+
+<h2 id="内部参考给了信心也提前暴露了问题形状">内部参考给了信心，也提前暴露了问题形状</h2>
+
+<p>我们当时之所以会认真看这条路，不只是因为逻辑上说得通，还因为公司内部已经有团队在用类似方式做任务调度或动态承载。</p>
+
+<p>这些参考给我们的第一层影响，是信心。</p>
+
+<p>至少当时能确认几件事：</p>
+
+<ol>
+  <li>控制面和执行面分离是可落地的。</li>
+  <li>分配真相中心化是可维护的。</li>
+  <li>watch 驱动的变更传播已经有过实际验证。</li>
+  <li>接管、迁移、重平衡这些动作，可以做成系统能力，而不只是运维动作。</li>
+</ol>
+
+<p>但第二层影响其实更重要。<br />
+内部已经跑过类似路线的团队，其实等于提前把一些问题形状摆在了眼前。那时候看到的，不只是“这条路能走”，也包括这条路会把哪些麻烦一起带进来。</p>
+
+<p>当时更早意识到的，是几类更本质的东西：</p>
+
+<ol>
+  <li>一旦走到中心调度，版本和时序就会变得非常重要。</li>
+  <li>watch 能带来实时性，但也会把抖动、重复事件、状态一致性问题一起带进来。</li>
+  <li>调度动作本身会制造新的故障面，尤其是在迁移和重分配时。</li>
+  <li>控制面一旦形成，就会进入长期维护状态，不会因为做完一版就结束。</li>
+  <li>很多表面上像“业务异常”的问题，最后都会绕回控制面状态和调度过程本身。</li>
+</ol>
+
+<p>这些参考真正带来的提醒，也不在组件名字。<br />
+真正决定系统重量的，是这套控制面本身会不会越来越成为系统中心。</p>
+
+<h2 id="如果继续往下推etcd-大概会怎么被用起来">如果继续往下推，etcd 大概会怎么被用起来</h2>
+
+<p>如果当时沿着这条路继续做，etcd 更像是“承载调度真相的状态存储”。方案本身仍然是那套调度系统。</p>
+
+<p>从实现形态上看，大概会有几个核心角色：</p>
+
+<ol>
+  <li>调度器
+定期汇总租户清单、worker 状态和负载指标，计算新的租户分配结果。</li>
+  <li>worker 注册中心
+维护每个 worker 的心跳、容量、版本、健康状态。</li>
+  <li>状态存储
+用 etcd 保存租户元数据、分配结果、版本号和变更事件。</li>
+  <li>执行 worker
+watch 分配结果，负责在本地真正拉起、停止、迁移租户处理逻辑。</li>
+</ol>
+
+<p>如果把 key 设计拆开，大概至少会有这些内容：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">/workers/&lt;workerId&gt;</code>
+保存实例心跳、健康状态、容量信息。</li>
+  <li><code class="language-plaintext highlighter-rouge">/tenants/&lt;tenantId&gt;</code>
+保存租户等级、优先级、限流级别、是否属于大租户。</li>
+  <li><code class="language-plaintext highlighter-rouge">/assignments/&lt;workerId&gt;</code>
+保存某个 worker 当前应该负责的租户集合。</li>
+  <li><code class="language-plaintext highlighter-rouge">/versions</code> 或 epoch
+保证分配变化有顺序，防止旧状态覆盖新状态。</li>
+</ol>
+
+<p>worker 侧真正要做的事情，也远不只是“watch 到变化就更新一下本地列表”。</p>
+
+<p>它至少要处理：</p>
+
+<ol>
+  <li>新租户迁入时，怎么安全拉起消费和处理逻辑。</li>
+  <li>租户迁出时，怎么优雅停止，避免本地状态残留。</li>
+  <li>重分配发生时，怎么控制新旧实例的交接窗口。</li>
+  <li>watch 事件乱序或重复时，怎么靠版本兜底。</li>
+</ol>
+
+<p>写到这里，系统的形状其实已经很清楚了：<br />
+这相当于在采集链路旁边，再长出一套专门负责“租户承载真相”的系统。</p>
+
+<h2 id="第一层难点是负载模型会越来越重">第一层难点，是负载模型会越来越重</h2>
+
+<p>这是很多人一开始最容易低估的地方。</p>
+
+<p>最初想这类方案时，很容易先用几个简单指标做分配，比如：</p>
+
+<ol>
+  <li>每个 worker 平均分多少租户。</li>
+  <li>最近一段时间每个租户有多少消息。</li>
+  <li>当前 backlog 大小。</li>
+</ol>
+
+<p>但这种模型通常只够做出第一版，不够做长期主线。<br />
+原因不在算法本身，而在于租户根本不是同质对象。</p>
+
+<p>同样一批消息，不同租户的真实成本可能差得非常远：</p>
+
+<ol>
+  <li>下游依赖不同，请求耗时完全不同。</li>
+  <li>有的租户几乎不重试，有的租户失败后会放大很多重试链路。</li>
+  <li>有的租户量不算高，但单条处理很重。</li>
+  <li>有的租户平时很稳，一到特定时段就会出现尖峰。</li>
+</ol>
+
+<p>所以调度模型很快就会从“按数量分”长成“按真实负载分”。<br />
+模型会不自觉地往下长出更多维度：</p>
+
+<ol>
+  <li>吞吐</li>
+  <li>backlog</li>
+  <li>平均耗时和 P99 耗时</li>
+  <li>错误率和重试率</li>
+  <li>租户等级和 SLA</li>
+  <li>worker 当前资源余量</li>
+</ol>
+
+<p>问题就在这里。</p>
+
+<p>最开始只是想“更聪明地分租户”，最后却会开始维护一套越来越重的负载判断系统。<br />
+而只要它承担了线上分配真相，它就不再是辅助模块，而是系统核心。</p>
+
+<h2 id="第二层难点是交接远比想象中重">第二层难点，是交接远比想象中重</h2>
+
+<p>很多架构图一画，最顺的就是调度流转。<br />
+但真正到线上，最容易把人拖住的，往往是交接。</p>
+
+<p>“把租户从 A 挪到 B” 这句话看起来很轻，落到工程上其实很黏：</p>
+
+<ol>
+  <li>A 什么时候停止拉取新消息。</li>
+  <li>A 手里的 in-flight 请求怎么办。</li>
+  <li>B 什么时候开始接手，才不会有太长空窗。</li>
+  <li>A 和 B 会不会在某段时间里都认为自己应该处理这个租户。</li>
+  <li>热租户频繁迁移时，会不会把系统整体抖起来。</li>
+</ol>
+
+<p>这些问题不一定第一天就炸，但它们会不断制造那种最烦的线上状态：<br />
+系统没彻底挂，但总有短时抖动、边界异常、很难解释的重复处理或状态残留。</p>
+
+<p>一旦走到这里，就会发现调度层真正要维护的，已经不只是“租户归谁”，而是：</p>
+
+<ol>
+  <li>谁怎么让出。</li>
+  <li>谁什么时候接手。</li>
+  <li>接管过程中谁说了算。</li>
+  <li>状态不一致时以什么为准。</li>
+</ol>
+
+<p>这时候控制面的重量就真的出来了。</p>
+
+<h2 id="第三层难点是值班会慢慢围着调度层转">第三层难点，是值班会慢慢围着调度层转</h2>
+
+<p>我们当时最开始其实也有一个很朴素的预期：<br />
+把调度系统做好之后，很多人工动作会消失，值班应该会更轻。</p>
+
+<p>这个预期不能说完全错，但它只对了一半。</p>
+
+<p>因为原来的很多问题确实会少，比如手工迁移、手工扩租户实例、节点故障靠人补。<br />
+可同时也会长出一批新的问题：</p>
+
+<ol>
+  <li>watch 抖动导致实例频繁重配。</li>
+  <li>worker 心跳异常，引发一轮本不该发生的迁移。</li>
+  <li>分配版本错乱，旧实例拿着过期状态继续跑。</li>
+  <li>某个大租户在迁移瞬间把新接管方压满。</li>
+</ol>
+
+<p>这时候值班的重心就会变。</p>
+
+<p>原来更常看的，是“哪个租户处理异常”。<br />
+后来更常追的，会变成“现在分配真相到底是什么”“这一轮迁移是谁触发的”“为什么它又重配了”。</p>
+
+<p>如果团队本来就在做调度平台，这很正常，这就是主系统的一部分。<br />
+但如果主任务是把采集、消费、写入这条链路做稳，就得非常诚实地面对一个问题：</p>
+
+<p><strong>一旦调度层成形，后续很多值班、排障和演进动作，都会慢慢围着控制面展开。</strong></p>
+
+<h2 id="所以后来真正让我们犹豫的也不在-etcd-本身">所以后来真正让我们犹豫的，也不在 etcd 本身</h2>
+
+<p>现在回头看，我并不觉得 etcd 这条路是错的。<br />
+相反，它在很多场景下都是正经方案。</p>
+
+<p>我们后来真正犹豫的，是另一件更根上的事：</p>
+
+<p><strong>一旦把它做成主线，我们接下来几年到底是在打磨采集系统，还是在打磨一套租户调度平台。</strong></p>
+
+<p>这个问题一旦冒出来，很多原本看起来只是技术实现细节的东西，就会突然变得很重：</p>
+
+<ol>
+  <li>负载模型会成为长期维护对象。</li>
+  <li>交接机制会变成线上稳定性的核心。</li>
+  <li>watch、防抖、版本、接管，不再是工具问题，而是值班问题。</li>
+</ol>
+
+<p>也就是从这个角度看，<code class="language-plaintext highlighter-rouge">该不该做 etcd / zk 这类中心调度方案</code> 从来不是一个单纯的技术选型问题。<br />
+它更像一个系统边界问题：</p>
+
+<p><strong>主系统，究竟准备把最重的复杂度压在哪一层。</strong></p>
+
+<h2 id="这篇文章真正想留下来的判断">这篇文章真正想留下来的判断</h2>
+
+<ol>
+  <li>一租户一 Pod 在产品早期并不落后，它解决的是最初阶段最真实的隔离和排障问题。</li>
+  <li>当时最先出现的问题，是“要不要做一套调度系统”。</li>
+  <li>etcd / zk 之类的选择，属于这套调度系统往下落地时的实现问题，不是出发点。</li>
+  <li>真正难的地方，在于负载模型、交接机制和控制面值班会一起长进来。</li>
+  <li>这条路值不值得做，不取决于它好不好实现，而取决于系统到底想长期围着哪类复杂度演进。</li>
+</ol>
+
+<p>如果后面继续写这个话题，我更想接着写另一个更具体的问题：</p>
+
+<p><strong>当团队本身不是做调度平台的，哪些复杂度值得自己背，哪些复杂度应该尽量借消息系统和平台原生能力吃掉。</strong></p>
+
+    </section>
+
+    
+  </div>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <p class="site-footer-title">持续记录那些真正影响结果的工程取舍。</p>
+        <small>&copy; 2026 我的博客 · 基于 Jekyll 发布</small>
+      </div>
+    </footer>
+
+    <script src="/assets/js/post-experience.js"></script>
+    <script src="/assets/js/sort-posts.js"></script>
+  </body>
+</html>
