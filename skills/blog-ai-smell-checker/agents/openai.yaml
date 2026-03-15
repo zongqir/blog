@@ -1,0 +1,4 @@
+interface:
+  display_name: "博客 AI 味诊断"
+  short_description: "诊断技术博客里的 AI 味、拼凑感与生成痕迹"
+  default_prompt: "Use $blog-ai-smell-checker to review a blog draft and identify where it feels AI-generated and why."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "博客大纲 Doctor"
+  short_description: "检查博客大纲、章节框架和二三级标题之间的推进关系"
+  default_prompt: "Use $blog-outline-doctor to review a blog outline and rebuild the section flow and headings."

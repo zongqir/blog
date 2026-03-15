@@ -1,0 +1,124 @@
+---
+layout: default
+---
+
+{% assign reading_chars = page.content | strip_html | strip_newlines | replace: ' ', '' | size %}
+{% assign reading_minutes = reading_chars | plus: 499 | divided_by: 500 %}
+{% if reading_minutes < 1 %}
+  {% assign reading_minutes = 1 %}
+{% endif %}
+{% assign cover_topic = page.tags | first | default: "技术博客" %}
+{% assign related_posts = "" | split: "" %}
+{% assign related_urls = "|" %}
+{% assign candidate_posts = site.posts %}
+{% if page.related_auto != false %}
+  {% if page.series %}
+    {% assign series_related = candidate_posts | where: "series", page.series %}
+    {% for rp in series_related %}
+      {% if related_posts.size >= 3 %}
+        {% break %}
+      {% endif %}
+      {% if rp.url != page.url and rp.draft != true %}
+        {% assign related_posts = related_posts | push: rp %}
+        {% assign related_urls = related_urls | append: rp.url | append: "|" %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if related_posts.size < 3 and page.tags and page.tags.size > 0 %}
+    {% for rp in candidate_posts %}
+      {% if related_posts.size >= 3 %}
+        {% break %}
+      {% endif %}
+      {% if rp.url == page.url or rp.draft == true %}
+        {% continue %}
+      {% endif %}
+      {% unless related_urls contains rp.url %}
+        {% assign has_overlap = false %}
+        {% for current_tag in page.tags %}
+          {% if rp.tags contains current_tag %}
+            {% assign has_overlap = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% if has_overlap %}
+          {% assign related_posts = related_posts | push: rp %}
+          {% assign related_urls = related_urls | append: rp.url | append: "|" %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+{% endif %}
+
+<div class="reading-progress" aria-hidden="true">
+  <span class="reading-progress-bar" data-reading-progress></span>
+</div>
+
+<article class="post">
+  <div class="post-grid" data-post-grid>
+    <header class="post-header">
+      <div class="post-header-topline">
+        <p class="post-cover-kicker">{{ cover_topic }}</p>
+        {% if page.series %}
+          <p class="post-series">收录于 {{ page.series }}</p>
+        {% endif %}
+      </div>
+      <section class="post-cover">
+        <h1>{{ page.title }}</h1>
+        {% if page.description %}
+          <p class="post-summary">{{ page.description }}</p>
+        {% endif %}
+      </section>
+      <div class="post-meta-panel">
+        <p class="post-meta">
+          <span class="meta-pill">发布于 <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time></span>
+          {% if page.updated %}
+            <span class="meta-pill">更新于 <time datetime="{{ page.updated | date_to_xmlschema }}">{{ page.updated | date: "%Y-%m-%d" }}</time></span>
+          {% endif %}
+          <span class="meta-pill">阅读约 {{ reading_minutes }} 分钟</span>
+        </p>
+        {% if page.tags and page.tags.size > 0 %}
+          <p class="post-meta-tags">
+            {% for tag in page.tags %}
+              <a class="tag-chip" href="{{ '/tags/' | relative_url }}#{{ tag | slugify: 'raw' }}">{{ tag }}</a>
+            {% endfor %}
+          </p>
+        {% endif %}
+      </div>
+    </header>
+
+    <aside class="post-toc" data-post-toc hidden>
+      <button class="post-toc-toggle" type="button" data-post-toc-toggle aria-expanded="false" aria-controls="post-toc-nav">
+        章节导航
+      </button>
+      <div class="post-toc-shell" data-post-toc-shell>
+        <p class="post-toc-title">章节导航</p>
+        <nav id="post-toc-nav" class="post-toc-nav" data-post-toc-nav aria-label="文章目录"></nav>
+      </div>
+    </aside>
+
+    <section class="post-content" data-post-content>
+      {{ content }}
+    </section>
+
+    {% if related_posts.size > 0 %}
+    <section class="post-related">
+      <p class="section-kicker">继续阅读</p>
+      <h2>把同一类问题继续读下去</h2>
+      <p class="post-related-tip">优先按专题与标签延展，减少读完一篇就中断的情况。</p>
+      <ul class="post-related-list">
+        {% for rp in related_posts %}
+        <li class="post-related-item">
+          <div>
+            <a href="{{ rp.url | relative_url }}">{{ rp.title }}</a>
+            {% if rp.description %}
+              <p>{{ rp.description }}</p>
+            {% endif %}
+          </div>
+          <span>{{ rp.updated | default: rp.date | date: "%Y-%m-%d" }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "事实风险审查"
+  short_description: "审查文章里的事实风险、脑补痕迹与证据不足结论"
+  default_prompt: "Use $blog-fact-risk-review to review a technical article and identify factual risks, unsupported claims, and likely hallucinated details."

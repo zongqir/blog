@@ -1,0 +1,47 @@
+{% assign sorted_posts = include.posts | default: site.posts %}
+{% assign list_id = include.list_id | default: "main" %}
+{% assign empty_text = include.empty_text | default: "暂无文章。" %}
+{% assign list_class = include.list_class | default: "" %}
+{% assign show_updated = include.show_updated %}
+{% assign show_desc = include.show_desc %}
+{% assign show_tags = include.show_tags %}
+{% assign show_kicker = include.show_kicker %}
+
+<ul class="post-list {{ list_class }}" data-sort-mode="updated-first" data-list-id="{{ list_id }}">
+  {% for post in sorted_posts %}
+    {% assign post_kicker = post.series %}
+    {% if post_kicker == nil or post_kicker == "" %}
+      {% assign post_kicker = post.tags | first %}
+    {% endif %}
+    {% if post_kicker == nil or post_kicker == "" %}
+      {% assign post_kicker = "文章" %}
+    {% endif %}
+    <li class="post-item" data-sort-ts="{{ post.updated | default: post.date | date: '%s' }}">
+      {% if show_kicker != false %}
+        <p class="post-kicker">{{ post_kicker }}</p>
+      {% endif %}
+      <div class="post-heading">
+        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="post-cta">阅读全文</span>
+      </div>
+      <div class="post-times">
+        <span>发布于 {{ post.date | date: "%Y-%m-%d" }}</span>
+        {% if show_updated != false and post.updated %}
+          <span>更新于 {{ post.updated | date: "%Y-%m-%d" }}</span>
+        {% endif %}
+      </div>
+      {% if show_desc != false and post.description %}
+        <p class="post-desc">{{ post.description }}</p>
+      {% endif %}
+      {% if show_tags != false and post.tags and post.tags.size > 0 %}
+        <p class="post-tags">
+          {% for tag in post.tags %}
+            <a class="tag-chip" href="{{ '/tags/' | relative_url }}#{{ tag | slugify: 'raw' }}">{{ tag }}</a>
+          {% endfor %}
+        </p>
+      {% endif %}
+    </li>
+  {% else %}
+    <li class="post-item">{{ empty_text }}</li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "文章质量门禁"
+  short_description: "总检博客是否过线，但先按文章类型决定该用哪套质量尺子"
+  default_prompt: "Use $blog-quality-gate to review a technical blog draft, first identify whether the quality standard is mismatched for this article type, then judge what to fix first."
