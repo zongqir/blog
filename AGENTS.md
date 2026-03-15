@@ -49,6 +49,7 @@ bundle exec jekyll build
 
 - 结构、大纲、标题推进：`skills/blog-outline-doctor/SKILL.md`
 - 内容写透度与关键段落补写：`skills/blog-depth-reviewer/SKILL.md`
+- 技术抓手、方案细节与运行机制补强：`skills/blog-technical-grounding/SKILL.md`
 - 文风、表达、删改边界：`skills/blog-writing-style/SKILL.md`
 - AI 痕迹清理与人味校正：`humanizer-zh`
 - 文章类型与适用质量尺子：`skills/blog-article-fit-checker/SKILL.md`
@@ -59,7 +60,7 @@ bundle exec jekyll build
 这里只保留三条总原则：
 
 1. 目标不是生成标准博客，而是把作者真实想法整理成可发布的文章。
-2. 先判断问题属于结构、写透度、表达、类型错配、事实风险、SEO 或发布门禁中的哪一类，再调用对应 skill，不要所有问题都堆到一个地方解决。
+2. 先判断问题属于结构、写透度、技术抓手、表达、类型错配、事实风险、SEO 或发布门禁中的哪一类，再调用对应 skill，不要所有问题都堆到一个地方解决。
 3. 当用户对文章给出新批评时，先修当前文章，再把可复用约束沉淀到对应 skill，而不是继续把 `AGENTS.md` 写成一份越来越长的博客总手册。
 
 ## 博客技能迭代主线
@@ -77,7 +78,7 @@ bundle exec jekyll build
 任何博客相关任务，先做分诊，再进入对应 skill；不要跳过分类直接开始写。
 
 默认执行顺序：
-1. 先判断任务属于结构、写透度、表达、类型判断、SEO、发布门禁中的哪一类。
+1. 先判断任务属于结构、写透度、技术抓手、表达、类型判断、SEO、发布门禁中的哪一类。
 2. 若用户一句话同时包含多类问题，先用 `blog-quality-gate` 做分诊，再按最小必要集合调用其他 skill。
 3. 若任务意图不清、跨阶段过多、或无法稳定判断主问题，默认先触发 `blog-quality-gate`，不要凭感觉直接选单一 skill。
 4. 若用户用口语、语音转写式表达、重复修正、半句插话或不完整句子提出博客修改意见，必须先把口语翻译成明确任务，再决定触发哪个 skill；不要因为表述松散就停在字面理解。
@@ -88,6 +89,7 @@ bundle exec jekyll build
 强触发映射：
 - 出现“选题”“标题”“提纲”“结构”“重组段落”“开头怎么起”等请求，默认触发 `blog-outline-doctor`。除非用户明确缩小范围，否则“标题”默认同时包括文章 `title`、二级标题、三级标题和其他显式标题文案。
 - 出现“内容太浅”“不够透”“论证不够”“补关键段落”“写深一点”等请求，默认触发 `blog-depth-reviewer`。
+- 出现“太虚”“大道理太多”“多加一点技术细节”“多一点技术方案细节”“多一点实战抓手”“没有讲技术本身”“得有点东西”这类请求，默认触发 `blog-technical-grounding`。
 - 出现“润色”“改写”“压缩”“展开”“更自然”“去 AI 味”“像人写的”等请求，默认触发 `blog-writing-style`。
 - 出现“很 AI”“AI 味重”“不像人写的”“像总结稿”“像生成稿”“去 AI 痕迹”“去机器味”等请求，默认同时触发 `blog-writing-style` + `humanizer-zh`，不要只靠单一 skill 处理。
 - 出现“这篇像不像博客”“该写成复盘还是方案”“类型对不对”“要不要写结果/框架/落地”等请求，默认触发 `blog-article-fit-checker`。
