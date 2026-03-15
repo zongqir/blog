@@ -6,3 +6,8 @@ vendor/
 .bundle/
 .wrangler/
 .history/
+.lh/
+.tmp/
+.vscode/changelists.json
+.DS_Store
+Thumbs.db

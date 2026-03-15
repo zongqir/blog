@@ -192,3 +192,4 @@ bundle exec jekyll build
 - 允许执行：`git add`、`git commit`。
 - 禁止执行：`git reset --hard`、`git checkout --`、`git revert`（除非用户明确要求）。
 - 若工作区存在与当前任务无关的改动，不要回滚，跳过并只提交本次相关文件。
+- commit格式为[ADD]中文博客内容
